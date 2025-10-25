@@ -9,6 +9,7 @@ import SwiftUI
 
 struct GAD7TestView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.managedObjectContext) private var viewContext
     @AppStorage("hasCompletedTest") private var hasCompletedTest = false
     @AppStorage("lastGAD7Score") private var lastGAD7Score = 0
     @AppStorage("lastGAD7Date") private var lastGAD7Date = Date()
@@ -289,9 +290,14 @@ struct GAD7TestView: View {
     
     private func saveResults() {
         let totalScore = answers.reduce(0, +)
+
+        // Save to AppStorage for backward compatibility
         hasCompletedTest = true
         lastGAD7Score = totalScore
         lastGAD7Date = Date()
+
+        // Save to Core Data
+        DataManager.shared.saveGAD7Entry(score: totalScore, answers: answers, date: Date())
     }
     
     private func getCategory(for score: Int) -> (title: String, description: String, color: Color) {

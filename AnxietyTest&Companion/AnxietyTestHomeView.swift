@@ -6,19 +6,36 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct AnxietyTestHomeView: View {
+    @Environment(\.managedObjectContext) private var viewContext
     @AppStorage("userName") private var userName = "Friend"
     @AppStorage("hasCompletedTest") private var hasCompletedTest = false
     @AppStorage("lastGAD7Score") private var lastGAD7Score = 0
     @AppStorage("lastGAD7Date") private var lastGAD7Date = Date()
     @AppStorage("lastMood") private var lastMood = 0
     
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \GAD7Entry.date, ascending: false)],
+        animation: .default
+    )
+    private var gad7Entries: FetchedResults<GAD7Entry>
+
     @State private var companionExpression: CompanionFaceView.Expression = .neutral
     @State private var selectedMood: MoodPickerView.Mood? = nil
     @State private var showGreeting = false
     @State private var showTyping = false
     @State private var companionScale: CGFloat = 1.0
+
+    private var buttonText: String {
+        if hasCompletedTest || !gad7Entries.isEmpty {
+            let daysAgo = Calendar.current.dateComponents([.day], from: lastGAD7Date, to: Date()).day ?? 0
+            return daysAgo == 0 ? "Retake Test" : "Take Test"
+        } else {
+            return "Take Test"
+        }
+    }
     
     var body: some View {
         NavigationStack {
@@ -103,7 +120,7 @@ struct AnxietyTestHomeView: View {
                         .fontWeight(.semibold)
                         .foregroundColor(.white)
                     
-                    if hasCompletedTest {
+                    if hasCompletedTest || !gad7Entries.isEmpty {
                         let daysAgo = Calendar.current.dateComponents([.day], from: lastGAD7Date, to: Date()).day ?? 0
                         let category = getScoreCategory(lastGAD7Score)
                         Text("Last test: \(daysAgo == 0 ? "Today" : "\(daysAgo) days ago") • Score: \(category) (\(lastGAD7Score)/21)")
@@ -118,13 +135,13 @@ struct AnxietyTestHomeView: View {
                 
                 Spacer()
                 
-                if hasCompletedTest {
+                if hasCompletedTest || !gad7Entries.isEmpty {
                     CircularProgressView(score: lastGAD7Score, maxScore: 21)
                 }
             }
             
             NavigationLink(destination: GAD7TestView()) {
-                Text("Take Test")
+                Text(buttonText)
                     .font(.system(.body, design: .rounded))
                     .fontWeight(.medium)
                     .foregroundColor(.white)

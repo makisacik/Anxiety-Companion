@@ -58,27 +58,21 @@ struct MoodPickerView: View {
                         HapticFeedback.light()
                         onMoodSelected(mood.companionExpression)
                     }) {
-                        VStack(spacing: 8) {
-                            Text(mood.rawValue)
-                                .font(.system(size: 40))
-                                .scaleEffect(selectedMood == mood ? 1.2 : 1.0)
-                                .animation(.spring(response: 0.3, dampingFraction: 0.6), value: selectedMood)
-                            
-                            Text(mood.description)
-                                .font(.system(.caption, design: .rounded))
-                                .foregroundColor(.white.opacity(0.8))
-                        }
-                        .frame(width: 60, height: 80)
-                        .background(
-                            RoundedRectangle(cornerRadius: 16)
-                                .fill(selectedMood == mood ? Color.white.opacity(0.2) : Color.clear)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 16)
-                                        .stroke(selectedMood == mood ? Color.white.opacity(0.5) : Color.clear, lineWidth: 2)
-                                )
-                        )
-                        .scaleEffect(selectedMood == mood ? 1.05 : 1.0)
-                        .animation(.spring(response: 0.3, dampingFraction: 0.6), value: selectedMood)
+                        Text(mood.rawValue)
+                            .font(.system(size: 40))
+                            .scaleEffect(selectedMood == mood ? 1.2 : 1.0)
+                            .animation(.spring(response: 0.3, dampingFraction: 0.6), value: selectedMood)
+                            .frame(width: 60, height: 60)
+                            .background(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(selectedMood == mood ? Color.white.opacity(0.2) : Color.clear)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 16)
+                                            .stroke(selectedMood == mood ? Color.white.opacity(0.5) : Color.clear, lineWidth: 2)
+                                    )
+                            )
+                            .scaleEffect(selectedMood == mood ? 1.05 : 1.0)
+                            .animation(.spring(response: 0.3, dampingFraction: 0.6), value: selectedMood)
                     }
                     .buttonStyle(PlainButtonStyle())
                     .accessibilityLabel("\(mood.description) mood")

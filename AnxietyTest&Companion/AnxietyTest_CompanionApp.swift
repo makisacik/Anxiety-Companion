@@ -16,7 +16,8 @@ struct AnxietyTest_CompanionApp: App {
     var body: some Scene {
         WindowGroup {
             if hasCompletedOnboarding {
-                AnxietyTestHomeView()
+                MainTabView()
+                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
             } else {
                 OnboardingView()
             }
