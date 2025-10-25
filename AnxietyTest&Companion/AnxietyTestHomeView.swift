@@ -49,6 +49,9 @@ struct AnxietyTestHomeView: View {
                     // Companion Bubble
                     companionSection
 
+                    // Calming Library Card
+                    calmingLibraryCardSection
+
                     // GAD-7 Check-in Card
                     gad7CardSection
 
@@ -125,6 +128,47 @@ struct AnxietyTestHomeView: View {
                     }
                 }
             }
+    }
+
+    private var calmingLibraryCardSection: some View {
+        NavigationLink(destination: CalmingLibraryView()) {
+            HStack(spacing: 16) {
+                Image(systemName: "leaf.fill")
+                    .font(.title2)
+                    .foregroundColor(.white)
+                    .frame(width: 40, height: 40)
+                    .background(Color.white.opacity(0.2))
+                    .clipShape(Circle())
+
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Find Your Calm 🌿")
+                        .font(.system(.title3, design: .serif))
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+
+                    Text("Quick calming exercises")
+                        .font(.system(.caption, design: .rounded))
+                        .foregroundColor(.white.opacity(0.8))
+                }
+
+                Spacer()
+
+                Image(systemName: "chevron.right")
+                    .font(.caption)
+                    .foregroundColor(.white.opacity(0.6))
+            }
+            .padding(20)
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
+            .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(.white.opacity(0.2), lineWidth: 1)
+            )
+            .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
+        }
+        .padding(.horizontal, 20)
+        .onTapGesture {
+            HapticFeedback.soft()
+        }
     }
 
     private var gad7CardSection: some View {

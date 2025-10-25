@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CompanionFaceView: View {
     enum Expression {
-        case neutral, happy, mouthLeft, mouthRight
+        case neutral, happy, mouthLeft, mouthRight, calm, smile
     }
 
     var expression: Expression = .neutral
@@ -89,7 +89,7 @@ struct CompanionFaceView: View {
     private var eye: some View {
         Capsule()
             .fill(Color.black.opacity(0.6))
-            .frame(width: blink ? 2 : 8, height: 8)
+            .frame(width: blink ? 2 : (expression == .calm ? 6 : 8), height: 8)
             .animation(.easeInOut(duration: 0.2), value: blink)
     }
 
@@ -97,7 +97,7 @@ struct CompanionFaceView: View {
     @ViewBuilder
     private var mouth: some View {
         switch expression {
-        case .happy:
+        case .happy, .smile:
             // gentle smile curve (visible but subtle)
             HappyMouthShape()
                 .stroke(Color.black.opacity(0.6), lineWidth: 3)
@@ -215,6 +215,8 @@ extension Color {
         CompanionFaceView(expression: .happy)
         CompanionFaceView(expression: .mouthLeft)
         CompanionFaceView(expression: .mouthRight)
+        CompanionFaceView(expression: .calm)
+        CompanionFaceView(expression: .smile)
         CompanionFaceView(expression: .happy, showGlow: true)
     }
     .padding()

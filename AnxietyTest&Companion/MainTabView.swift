@@ -36,12 +36,21 @@ struct MainTabView: View {
                     }
                     .tag(1)
 
+                NavigationStack {
+                    CalmingLibraryView()
+                }
+                .tabItem {
+                    Image(systemName: "leaf.fill")
+                    Text("Calm")
+                }
+                .tag(2)
+
                 SettingsView()
                     .tabItem {
                         Image(systemName: "gearshape.fill")
                         Text("Settings")
                     }
-                    .tag(2)
+                    .tag(3)
             }
             .accentColor(Color(hex: "#B5A7E0"))
             .environment(\.managedObjectContext, viewContext)
