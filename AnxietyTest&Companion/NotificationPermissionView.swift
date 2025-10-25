@@ -10,10 +10,11 @@ import SwiftUI
 struct NotificationPermissionView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var isVisible = false
-    
+    @State private var companionOffsetX: CGFloat = 400 // Start off-screen to the right
+
     let onPermissionGranted: () -> Void
     let onDismiss: () -> Void
-    
+
     var body: some View {
         ZStack {
             // Background gradient
@@ -23,32 +24,33 @@ struct NotificationPermissionView: View {
                 endPoint: .bottomTrailing
             )
             .ignoresSafeArea()
-            
+
             VStack(spacing: 0) {
                 Spacer()
-                
+
+                // Companion outside the card, above it
+                CompanionFaceView(expression: .happy)
+                    .scaleEffect(isVisible ? 1.2 : 0.8)
+                    .rotationEffect(.degrees(companionOffsetX / 10)) // Rolling rotation
+                    .offset(x: companionOffsetX, y: -80)
+                    .opacity(isVisible ? 1.0 : 0.0)
+
                 // Main content card
                 VStack(spacing: 24) {
-                    // Companion at the top
-                    CompanionFaceView(expression: .happy)
-                        .scaleEffect(isVisible ? 1.2 : 0.8)
-                        .opacity(isVisible ? 1.0 : 0.0)
-                        .animation(.easeInOut(duration: 0.6).delay(0.2), value: isVisible)
-                    
                     // Title
                     Text("🌿 Stay mindful of your calm.")
                         .font(.system(.title2, design: .serif))
                         .fontWeight(.bold)
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
-                    
+
                     // Body text
                     Text("Would you like gentle reminders to check in on how you're feeling? You'll only get them every few days — no spam, just care.")
                         .font(.system(.body, design: .rounded))
                         .foregroundColor(.white.opacity(0.9))
                         .multilineTextAlignment(.center)
                         .lineSpacing(4)
-                    
+
                     // Buttons
                     VStack(spacing: 16) {
                         // Primary button - Yes, remind me
@@ -69,7 +71,7 @@ struct NotificationPermissionView: View {
                         }
                         .buttonStyle(ScaleButtonStyle())
                         .accessibilityLabel("Enable gentle reminders")
-                        
+
                         // Secondary button - Not now
                         Button(action: {
                             HapticFeedback.soft()
@@ -100,10 +102,11 @@ struct NotificationPermissionView: View {
                         )
                 )
                 .padding(.horizontal, 20)
+                .padding(.top, 60) // Add top padding to make room for companion
                 .scaleEffect(isVisible ? 1.0 : 0.8)
                 .opacity(isVisible ? 1.0 : 0.0)
-                .animation(.easeInOut(duration: 0.6), value: isVisible)
-                
+                .animation(.easeInOut(duration: 0.6).delay(0.3), value: isVisible)
+
                 Spacer()
             }
         }
@@ -111,14 +114,19 @@ struct NotificationPermissionView: View {
             withAnimation {
                 isVisible = true
             }
+
+            // Animate companion rolling in from the right
+            withAnimation(.spring(response: 0.8, dampingFraction: 0.6)) {
+                companionOffsetX = 0
+            }
         }
     }
-    
+
     private func handlePermissionRequest() {
         // Mark that we've shown the prompt
         UserDefaults.standard.set(true, forKey: "reminderPromptShown")
         UserDefaults.standard.set(true, forKey: "hasShownNotificationPrompt")
-        
+
         // Request authorization
         ReminderScheduler.shared.requestAuthorization { granted in
             DispatchQueue.main.async {
@@ -129,7 +137,7 @@ struct NotificationPermissionView: View {
             }
         }
     }
-    
+
     private func handleDismiss() {
         // Mark that we've shown the prompt
         UserDefaults.standard.set(true, forKey: "reminderPromptShown")
