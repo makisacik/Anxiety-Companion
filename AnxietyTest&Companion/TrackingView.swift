@@ -26,16 +26,17 @@ struct TrackingView: View {
     private var moodEntries: FetchedResults<MoodEntry>
     
     var body: some View {
-        ZStack {
-            // Background gradient
-            LinearGradient(
-                colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
-            
-            ScrollView(showsIndicators: false) {
+        NavigationStack {
+            ZStack {
+                // Background gradient
+                LinearGradient(
+                    colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .ignoresSafeArea(.all)
+
+                ScrollView(showsIndicators: false) {
                 VStack(spacing: 24) {
                     // Companion Section
                     CompanionSectionView(
@@ -59,18 +60,22 @@ struct TrackingView: View {
                 .padding(.horizontal, 20)
                 .padding(.top, 30)
                 .padding(.bottom, 60)
+                }
+                .onAppear {
+                    checkForIntroOverlay()
+                    DataManager.shared.migrateFromAppStorage()
+                }
+                .overlay(
+                    // Intro Overlay
+                    Group {
+                        if showIntroOverlay {
+                            IntroOverlayView(showIntro: $showIntroOverlay)
+                                .transition(.opacity)
+                                .zIndex(1)
+                        }
+                    }
+                )
             }
-            
-            // Intro Overlay
-            if showIntroOverlay {
-                IntroOverlayView(showIntro: $showIntroOverlay)
-                    .transition(.opacity)
-                    .zIndex(1)
-            }
-        }
-        .onAppear {
-            checkForIntroOverlay()
-            DataManager.shared.migrateFromAppStorage()
         }
     }
     

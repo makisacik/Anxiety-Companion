@@ -12,23 +12,33 @@ struct MainTabView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
-        TabView {
-            AnxietyTestHomeView()
-                .tabItem {
-                    Image(systemName: "house.fill")
-                    Text("Home")
-                }
-                .tag(0)
+        ZStack {
+            // Background gradient for the entire app
+            LinearGradient(
+                colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea(.all)
             
-            TrackingView()
-                .tabItem {
-                    Image(systemName: "chart.line.uptrend.xyaxis")
-                    Text("Tracking")
-                }
-                .tag(1)
+            TabView {
+                AnxietyTestHomeView()
+                    .tabItem {
+                        Image(systemName: "house.fill")
+                        Text("Home")
+                    }
+                    .tag(0)
+
+                TrackingView()
+                    .tabItem {
+                        Image(systemName: "chart.line.uptrend.xyaxis")
+                        Text("Tracking")
+                    }
+                    .tag(1)
+            }
+            .accentColor(Color(hex: "#B5A7E0"))
+            .environment(\.managedObjectContext, viewContext)
         }
-        .accentColor(Color(hex: "#B5A7E0"))
-        .environment(\.managedObjectContext, viewContext)
     }
 }
 

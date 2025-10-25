@@ -252,71 +252,80 @@ struct DayDetailView: View {
     
     @Environment(\.dismiss) private var dismiss
     
-    private let dateFormatter = DateFormatter()
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .full
+        return formatter
+    }()
     
     var body: some View {
-        NavigationView {
-            VStack(spacing: 24) {
-                Text(dateFormatter.string(from: date))
-                    .font(.system(.title2, design: .serif))
-                    .fontWeight(.semibold)
-                    .foregroundColor(.white)
-                
-                if let gad7Entry = gad7Entry {
-                    VStack(spacing: 12) {
-                        Text("GAD-7 Score")
-                            .font(.system(.headline, design: .rounded))
-                            .foregroundColor(.white)
-                        
-                        Text("\(gad7Entry.score)/21")
-                            .font(.system(.title, design: .rounded))
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                        
-                        Text(getScoreCategory(Int(gad7Entry.score)))
-                            .font(.system(.subheadline, design: .rounded))
-                            .foregroundColor(.white.opacity(0.8))
-                    }
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 16)
-                            .fill(.ultraThinMaterial)
-                    )
-                }
-                
-                if let moodEntry = moodEntry {
-                    VStack(spacing: 12) {
-                        Text("Mood")
-                            .font(.system(.headline, design: .rounded))
-                            .foregroundColor(.white)
-                        
-                        Text(moodEmoji(for: Int(moodEntry.moodValue)))
-                            .font(.system(size: 48))
-                    }
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 16)
-                            .fill(.ultraThinMaterial)
-                    )
-                }
-                
-                if gad7Entry == nil && moodEntry == nil {
-                    Text("No data for this day")
-                        .font(.system(.body, design: .rounded))
-                        .foregroundColor(.white.opacity(0.7))
-                }
-                
-                Spacer()
-            }
-            .padding()
-            .background(
+        NavigationStack {
+            ZStack {
+                // Background gradient
                 LinearGradient(
                     colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
-                .ignoresSafeArea()
-            )
+                .ignoresSafeArea(.all)
+                .onAppear {
+                    // Ensure background renders immediately
+                }
+
+                VStack(spacing: 24) {
+                    Text(dateFormatter.string(from: date))
+                        .font(.system(.title2, design: .serif))
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+
+                    if let gad7Entry = gad7Entry {
+                        VStack(spacing: 12) {
+                            Text("GAD-7 Score")
+                                .font(.system(.headline, design: .rounded))
+                                .foregroundColor(.white)
+
+                            Text("\(gad7Entry.score)/21")
+                                .font(.system(.title, design: .rounded))
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+
+                            Text(getScoreCategory(Int(gad7Entry.score)))
+                                .font(.system(.subheadline, design: .rounded))
+                                .foregroundColor(.white.opacity(0.8))
+                        }
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(.ultraThinMaterial)
+                        )
+                    }
+
+                    if let moodEntry = moodEntry {
+                        VStack(spacing: 12) {
+                            Text("Mood")
+                                .font(.system(.headline, design: .rounded))
+                                .foregroundColor(.white)
+
+                            Text(moodEmoji(for: Int(moodEntry.moodValue)))
+                                .font(.system(size: 48))
+                        }
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(.ultraThinMaterial)
+                        )
+                    }
+
+                    if gad7Entry == nil && moodEntry == nil {
+                        Text("No data for this day")
+                            .font(.system(.body, design: .rounded))
+                            .foregroundColor(.white.opacity(0.7))
+                    }
+
+                    Spacer()
+                }
+                .padding()
+            }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -326,9 +335,6 @@ struct DayDetailView: View {
                     .foregroundColor(.white)
                 }
             }
-        }
-        .onAppear {
-            dateFormatter.dateStyle = .full
         }
     }
     

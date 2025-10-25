@@ -110,7 +110,19 @@ struct ScoreGraphView: View {
     }
     
     private var sortedEntries: [GAD7Entry] {
-        gad7Entries.sorted { ($0.date ?? Date.distantPast) < ($1.date ?? Date.distantPast) }
+        // Group entries by date and take the last test of each day
+        let calendar = Calendar.current
+        let groupedByDate = Dictionary(grouping: gad7Entries) { entry in
+            calendar.startOfDay(for: entry.date ?? Date.distantPast)
+        }
+
+        // For each date, take the entry with the latest date (most recent test of that day)
+        let lastTestPerDay = groupedByDate.compactMapValues { entries in
+            entries.max { ($0.date ?? Date.distantPast) < ($1.date ?? Date.distantPast) }
+        }
+
+        // Sort by date
+        return lastTestPerDay.values.sorted { ($0.date ?? Date.distantPast) < ($1.date ?? Date.distantPast) }
     }
 }
 
