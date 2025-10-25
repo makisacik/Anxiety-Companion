@@ -10,7 +10,8 @@ import SwiftUI
 struct NotificationPermissionView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var isVisible = false
-    @State private var companionOffsetX: CGFloat = 400 // Start off-screen to the right
+    @State private var companionOffsetX: CGFloat = -400 // Start off-screen to the left
+    @State private var companionRotation: Double = 0 // Track rotation for continuous rolling
 
     let onPermissionGranted: () -> Void
     let onDismiss: () -> Void
@@ -31,7 +32,7 @@ struct NotificationPermissionView: View {
                 // Companion outside the card, above it
                 CompanionFaceView(expression: .happy)
                     .scaleEffect(isVisible ? 1.2 : 0.8)
-                    .rotationEffect(.degrees(companionOffsetX / 10)) // Rolling rotation
+                    .rotationEffect(.degrees(companionRotation)) // Continuous rolling rotation
                     .offset(x: companionOffsetX, y: -80)
                     .opacity(isVisible ? 1.0 : 0.0)
 
@@ -115,10 +116,16 @@ struct NotificationPermissionView: View {
                 isVisible = true
             }
 
-            // Animate companion rolling in from the right
-            withAnimation(.spring(response: 0.8, dampingFraction: 0.6)) {
-                companionOffsetX = 0
-            }
+            // Start rolling animation - roll in from left and stop in center
+            startRollingAnimation()
+        }
+    }
+
+    private func startRollingAnimation() {
+        // Roll in from left at a slower speed, stop at center (0)
+        withAnimation(.easeOut(duration: 3.5)) {
+            companionOffsetX = 0 // Stop in the center
+            companionRotation = 360 // Full rotation
         }
     }
 
