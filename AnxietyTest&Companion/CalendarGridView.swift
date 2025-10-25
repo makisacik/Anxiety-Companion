@@ -163,9 +163,11 @@ struct CalendarGridView: View {
     }
     
     private func gad7EntryForDate(_ date: Date) -> GAD7Entry? {
-        gad7Entries.first { entry in
+        // Find all entries for this date and return the latest one
+        let entriesForDate = gad7Entries.filter { entry in
             calendar.isDate(entry.date ?? Date.distantPast, inSameDayAs: date)
         }
+        return entriesForDate.max { ($0.date ?? Date.distantPast) < ($1.date ?? Date.distantPast) }
     }
     
     private func moodEntryForDate(_ date: Date) -> MoodEntry? {

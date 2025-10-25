@@ -68,7 +68,7 @@ struct ScoreGraphView: View {
                 }
                 .frame(height: 160)
                 .chartXAxis {
-                    AxisMarks(values: .stride(by: .day, count: 7)) { value in
+                    AxisMarks(values: .stride(by: .day, count: xAxisStride)) { value in
                         AxisGridLine()
                             .foregroundStyle(.white.opacity(0.2))
                         AxisValueLabel()
@@ -86,6 +86,7 @@ struct ScoreGraphView: View {
                     }
                 }
                 .chartYScale(domain: 0...21)
+                .chartXScale(domain: chartDateRange)
                 .opacity(showGraph ? 1 : 0)
                 .animation(.easeInOut(duration: 1.0), value: showGraph)
             }
@@ -116,13 +117,47 @@ struct ScoreGraphView: View {
             calendar.startOfDay(for: entry.date ?? Date.distantPast)
         }
 
-        // For each date, take the entry with the latest date (most recent test of that day)
+        // For each date, take the entry with the latest time (most recent test of that day)
         let lastTestPerDay = groupedByDate.compactMapValues { entries in
             entries.max { ($0.date ?? Date.distantPast) < ($1.date ?? Date.distantPast) }
         }
 
         // Sort by date
         return lastTestPerDay.values.sorted { ($0.date ?? Date.distantPast) < ($1.date ?? Date.distantPast) }
+    }
+
+    private var xAxisStride: Int {
+        let entryCount = sortedEntries.count
+        switch entryCount {
+        case 0...7:
+            return 1  // Show every day for a week
+        case 8...14:
+            return 2  // Show every 2 days for 2 weeks
+        case 15...30:
+            return 3  // Show every 3 days for a month
+        case 31...60:
+            return 7  // Show every week for 2 months
+        default:
+            return 14 // Show every 2 weeks for longer periods
+        }
+    }
+
+    private var chartDateRange: ClosedRange<Date> {
+        guard !sortedEntries.isEmpty else {
+            let today = Date()
+            let weekAgo = Calendar.current.date(byAdding: .day, value: -7, to: today) ?? today
+            return weekAgo...today
+        }
+
+        let firstDate = sortedEntries.first?.date ?? Date()
+        let lastDate = sortedEntries.last?.date ?? Date()
+
+        // Add some padding to the range for better visualization
+        let calendar = Calendar.current
+        let startDate = calendar.date(byAdding: .day, value: -1, to: firstDate) ?? firstDate
+        let endDate = calendar.date(byAdding: .day, value: 1, to: lastDate) ?? lastDate
+
+        return startDate...endDate
     }
 }
 

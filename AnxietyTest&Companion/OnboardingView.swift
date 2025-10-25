@@ -87,6 +87,10 @@ struct OnboardingView: View {
                                 .transition(.opacity.combined(with: .move(edge: .bottom)))
                             }
                         }
+                        .onTapGesture {
+                            // Dismiss keyboard when tapping outside the TextField
+                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                        }
                     )
                 )
                 .tag(1)
@@ -180,6 +184,9 @@ struct OnboardingView: View {
     }
     
     private func saveNameAndContinue() {
+        // Dismiss keyboard first
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+
         let trimmedName = nameInput.trimmingCharacters(in: .whitespacesAndNewlines)
         if !trimmedName.isEmpty {
             userName = trimmedName

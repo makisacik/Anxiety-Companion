@@ -18,6 +18,10 @@ struct AnxietyTest_CompanionApp: App {
             if hasCompletedOnboarding {
                 MainTabView()
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                    .onAppear {
+                        // Ensure reminders are properly scheduled after app launch
+                        ReminderScheduler.shared.rescheduleIfNeeded()
+                    }
             } else {
                 OnboardingView()
             }

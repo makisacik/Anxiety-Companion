@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct GAD7TestView: View {
     @Environment(\.dismiss) private var dismiss
@@ -14,11 +15,16 @@ struct GAD7TestView: View {
     @AppStorage("lastGAD7Score") private var lastGAD7Score = 0
     @AppStorage("lastGAD7Date") private var lastGAD7Date = Date()
     
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \GAD7Entry.date, ascending: false)],
+        animation: .default
+    )
+    private var gad7Entries: FetchedResults<GAD7Entry>
+
     @State private var currentQuestion = 0
     @State private var answers: [Int] = Array(repeating: 0, count: 7)
     @State private var showResults = false
     @State private var companionExpression: CompanionFaceView.Expression = .neutral
-    
     private let questions = [
         "Feeling nervous, anxious, or on edge",
         "Not being able to stop or control worrying",
@@ -232,6 +238,31 @@ struct GAD7TestView: View {
             Button(action: {
                 saveResults()
                 HapticFeedback.success()
+
+                // Check if this is the first test completion and we haven't shown the permission prompt yet
+                let reminderPromptShown = UserDefaults.standard.bool(forKey: "reminderPromptShown")
+                let hasShownNotificationPrompt = UserDefaults.standard.bool(forKey: "hasShownNotificationPrompt")
+
+                print("🧪 GAD7 Test Completion:")
+                print("   - hasCompletedTest: \(hasCompletedTest)")
+                print("   - gad7Entries.isEmpty: \(gad7Entries.isEmpty)")
+                print("   - reminderPromptShown: \(reminderPromptShown)")
+                print("   - hasShownNotificationPrompt: \(hasShownNotificationPrompt)")
+
+                // Show notification permission if we haven't shown it yet
+                if !hasShownNotificationPrompt && !reminderPromptShown {
+                    print("   - ✅ Marking as first test completion")
+                    // Mark this as the first test completion
+                    UserDefaults.standard.set(true, forKey: "isFirstTestCompletion")
+                    
+                    // Show notification permission after a brief delay to allow navigation to complete
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                        // Post a notification to trigger the permission check
+                        NotificationCenter.default.post(name: NSNotification.Name("ShowNotificationPermission"), object: nil)
+                    }
+                } else {
+                    print("   - ❌ Not marking as first test completion")
+                }
                 dismiss()
             }) {
                 Text("Done")

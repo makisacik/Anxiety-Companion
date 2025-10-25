@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import Combine
 
 struct AnxietyTestHomeView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -27,6 +28,7 @@ struct AnxietyTestHomeView: View {
     @State private var showGreeting = false
     @State private var showTyping = false
     @State private var companionScale: CGFloat = 1.0
+    @State private var showNotificationPermission = false
 
     private var buttonText: String {
         if hasCompletedTest || !gad7Entries.isEmpty {
@@ -72,6 +74,20 @@ struct AnxietyTestHomeView: View {
         .onAppear {
             loadLastMood()
             startGreetingAnimation()
+            checkForNotificationPermission()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("ShowNotificationPermission"))) { _ in
+            checkForNotificationPermission()
+        }
+        .sheet(isPresented: $showNotificationPermission) {
+            NotificationPermissionView(
+                onPermissionGranted: {
+                    print("User granted notification permission")
+                },
+                onDismiss: {
+                    print("User dismissed notification permission")
+                }
+            )
         }
     }
     
@@ -215,6 +231,29 @@ struct AnxietyTestHomeView: View {
         if let mood = selectedMood,
            let index = MoodPickerView.Mood.allCases.firstIndex(of: mood) {
             lastMood = index
+        }
+    }
+    
+    private func checkForNotificationPermission() {
+        // Check if user just completed their first test and we haven't shown the permission prompt yet
+        let isFirstTestCompletion = UserDefaults.standard.bool(forKey: "isFirstTestCompletion")
+        let reminderPromptShown = UserDefaults.standard.bool(forKey: "reminderPromptShown")
+        
+        print("🔔 Notification Permission Check:")
+        print("   - isFirstTestCompletion: \(isFirstTestCompletion)")
+        print("   - reminderPromptShown: \(reminderPromptShown)")
+        
+        if isFirstTestCompletion && !reminderPromptShown {
+            print("   - ✅ Showing notification permission sheet")
+            // Clear the first test completion flag
+            UserDefaults.standard.set(false, forKey: "isFirstTestCompletion")
+            
+            // Show notification permission after a brief delay
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                showNotificationPermission = true
+            }
+        } else {
+            print("   - ❌ Not showing notification permission sheet")
         }
     }
     

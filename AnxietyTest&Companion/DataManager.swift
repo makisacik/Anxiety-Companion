@@ -11,20 +11,12 @@ import Foundation
 class DataManager {
     static let shared = DataManager()
     
-    private let persistentContainer: NSPersistentContainer
-    
     private init() {
-        persistentContainer = NSPersistentContainer(name: "AnxietyTest_Companion")
-        persistentContainer.loadPersistentStores { _, error in
-            if let error = error {
-                fatalError("Core Data failed to load: \(error.localizedDescription)")
-            }
-        }
-        persistentContainer.viewContext.automaticallyMergesChangesFromParent = true
+        // Use the shared PersistenceController instead of creating our own container
     }
     
     var viewContext: NSManagedObjectContext {
-        persistentContainer.viewContext
+        PersistenceController.shared.container.viewContext
     }
     
     // MARK: - GAD-7 Entry Operations
@@ -33,7 +25,7 @@ class DataManager {
         let context = viewContext
         let entry = GAD7Entry(context: context)
         entry.id = UUID()
-        entry.date = date.startOfDay()
+        entry.date = date  // Save actual time, not start of day
         entry.score = Int16(score)
         entry.answers = answers.map(String.init).joined(separator: ",")
         

@@ -35,6 +35,13 @@ struct MainTabView: View {
                         Text("Tracking")
                     }
                     .tag(1)
+
+                SettingsView()
+                    .tabItem {
+                        Image(systemName: "gearshape.fill")
+                        Text("Settings")
+                    }
+                    .tag(2)
             }
             .accentColor(Color(hex: "#B5A7E0"))
             .environment(\.managedObjectContext, viewContext)
