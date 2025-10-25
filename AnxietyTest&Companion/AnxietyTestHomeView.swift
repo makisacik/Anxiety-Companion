@@ -243,15 +243,6 @@ struct AnxietyTestHomeView: View {
         print("   - isFirstTestCompletion: \(isFirstTestCompletion)")
         print("   - reminderPromptShown: \(reminderPromptShown)")
 
-        // FOR TESTING: Always show the notification sheet
-        print("   - ✅ [TESTING] Showing notification permission sheet")
-
-        // Show notification permission after a brief delay
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            showNotificationPermission = true
-        }
-
-        /* ORIGINAL CODE:
         if isFirstTestCompletion && !reminderPromptShown {
             print("   - ✅ Showing notification permission sheet")
             // Clear the first test completion flag
@@ -264,7 +255,6 @@ struct AnxietyTestHomeView: View {
         } else {
             print("   - ❌ Not showing notification permission sheet")
         }
-        */
     }
 
     private func getScoreCategory(_ score: Int) -> String {
