@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @AppStorage("notificationsEnabled") private var notificationsEnabled = false
+    @AppStorage("isPremiumUser") private var isPremiumUser = false
     @State private var actualNotificationStatus: Bool = false
     @State private var isLoading = true
     
@@ -104,14 +105,14 @@ struct SettingsView: View {
                         }
                         .padding(.horizontal, 20)
                         
-                        // Future Settings Placeholder
+                        // Development Settings
                         VStack(spacing: 20) {
                             HStack {
                                 Image(systemName: "gearshape.fill")
                                     .foregroundColor(Color(hex: "#B5A7E0"))
                                     .font(.system(size: 20))
                                 
-                                Text("More Settings")
+                                Text("Development")
                                     .font(.system(.title2, design: .serif))
                                     .fontWeight(.semibold)
                                     .foregroundColor(.white)
@@ -120,6 +121,36 @@ struct SettingsView: View {
                             }
                             
                             VStack(spacing: 12) {
+                                // Premium Toggle for Testing
+                                VStack(spacing: 16) {
+                                    HStack {
+                                        VStack(alignment: .leading, spacing: 4) {
+                                            Text("Premium Access")
+                                                .font(.system(.headline, design: .rounded))
+                                                .foregroundColor(.white)
+
+                                            Text("Unlock all Calm Journey levels for testing")
+                                                .font(.system(.caption, design: .rounded))
+                                                .foregroundColor(.white.opacity(0.7))
+                                                .multilineTextAlignment(.leading)
+                                        }
+
+                                        Spacer()
+
+                                        Toggle("", isOn: $isPremiumUser)
+                                            .toggleStyle(SwitchToggleStyle(tint: Color(hex: "#B5A7E0")))
+                                    }
+                                }
+                                .padding(20)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .fill(.ultraThinMaterial)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 16)
+                                                .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                                        )
+                                )
+
                                 SettingsRow(
                                     icon: "clock.fill",
                                     title: "Reminder Frequency",

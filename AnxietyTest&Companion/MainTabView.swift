@@ -45,12 +45,21 @@ struct MainTabView: View {
                 }
                 .tag(2)
 
+                NavigationStack {
+                    CalmJourneyView()
+                }
+                .tabItem {
+                    Image(systemName: "map.fill")
+                    Text("Journey")
+                }
+                .tag(3)
+
                 SettingsView()
                     .tabItem {
                         Image(systemName: "gearshape.fill")
                         Text("Settings")
                     }
-                    .tag(3)
+                    .tag(4)
             }
             .accentColor(Color(hex: "#B5A7E0"))
             .environment(\.managedObjectContext, viewContext)
