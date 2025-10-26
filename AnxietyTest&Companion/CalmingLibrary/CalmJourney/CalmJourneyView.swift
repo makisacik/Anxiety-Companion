@@ -20,20 +20,21 @@ struct CalmJourneyView: View {
     var body: some View {
         ZStack {
             LinearGradient(
-                colors: [Color(hex: "#E6E6FA"), Color(hex: "#FFE4E1")],
+                colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
             .ignoresSafeArea()
 
-            VStack(spacing: 0) {
-                // Header stays fixed at top
-                headerSection
-                    .padding(.horizontal, 24)
-                    .padding(.top, 40)
-                    .padding(.bottom, 20)
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 0) {
+                    // Header
+                    headerSection
+                        .padding(.horizontal, 24)
+                        .padding(.top, 40)
+                        .padding(.bottom, 30)
 
-                ScrollView(showsIndicators: false) {
+                    // Levels
                     VStack(spacing: levelSpacing) {
                         ForEach(Array(dataStore.levels.enumerated()), id: \.element.id) { index, level in
                             ZigZagLevelRow(
@@ -83,11 +84,11 @@ struct CalmJourneyView: View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Your Calm Journey 🌿")
                 .font(.largeTitle.bold())
-                .foregroundColor(Color(hex: "#6E63A4"))
+                .foregroundColor(.white)
 
             Text("Structured exercises to build lasting calm, based on proven therapy techniques.")
                 .font(.system(.body, design: .rounded))
-                .foregroundColor(Color(hex: "#7B6B9F"))
+                .foregroundColor(.white.opacity(0.9))
         }
         .multilineTextAlignment(.leading)
     }
@@ -157,28 +158,32 @@ struct ZigZagLevelRow: View {
                 Text(level.title)
                     .font(.system(.title3, design: .serif))
                     .fontWeight(.semibold)
-                    .foregroundColor(Color(hex: "#6E63A4"))
+                    .foregroundColor(.white)
 
                 if !level.free && !isPremiumUser {
                     Image(systemName: "lock.fill")
                         .font(.system(.caption, weight: .medium))
-                        .foregroundColor(Color(hex: "#7B6B9F").opacity(0.6))
+                        .foregroundColor(.white.opacity(0.7))
                 }
             }
 
             Text(level.summary)
                 .font(.system(.subheadline, design: .rounded))
-                .foregroundColor(Color(hex: "#7B6B9F"))
+                .foregroundColor(.white.opacity(0.9))
         }
         .frame(height: 120)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.vertical, 8)
-        .padding(.horizontal, 14)
+        .padding(.vertical, 16)
+        .padding(.horizontal, 20)
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .fill(Color.white.opacity(0.4))
-                .shadow(radius: 1)
+                .fill(.ultraThinMaterial)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(.white.opacity(0.2), lineWidth: 1)
+                )
         )
+        .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)
         .onTapGesture(perform: action)
     }
 
