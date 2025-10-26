@@ -16,7 +16,6 @@ struct ExerciseInstructionPageView: View {
     
     @State private var userResponse = ""
     @State private var isTypingComplete = false
-    @State private var viewId = UUID()
     
     private var companionExpression: CompanionFaceView.Expression {
         switch exerciseType {
@@ -40,37 +39,6 @@ struct ExerciseInstructionPageView: View {
         VStack(spacing: 32) {
             Spacer()
             
-            // Debug info (remove this in production)
-            VStack(alignment: .leading, spacing: 4) {
-                Text("DEBUG: View ID = \(viewId.uuidString.prefix(8))")
-                    .font(.caption)
-                    .foregroundColor(.white.opacity(0.7))
-                Text("DEBUG: promptType = \(promptType.rawValue)")
-                    .font(.caption)
-                    .foregroundColor(.white.opacity(0.7))
-                Text("DEBUG: canContinue = \(canContinue)")
-                    .font(.caption)
-                    .foregroundColor(.white.opacity(0.7))
-                Text("DEBUG: userResponse = '\(userResponse)'")
-                    .font(.caption)
-                    .foregroundColor(.white.opacity(0.7))
-                Text("DEBUG: isTypingComplete = \(isTypingComplete)")
-                    .font(.caption)
-                    .foregroundColor(.white.opacity(0.7))
-                if promptType == .question {
-                    Text("DEBUG: Text field should be visible below")
-                        .font(.caption)
-                        .foregroundColor(.green.opacity(0.8))
-                    Text("DEBUG: Question detected - text field will show")
-                        .font(.caption)
-                        .foregroundColor(.yellow.opacity(0.8))
-                } else {
-                    Text("DEBUG: Not a question - no text field")
-                        .font(.caption)
-                        .foregroundColor(.red.opacity(0.8))
-                }
-            }
-            .padding(.horizontal, 24)
             
             // Companion with chat bubble
             CompanionChatBubbleView(
@@ -79,18 +47,9 @@ struct ExerciseInstructionPageView: View {
                 companionExpression: companionExpression
             )
             .onAppear {
-                // Generate new view ID to track view instances
-                viewId = UUID()
-                print("🔍 ExerciseInstructionPageView appeared - promptType: \(promptType), instruction: '\(instruction)', viewId: \(viewId.uuidString.prefix(8))")
-                
                 // Reset user response for each new question
                 if promptType == .question {
                     userResponse = ""
-                    print("🔍 Reset userResponse for new question")
-                    // Add a visual flash to show reset happened
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        // This will trigger a UI update to show the reset
-                    }
                 }
                 
                 // For non-questions, mark as complete after animation

@@ -234,22 +234,19 @@ struct CalmLevelSessionView: View {
             print("🔍 Prompt types: \(exercise.instructionPromptTypes)")
             
             if exercise.type == .breathing {
-                // For breathing exercises, only show the first instruction as explanation
-                // The actual breathing exercise will be handled separately
-                if let firstInstruction = exercise.instructions.first,
-                   let firstPromptType = exercise.instructionPromptTypes.first {
-                    let step = InstructionStep(
-                        id: stepId,
-                        instruction: firstInstruction,
-                        exerciseType: exercise.type,
-                        exerciseTitle: exercise.title,
-                        exerciseId: exercise.id,
-                        promptType: firstPromptType
-                    )
-                    steps.append(step)
-                    print("🔍 Added breathing step: \(firstInstruction) (promptType: \(firstPromptType))")
-                    stepId += 1
-                }
+                // For breathing exercises, show a proper explanation instead of the first instruction
+                let explanation = "Let's practice \(exercise.title.lowercased()). This technique helps calm your nervous system by regulating your breath. Follow the guided breathing exercise that will appear next."
+                let step = InstructionStep(
+                    id: stepId,
+                    instruction: explanation,
+                    exerciseType: exercise.type,
+                    exerciseTitle: exercise.title,
+                    exerciseId: exercise.id,
+                    promptType: .statement
+                )
+                steps.append(step)
+                print("🔍 Added breathing explanation step: \(explanation)")
+                stepId += 1
             } else {
                 // For other exercise types, show all instructions as separate steps
                 for (index, instruction) in exercise.instructions.enumerated() {
@@ -312,14 +309,21 @@ struct CalmLevelSessionView: View {
     
     private func handleBreathingCompletion() {
         print("🫁 Breathing exercise completed, moving to next step")
-        HapticFeedback.success()
-        withAnimation(.easeInOut(duration: 0.6)) {
-            showBreathingView = false
+        print("🫁 Current step index: \(currentStepIndex), Total steps: \(totalSteps)")
+        if let nextStep = currentStepIndex + 1 < instructionSteps.count ? instructionSteps[currentStepIndex + 1] : nil {
+            print("🫁 Next step will be: \(nextStep.instruction) (type: \(nextStep.exerciseType))")
         }
-        // Add a small delay to ensure the breathing view is fully dismissed
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-            print("🔄 Moving to next step after breathing completion")
-            moveToNextStep()
+        
+        HapticFeedback.success()
+        
+        // Move to next step first, then hide breathing view
+        moveToNextStep()
+        
+        // Hide breathing view after moving to next step
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            withAnimation(.easeInOut(duration: 0.3)) {
+                showBreathingView = false
+            }
         }
     }
     
