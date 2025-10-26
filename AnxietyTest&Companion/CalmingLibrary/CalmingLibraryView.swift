@@ -20,16 +20,16 @@ struct CalmingLibraryView: View {
             )
             .ignoresSafeArea()
 
-            VStack(alignment: .leading, spacing: 20) {
-                Text("Find Your Calm 🌿")
-                    .font(.largeTitle.bold())
-                    .foregroundColor(.white)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    Text("Find Your Calm 🌿")
+                        .font(.largeTitle.bold())
+                        .foregroundColor(.white)
 
-                Text("Choose a small action to reset your mind.")
-                    .foregroundColor(.white.opacity(0.9))
+                    Text("Choose a small action to reset your mind.")
+                        .foregroundColor(.white.opacity(0.9))
 
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 16) {
+                    LazyVStack(spacing: 16) {
                         ForEach(activities) { activity in
                             NavigationLink(destination: destinationView(for: activity)) {
                                 CalmingActivityCard(activity: activity)
@@ -38,7 +38,6 @@ struct CalmingLibraryView: View {
                     }
                     .padding(.vertical, 20)
                 }
-                Spacer()
             }
             .padding(.horizontal, 24)
         }
@@ -47,9 +46,18 @@ struct CalmingLibraryView: View {
     
     @ViewBuilder
     private func destinationView(for activity: CalmingActivity) -> some View {
-        if activity.title == "Breathing" {
+        switch activity.title {
+        case "Breathing":
             GuidedBreathingView()
-        } else {
+        case "Grounding":
+            GroundingView()
+        case "Journaling":
+            JournalingView()
+        case "Gratitude":
+            GratitudeView()
+        case "Affirmation":
+            AffirmationView()
+        default:
             CalmingCardView(activity: activity)
         }
     }
@@ -60,18 +68,35 @@ struct CalmingActivityCard: View {
     let activity: CalmingActivity
 
     var body: some View {
-        VStack(spacing: 12) {
+        HStack(spacing: 16) {
             Text(activity.emoji)
                 .font(.system(size: 40))
-            Text(activity.title)
-                .font(.headline)
-                .foregroundColor(.white)
+                .frame(width: 60, height: 60)
+                .background(Color.white.opacity(0.2))
+                .cornerRadius(12)
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(activity.title)
+                    .font(.headline)
+                    .foregroundColor(.white)
+                Text(activity.description)
+                    .font(.subheadline)
+                    .foregroundColor(.white.opacity(0.8))
+                    .lineLimit(2)
+            }
+
+            Spacer()
+
+            Image(systemName: "chevron.right")
+                .foregroundColor(.white.opacity(0.6))
+                .font(.system(size: 16, weight: .medium))
         }
-        .frame(width: 150, height: 150)
+        .padding(.horizontal, 20)
+        .padding(.vertical, 16)
         .background(Color(hex: activity.colorHex).opacity(0.9))
-        .cornerRadius(20)
-        .shadow(radius: 6)
-        .overlay(RoundedRectangle(cornerRadius: 20)
+        .cornerRadius(16)
+        .shadow(radius: 4)
+        .overlay(RoundedRectangle(cornerRadius: 16)
                     .stroke(.white.opacity(0.3), lineWidth: 1))
         .contentShape(Rectangle())
         .animation(.easeInOut(duration: 0.6), value: activity.id)

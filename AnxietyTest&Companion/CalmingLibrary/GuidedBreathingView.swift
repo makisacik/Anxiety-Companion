@@ -20,13 +20,6 @@ struct GuidedBreathingView: View {
             ).ignoresSafeArea()
 
             VStack(spacing: 30) {
-                CompanionFaceView(expression: manager.currentExpression)
-                    .frame(width: 120, height: 120)
-                    .padding(.top, 20)
-
-                CompanionDialogueView(text: manager.currentDialogue)
-                    .padding(.horizontal, 32)
-
                 BreathingCircleViewCustom(
                     isExpanded: $manager.isExpanded,
                     onPhaseChange: manager.updatePhase

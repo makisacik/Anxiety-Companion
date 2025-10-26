@@ -26,6 +26,14 @@ struct BreathingCircleViewCustom: View {
 
     var body: some View {
         ZStack {
+            // Outer circle (border)
+            Circle()
+                .strokeBorder(Color.white.opacity(0.5), lineWidth: 4)
+                .frame(width: isExpanded ? 200 : 120,
+                       height: isExpanded ? 200 : 120)
+                .animation(.easeInOut(duration: inhaleDuration), value: isExpanded)
+
+            // Inner circle (main breathing circle)
             Circle()
                 .fill(LinearGradient(
                     colors: [Color(hex: "#B5A7E0"), Color(hex: "#6E63A4")],
@@ -33,14 +41,8 @@ struct BreathingCircleViewCustom: View {
                     endPoint: .bottomTrailing))
                 .frame(width: isExpanded ? 180 : 100,
                        height: isExpanded ? 180 : 100)
-                .shadow(radius: 10)
-                .animation(.easeInOut(duration: inhaleDuration), value: isExpanded)
-
-            Circle()
-                .strokeBorder(Color.white.opacity(0.5), lineWidth: 3)
-                .frame(width: isExpanded ? 190 : 110,
-                       height: isExpanded ? 190 : 110)
-                .blur(radius: 1)
+                .clipShape(Circle())
+                .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
                 .animation(.easeInOut(duration: inhaleDuration), value: isExpanded)
 
             VStack {

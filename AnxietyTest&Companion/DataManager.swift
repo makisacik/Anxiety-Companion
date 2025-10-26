@@ -125,6 +125,135 @@ class DataManager {
         }
     }
     
+    // MARK: - Journal Entry Operations
+    
+    func saveJournalEntry(prompt: String, content: String, activityType: String, date: Date = Date()) {
+        let context = viewContext
+        let entry = JournalEntry(context: context)
+        entry.id = UUID()
+        entry.date = date
+        entry.prompt = prompt
+        entry.content = content
+        entry.activityType = activityType
+        
+        do {
+            try context.save()
+        } catch {
+            print("Failed to save journal entry: \(error)")
+        }
+    }
+    
+    func fetchJournalEntries(limit: Int? = nil) -> [JournalEntry] {
+        let request: NSFetchRequest<JournalEntry> = JournalEntry.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \JournalEntry.date, ascending: false)]
+        
+        if let limit = limit {
+            request.fetchLimit = limit
+        }
+        
+        do {
+            return try viewContext.fetch(request)
+        } catch {
+            print("Failed to fetch journal entries: \(error)")
+            return []
+        }
+    }
+    
+    func fetchJournalEntries(by activityType: String) -> [JournalEntry] {
+        let request: NSFetchRequest<JournalEntry> = JournalEntry.fetchRequest()
+        request.predicate = NSPredicate(format: "activityType == %@", activityType)
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \JournalEntry.date, ascending: false)]
+        
+        do {
+            return try viewContext.fetch(request)
+        } catch {
+            print("Failed to fetch journal entries by type: \(error)")
+            return []
+        }
+    }
+    
+    // MARK: - Calming Activity Completion Operations
+    
+    func saveActivityCompletion(activityTitle: String, duration: Int, completedAt: Date = Date()) {
+        let context = viewContext
+        let completion = CalmingActivityCompletion(context: context)
+        completion.id = UUID()
+        completion.activityTitle = activityTitle
+        completion.completedAt = completedAt
+        completion.duration = Int32(duration)
+        
+        do {
+            try context.save()
+        } catch {
+            print("Failed to save activity completion: \(error)")
+        }
+    }
+    
+    func fetchActivityCompletions(limit: Int? = nil) -> [CalmingActivityCompletion] {
+        let request: NSFetchRequest<CalmingActivityCompletion> = CalmingActivityCompletion.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \CalmingActivityCompletion.completedAt, ascending: false)]
+        
+        if let limit = limit {
+            request.fetchLimit = limit
+        }
+        
+        do {
+            return try viewContext.fetch(request)
+        } catch {
+            print("Failed to fetch activity completions: \(error)")
+            return []
+        }
+    }
+    
+    func fetchActivityCompletions(for activityTitle: String) -> [CalmingActivityCompletion] {
+        let request: NSFetchRequest<CalmingActivityCompletion> = CalmingActivityCompletion.fetchRequest()
+        request.predicate = NSPredicate(format: "activityTitle == %@", activityTitle)
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \CalmingActivityCompletion.completedAt, ascending: false)]
+        
+        do {
+            return try viewContext.fetch(request)
+        } catch {
+            print("Failed to fetch activity completions by title: \(error)")
+            return []
+        }
+    }
+    
+    // MARK: - Grounding Response Operations
+    
+    func saveGroundingResponse(seeResponses: [String], hearResponses: [String], touchResponses: [String], smellResponses: [String], tasteResponse: String, date: Date = Date()) {
+        let context = viewContext
+        let response = GroundingResponse(context: context)
+        response.id = UUID()
+        response.date = date
+        response.seeResponses = seeResponses.joined(separator: ",")
+        response.hearResponses = hearResponses.joined(separator: ",")
+        response.touchResponses = touchResponses.joined(separator: ",")
+        response.smellResponses = smellResponses.joined(separator: ",")
+        response.tasteResponse = tasteResponse
+        
+        do {
+            try context.save()
+        } catch {
+            print("Failed to save grounding response: \(error)")
+        }
+    }
+    
+    func fetchGroundingResponses(limit: Int? = nil) -> [GroundingResponse] {
+        let request: NSFetchRequest<GroundingResponse> = GroundingResponse.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \GroundingResponse.date, ascending: false)]
+        
+        if let limit = limit {
+            request.fetchLimit = limit
+        }
+        
+        do {
+            return try viewContext.fetch(request)
+        } catch {
+            print("Failed to fetch grounding responses: \(error)")
+            return []
+        }
+    }
+    
     // MARK: - Delete Operations
     
     func deleteEntry(_ entry: NSManagedObject) {
