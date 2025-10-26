@@ -178,26 +178,56 @@ struct CalmJourneyBreathingView: View {
             
             Spacer()
             
-            // Finish button
-            Button("Complete Exercise 🌿") {
-                manager.finishSession()
-                HapticFeedback.success()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    onComplete()
+            // Completion message and button
+            if manager.isFinished {
+                VStack(spacing: 20) {
+                    Text("Great job! 🌿")
+                        .font(.system(.title2, design: .rounded))
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+
+                    Text("You've completed the breathing exercise")
+                        .font(.system(.body, design: .rounded))
+                        .foregroundColor(.white.opacity(0.8))
+                        .multilineTextAlignment(.center)
+                    Button("Continue to Next Exercise →") {
+                        print("🫁 User tapped continue button")
+                        HapticFeedback.success()
+                        onComplete()
+                    }
+                    .padding(.horizontal, 40)
+                    .padding(.vertical, 16)
+                    .background(
+                        RoundedRectangle(cornerRadius: 25)
+                            .fill(Color.white)
+                            .shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4)
+                    )
+                    .foregroundColor(Color(hex: "#6E63A4"))
+                    .font(.system(.body, design: .rounded))
+                    .fontWeight(.semibold)
                 }
+                .transition(.opacity.combined(with: .offset(y: 20)))
+                .animation(.easeInOut(duration: 0.6), value: manager.isFinished)
+                .padding(.bottom, 50)
+            } else {
+                // Show a manual finish button as fallback
+                Button("Finish Exercise") {
+                    print("🫁 User manually finished exercise")
+                    manager.finishSession()
+                    HapticFeedback.success()
+                }
+                .padding(.horizontal, 40)
+                .padding(.vertical, 16)
+                .background(
+                    RoundedRectangle(cornerRadius: 25)
+                        .fill(Color.white.opacity(0.8))
+                )
+                .foregroundColor(Color(hex: "#6E63A4"))
+                .font(.system(.body, design: .rounded))
+                .fontWeight(.semibold)
+                .padding(.bottom, 50)
             }
-            .padding(.horizontal, 40)
-            .padding(.vertical, 16)
-            .background(
-                RoundedRectangle(cornerRadius: 25)
-                    .fill(Color.white)
-            )
-            .foregroundColor(Color(hex: "#6E63A4"))
-            .font(.system(.body, design: .rounded))
-            .fontWeight(.semibold)
-            .opacity(manager.isFinished ? 1 : 0)
-            .animation(.easeInOut, value: manager.isFinished)
-            .padding(.bottom, 50)
         }
     }
 }
@@ -214,6 +244,13 @@ struct CalmJourneyBreathingView: View {
                 "Exhale for 4 seconds.",
                 "Hold again for 4 seconds.",
                 "Repeat for 1–2 minutes."
+            ],
+            instructionPromptTypes: [
+                .action,
+                .action,
+                .action,
+                .action,
+                .action
             ],
             scienceNote: "Box breathing lowers heart rate and activates the parasympathetic nervous system."
         ),

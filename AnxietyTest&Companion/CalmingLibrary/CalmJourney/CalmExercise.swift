@@ -18,6 +18,7 @@ struct CalmExercise: Identifiable, Codable, Hashable {
     let type: ExerciseType
     let title: String
     let instructions: [String]
+    let instructionPromptTypes: [InstructionPromptType]
     let scienceNote: String
     
     var displayType: String {
@@ -40,5 +41,36 @@ struct CalmExercise: Identifiable, Codable, Hashable {
         case .education:
             return "brain.head.profile"
         }
+    }
+}
+
+// Represents the type of instruction prompt
+enum InstructionPromptType: String, CaseIterable, Codable {
+    case statement = "statement"      // Just information/instruction, no user input needed
+    case question = "question"        // Requires user text input
+    case action = "action"           // User needs to perform an action (like breathing)
+}
+
+// Represents an individual instruction step for the page-by-page flow
+struct InstructionStep: Identifiable {
+    let id: Int
+    let instruction: String
+    let exerciseType: ExerciseType
+    let exerciseTitle: String
+    let exerciseId: Int
+    let promptType: InstructionPromptType
+
+    // Computed property for backward compatibility
+    var isQuestion: Bool {
+        return promptType == .question
+    }
+
+    init(id: Int, instruction: String, exerciseType: ExerciseType, exerciseTitle: String, exerciseId: Int, promptType: InstructionPromptType) {
+        self.id = id
+        self.instruction = instruction
+        self.exerciseType = exerciseType
+        self.exerciseTitle = exerciseTitle
+        self.exerciseId = exerciseId
+        self.promptType = promptType
     }
 }

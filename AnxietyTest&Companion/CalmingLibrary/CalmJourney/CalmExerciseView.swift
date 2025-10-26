@@ -336,6 +336,13 @@ struct CalmExerciseView: View {
                 "Name 2 things you can smell.",
                 "Name 1 thing you can taste."
             ],
+            instructionPromptTypes: [
+                .question,
+                .question,
+                .question,
+                .question,
+                .question
+            ],
             scienceNote: "Grounding shifts attention from anxious thoughts to the present moment."
         ),
         onComplete: {},

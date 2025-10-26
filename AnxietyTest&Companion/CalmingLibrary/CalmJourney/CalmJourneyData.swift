@@ -36,6 +36,12 @@ class CalmJourneyDataStore: ObservableObject {
                             "This is your nervous system trying to protect you from perceived danger.",
                             "Learning to recognize and calm this response is the first step to managing anxiety."
                         ],
+                        instructionPromptTypes: [
+                            .statement,
+                            .statement,
+                            .statement,
+                            .statement
+                        ],
                         scienceNote: "Understanding the fight-flight-freeze response helps you recognize anxiety as a normal protective mechanism."
                     ),
                     CalmExercise(
@@ -48,6 +54,13 @@ class CalmJourneyDataStore: ObservableObject {
                             "Exhale for 4 seconds.",
                             "Hold again for 4 seconds.",
                             "Repeat for 1–2 minutes."
+                        ],
+                        instructionPromptTypes: [
+                            .statement,
+                            .action,
+                            .action,
+                            .action,
+                            .action
                         ],
                         scienceNote: "Box breathing lowers heart rate and activates the parasympathetic nervous system."
                     ),
@@ -62,6 +75,13 @@ class CalmJourneyDataStore: ObservableObject {
                             "Name 2 things you can smell.",
                             "Name 1 thing you can taste."
                         ],
+                        instructionPromptTypes: [
+                            .question,
+                            .question,
+                            .question,
+                            .question,
+                            .question
+                        ],
                         scienceNote: "Grounding shifts attention from anxious thoughts to the present moment."
                     ),
                     CalmExercise(
@@ -74,6 +94,13 @@ class CalmJourneyDataStore: ObservableObject {
                             "Move your attention slowly up your legs.",
                             "Continue to your stomach, chest, shoulders, and face.",
                             "Release any tightness as you go."
+                        ],
+                        instructionPromptTypes: [
+                            .action,
+                            .statement,
+                            .statement,
+                            .statement,
+                            .statement
                         ],
                         scienceNote: "Body scans increase interoceptive awareness and reduce muscle tension."
                     )
@@ -98,6 +125,13 @@ class CalmJourneyDataStore: ObservableObject {
                             "Avoidance brings short relief but strengthens the anxiety cycle.",
                             "Awareness helps you break this loop."
                         ],
+                        instructionPromptTypes: [
+                            .statement,
+                            .statement,
+                            .statement,
+                            .statement,
+                            .statement
+                        ],
                         scienceNote: "Understanding the anxiety feedback loop is a foundation of CBT."
                     ),
                     CalmExercise(
@@ -110,6 +144,12 @@ class CalmJourneyDataStore: ObservableObject {
                             "What did you do to cope?",
                             "Did the anxiety fade or grow afterward?"
                         ],
+                        instructionPromptTypes: [
+                            .question,
+                            .question,
+                            .question,
+                            .question
+                        ],
                         scienceNote: "Recognizing triggers builds control over automatic reactions."
                     ),
                     CalmExercise(
@@ -120,6 +160,11 @@ class CalmJourneyDataStore: ObservableObject {
                             "Imagine the same situation again.",
                             "What could you do differently next time?",
                             "Try small changes: breathing, staying present, or acting despite fear."
+                        ],
+                        instructionPromptTypes: [
+                            .question,
+                            .question,
+                            .statement
                         ],
                         scienceNote: "Behavioral change interrupts avoidance and restores control."
                     )
@@ -142,6 +187,11 @@ class CalmJourneyDataStore: ObservableObject {
                             "When anxious, we often believe our thoughts are facts.",
                             "Learning to question them can reduce anxiety."
                         ],
+                        instructionPromptTypes: [
+                            .statement,
+                            .statement,
+                            .statement
+                        ],
                         scienceNote: "Cognitive restructuring reduces emotional reactivity."
                     ),
                     CalmExercise(
@@ -151,6 +201,10 @@ class CalmJourneyDataStore: ObservableObject {
                         instructions: [
                             "Write down one anxious thought you've had recently.",
                             "Describe when it appeared and what you felt in your body."
+                        ],
+                        instructionPromptTypes: [
+                            .question,
+                            .question
                         ],
                         scienceNote: "Awareness is the first step toward change."
                     ),
@@ -163,6 +217,11 @@ class CalmJourneyDataStore: ObservableObject {
                             "What evidence goes against it?",
                             "Is there another possible explanation?"
                         ],
+                        instructionPromptTypes: [
+                            .question,
+                            .question,
+                            .question
+                        ],
                         scienceNote: "CBT teaches balanced thinking to counter distorted beliefs."
                     ),
                     CalmExercise(
@@ -173,6 +232,11 @@ class CalmJourneyDataStore: ObservableObject {
                             "Take your original thought and make it gentler.",
                             "Example: 'I can't handle this' → 'This is hard, but I've managed before.'",
                             "Notice how your body feels after reframing."
+                        ],
+                        instructionPromptTypes: [
+                            .question,
+                            .statement,
+                            .question
                         ],
                         scienceNote: "Reframing reduces catastrophizing and promotes calm thinking."
                     )
@@ -195,6 +259,11 @@ class CalmJourneyDataStore: ObservableObject {
                             "Even small activities like walking or journaling can improve mood.",
                             "Structure supports emotional stability."
                         ],
+                        instructionPromptTypes: [
+                            .statement,
+                            .statement,
+                            .statement
+                        ],
                         scienceNote: "Behavioral activation increases positive reinforcement and reduces anxiety."
                     ),
                     CalmExercise(
@@ -204,6 +273,10 @@ class CalmJourneyDataStore: ObservableObject {
                         instructions: [
                             "What daily habit helps you feel calm?",
                             "It could be a walk, music, journaling, or talking to a friend."
+                        ],
+                        instructionPromptTypes: [
+                            .question,
+                            .statement
                         ],
                         scienceNote: "Linking calm behaviors to routine strengthens emotional regulation."
                     ),
@@ -215,6 +288,11 @@ class CalmJourneyDataStore: ObservableObject {
                             "Choose one small calm action for today.",
                             "Set a specific time you'll do it.",
                             "Later, reflect on how it felt."
+                        ],
+                        instructionPromptTypes: [
+                            .question,
+                            .question,
+                            .question
                         ],
                         scienceNote: "Small achievable goals build momentum and confidence."
                     )
@@ -237,6 +315,11 @@ class CalmJourneyDataStore: ObservableObject {
                             "Treating yourself with kindness reduces shame and fear.",
                             "Self-compassion is strength, not weakness."
                         ],
+                        instructionPromptTypes: [
+                            .statement,
+                            .statement,
+                            .statement
+                        ],
                         scienceNote: "Self-compassion improves resilience and emotion regulation."
                     ),
                     CalmExercise(
@@ -248,6 +331,11 @@ class CalmJourneyDataStore: ObservableObject {
                             "What did you tell yourself?",
                             "What would you say to a close friend in the same situation?"
                         ],
+                        instructionPromptTypes: [
+                            .question,
+                            .question,
+                            .question
+                        ],
                         scienceNote: "Reframing self-talk promotes emotional healing."
                     ),
                     CalmExercise(
@@ -258,6 +346,10 @@ class CalmJourneyDataStore: ObservableObject {
                             "What truly matters to you that anxiety sometimes gets in the way of?",
                             "What small step can you take toward it anyway?"
                         ],
+                        instructionPromptTypes: [
+                            .question,
+                            .question
+                        ],
                         scienceNote: "Acting on values builds long-term emotional balance."
                     ),
                     CalmExercise(
@@ -267,6 +359,10 @@ class CalmJourneyDataStore: ObservableObject {
                         instructions: [
                             "Write a message to your future self for hard moments.",
                             "Example: 'Breathe. You've handled harder days before.'"
+                        ],
+                        instructionPromptTypes: [
+                            .question,
+                            .statement
                         ],
                         scienceNote: "Personal affirmations reinforce emotional safety."
                     )

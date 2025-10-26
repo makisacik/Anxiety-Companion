@@ -10,9 +10,10 @@ import SwiftUI
 struct CalmJourneyView: View {
     @StateObject private var dataStore = CalmJourneyDataStore.shared
     @AppStorage("isPremiumUser") private var isPremiumUser = false
+    @State private var completedLevels: [Int] = []
     @State private var showPaywall = false
-    @State private var selectedLevel: CalmLevel?
     @State private var pendingLevel: CalmLevel?
+    @State private var selectedLevel: CalmLevel?
     
     var body: some View {
         ZStack {
@@ -35,6 +36,7 @@ struct CalmJourneyView: View {
                             CalmLevelCard(
                                 level: level,
                                 isPremiumUser: isPremiumUser,
+                                isCompleted: completedLevels.contains(level.id),
                                 onTap: {
                                     handleLevelTap(level)
                                 }
@@ -48,18 +50,35 @@ struct CalmJourneyView: View {
         }
         .navigationBarHidden(true)
         .sheet(isPresented: $showPaywall, onDismiss: {
-            // After paywall is dismissed, open the pending level
+            // After paywall is dismissed, the user can try accessing the level again
             print("🚪 Paywall dismissed, pending level: \(pendingLevel?.title ?? "none")")
-            if let level = pendingLevel {
-                print("🎯 Opening pending level: \(level.title)")
-                selectedLevel = level
-                pendingLevel = nil
-            }
+            pendingLevel = nil
         }) {
             PaywallView()
         }
-        .sheet(item: $selectedLevel) { level in
-            CalmLevelDetailView(level: level)
+        .background(
+            NavigationLink(
+                destination: selectedLevel.map { level in
+                    CalmLevelSessionView(
+                        level: level,
+                        onLevelCompleted: { levelId in
+                            if !completedLevels.contains(levelId) {
+                                completedLevels.append(levelId)
+                                saveCompletedLevels()
+                            }
+                        }
+                    )
+                },
+                isActive: Binding(
+                    get: { selectedLevel != nil },
+                    set: { if !$0 { selectedLevel = nil } }
+                )
+            ) {
+                EmptyView()
+            }
+        )
+        .onAppear {
+            loadCompletedLevels()
         }
     }
     
@@ -109,17 +128,31 @@ struct CalmJourneyView: View {
             selectedLevel = level
         }
     }
+
+    private func loadCompletedLevels() {
+        if let data = UserDefaults.standard.data(forKey: "completedLevels"),
+           let levels = try? JSONDecoder().decode([Int].self, from: data) {
+            completedLevels = levels
+        }
+    }
+
+    private func saveCompletedLevels() {
+        if let data = try? JSONEncoder().encode(completedLevels) {
+            UserDefaults.standard.set(data, forKey: "completedLevels")
+        }
+    }
 }
 
 struct CalmLevelCard: View {
     let level: CalmLevel
     let isPremiumUser: Bool
+    let isCompleted: Bool
     let onTap: () -> Void
-    
+
     private var isAccessible: Bool {
         return level.free || isPremiumUser
     }
-    
+
     var body: some View {
         Button(action: onTap) {
             HStack(spacing: 16) {
@@ -127,10 +160,15 @@ struct CalmLevelCard: View {
                 VStack {
                     ZStack {
                         Circle()
-                            .fill(isAccessible ? Color.white.opacity(0.2) : Color.white.opacity(0.1))
+                            .fill(isCompleted ? Color(hex: "#B5A7E0") : (isAccessible ? Color.white.opacity(0.2) : Color.white.opacity(0.1)))
                             .frame(width: 50, height: 50)
+                            .shadow(radius: isCompleted ? 8 : 0)
                         
-                        if isAccessible {
+                        if isCompleted {
+                            Image(systemName: "checkmark")
+                                .font(.system(.title3, weight: .bold))
+                                .foregroundColor(.white)
+                        } else if isAccessible {
                             Text("\(level.id)")
                                 .font(.system(.title2, design: .rounded))
                                 .fontWeight(.bold)
