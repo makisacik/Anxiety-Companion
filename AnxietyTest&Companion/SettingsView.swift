@@ -73,7 +73,7 @@ struct SettingsView: View {
                                     
                                     Toggle("", isOn: $notificationsEnabled)
                                         .toggleStyle(SwitchToggleStyle(tint: Color(hex: "#B5A7E0")))
-                                        .onChange(of: notificationsEnabled) { _, newValue in
+                                        .onChange(of: notificationsEnabled) { newValue in
                                             handleToggleChange(newValue)
                                         }
                                 }

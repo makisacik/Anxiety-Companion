@@ -64,7 +64,7 @@ struct CompanionFaceView: View {
                 startGlowPulse()
             }
         }
-        .onChange(of: showGlow) { _, newValue in
+        .onChange(of: showGlow) { newValue in
             if newValue {
                 startGlowPulse()
             } else {

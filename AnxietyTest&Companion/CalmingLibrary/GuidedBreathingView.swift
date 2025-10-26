@@ -42,5 +42,14 @@ struct GuidedBreathingView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: { dismiss() }) {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(.white)
+                        .font(.system(size: 18, weight: .medium))
+                }
+            }
+        }
     }
 }

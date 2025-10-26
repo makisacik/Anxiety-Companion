@@ -276,7 +276,8 @@ class DataManager {
         let hasCompletedTest = UserDefaults.standard.bool(forKey: "hasCompletedTest")
         if hasCompletedTest {
             let lastScore = UserDefaults.standard.integer(forKey: "lastGAD7Score")
-            let lastDate = UserDefaults.standard.object(forKey: "lastGAD7Date") as? Date ?? Date()
+            let timestamp = UserDefaults.standard.double(forKey: "lastGAD7DateTimestamp")
+            let lastDate = timestamp > 0 ? Date(timeIntervalSince1970: timestamp) : (UserDefaults.standard.object(forKey: "lastGAD7Date") as? Date ?? Date())
             
             // Create a basic answers array (all zeros) for migration
             let defaultAnswers = Array(repeating: 0, count: 7)

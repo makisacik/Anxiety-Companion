@@ -13,7 +13,16 @@ struct GAD7TestView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @AppStorage("hasCompletedTest") private var hasCompletedTest = false
     @AppStorage("lastGAD7Score") private var lastGAD7Score = 0
-    @AppStorage("lastGAD7Date") private var lastGAD7Date = Date()
+    @AppStorage("lastGAD7DateTimestamp") private var lastGAD7DateTimestamp: Double = 0
+
+    private var lastGAD7Date: Date {
+        get {
+            lastGAD7DateTimestamp == 0 ? Date() : Date(timeIntervalSince1970: lastGAD7DateTimestamp)
+        }
+        set {
+            lastGAD7DateTimestamp = newValue.timeIntervalSince1970
+        }
+    }
     
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \GAD7Entry.date, ascending: false)],
@@ -325,7 +334,7 @@ struct GAD7TestView: View {
         // Save to AppStorage for backward compatibility
         hasCompletedTest = true
         lastGAD7Score = totalScore
-        lastGAD7Date = Date()
+        lastGAD7DateTimestamp = Date().timeIntervalSince1970
 
         // Save to Core Data
         DataManager.shared.saveGAD7Entry(score: totalScore, answers: answers, date: Date())

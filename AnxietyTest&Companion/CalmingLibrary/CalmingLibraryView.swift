@@ -72,8 +72,14 @@ struct CalmingActivityCard: View {
             Text(activity.emoji)
                 .font(.system(size: 40))
                 .frame(width: 60, height: 60)
-                .background(Color.white.opacity(0.2))
-                .cornerRadius(12)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(.ultraThinMaterial)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(.white.opacity(0.2), lineWidth: 1)
+                        )
+                )
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(activity.title)
@@ -93,11 +99,15 @@ struct CalmingActivityCard: View {
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 16)
-        .background(Color(hex: activity.colorHex).opacity(0.9))
-        .cornerRadius(16)
-        .shadow(radius: 4)
-        .overlay(RoundedRectangle(cornerRadius: 16)
-                    .stroke(.white.opacity(0.3), lineWidth: 1))
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(.ultraThinMaterial)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(.white.opacity(0.2), lineWidth: 1)
+                )
+        )
+        .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)
         .contentShape(Rectangle())
         .animation(.easeInOut(duration: 0.6), value: activity.id)
     }

@@ -22,7 +22,7 @@ struct CompanionDialogueView: View {
             .onAppear {
                 startTypingAnimation()
             }
-            .onChange(of: text) {
+            .onChange(of: text) { _ in
                 restartTypingAnimation()
             }
             .onDisappear {

@@ -362,19 +362,25 @@ extension Array {
 }
 
 #Preview {
-    @Previewable @State var selectedDay: Date? = nil
-    
-    return VStack {
-        CalendarGridView(gad7Entries: [], moodEntries: [], selectedDay: $selectedDay)
-        
-        Spacer()
+    struct PreviewWrapper: View {
+        @State var selectedDay: Date? = nil
+
+        var body: some View {
+            VStack {
+                CalendarGridView(gad7Entries: [], moodEntries: [], selectedDay: $selectedDay)
+
+                Spacer()
+            }
+            .padding()
+            .background(
+                LinearGradient(
+                    colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
+        }
     }
-    .padding()
-    .background(
-        LinearGradient(
-            colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    )
+
+    return PreviewWrapper()
 }

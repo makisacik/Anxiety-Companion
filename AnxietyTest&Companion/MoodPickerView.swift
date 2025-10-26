@@ -92,19 +92,25 @@ struct MoodPickerView: View {
 }
 
 #Preview {
-    @Previewable @State var selectedMood: MoodPickerView.Mood? = nil
-    
-    return VStack {
-        MoodPickerView(selectedMood: $selectedMood) { expression in
-            print("Selected expression: \(expression)")
+    struct PreviewWrapper: View {
+        @State var selectedMood: MoodPickerView.Mood? = nil
+
+        var body: some View {
+            VStack {
+                MoodPickerView(selectedMood: $selectedMood) { expression in
+                    print("Selected expression: \(expression)")
+                }
+            }
+            .padding()
+            .background(
+                LinearGradient(
+                    colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
         }
     }
-    .padding()
-    .background(
-        LinearGradient(
-            colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    )
+
+    return PreviewWrapper()
 }

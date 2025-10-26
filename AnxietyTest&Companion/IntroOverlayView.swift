@@ -65,18 +65,24 @@ struct IntroOverlayView: View {
 }
 
 #Preview {
-    @Previewable @State var showIntro = true
-    
-    return ZStack {
-        LinearGradient(
-            colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-        .ignoresSafeArea()
-        
-        if showIntro {
-            IntroOverlayView(showIntro: $showIntro)
+    struct PreviewWrapper: View {
+        @State var showIntro = true
+
+        var body: some View {
+            ZStack {
+                LinearGradient(
+                    colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .ignoresSafeArea()
+
+                if showIntro {
+                    IntroOverlayView(showIntro: $showIntro)
+                }
+            }
         }
     }
+
+    return PreviewWrapper()
 }

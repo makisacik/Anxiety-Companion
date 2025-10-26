@@ -14,8 +14,17 @@ struct AnxietyTestHomeView: View {
     @AppStorage("userName") private var userName = "Friend"
     @AppStorage("hasCompletedTest") private var hasCompletedTest = false
     @AppStorage("lastGAD7Score") private var lastGAD7Score = 0
-    @AppStorage("lastGAD7Date") private var lastGAD7Date = Date()
+    @AppStorage("lastGAD7DateTimestamp") private var lastGAD7DateTimestamp: Double = 0
     @AppStorage("lastMood") private var lastMood = 0
+
+    private var lastGAD7Date: Date {
+        get {
+            lastGAD7DateTimestamp == 0 ? Date() : Date(timeIntervalSince1970: lastGAD7DateTimestamp)
+        }
+        set {
+            lastGAD7DateTimestamp = newValue.timeIntervalSince1970
+        }
+    }
 
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \GAD7Entry.date, ascending: false)],
