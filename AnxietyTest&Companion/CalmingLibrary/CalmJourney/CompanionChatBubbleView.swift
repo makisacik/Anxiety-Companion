@@ -57,17 +57,6 @@ struct CompanionChatBubbleView: View {
                                 .stroke(.white.opacity(0.2), lineWidth: 1)
                         )
                 )
-                .overlay(
-                    // Chat bubble tail pointing to companion
-                    ChatBubbleTail()
-                        .fill(.ultraThinMaterial)
-                        .overlay(
-                            ChatBubbleTail()
-                                .stroke(.white.opacity(0.2), lineWidth: 1)
-                        )
-                        .frame(width: 20, height: 20)
-                        .offset(x: -10, y: 20)
-                )
             }
             
             Spacer()
@@ -82,20 +71,6 @@ struct CompanionChatBubbleView: View {
     }
 }
 
-// Chat bubble tail shape pointing to the companion
-struct ChatBubbleTail: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        
-        // Create a triangle pointing left
-        path.move(to: CGPoint(x: rect.maxX, y: rect.midY - 8))
-        path.addLine(to: CGPoint(x: rect.minX, y: rect.midY))
-        path.addLine(to: CGPoint(x: rect.maxX, y: rect.midY + 8))
-        path.closeSubpath()
-        
-        return path
-    }
-}
 
 #Preview {
     ZStack {

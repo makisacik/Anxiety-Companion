@@ -34,140 +34,121 @@ struct CalmJourneyBreathingView: View {
     }
     
     private var introView: some View {
-        VStack(spacing: 30) {
-            Spacer()
-            
-            // Icon
-            Image(systemName: "lungs.fill")
-                .font(.system(size: 60))
-                .foregroundColor(.white)
-                .padding(30)
+        ScrollView {
+            VStack(spacing: 20) {
+                // Icon
+                Image(systemName: "lungs.fill")
+                    .font(.system(size: 50))
+                    .foregroundColor(.white)
+                    .padding(20)
+                    .background(
+                        Circle()
+                            .fill(Color.white.opacity(0.2))
+                    )
+                    .padding(.top, 20)
+
+                // Title
+                Text(exercise.title)
+                    .font(.system(.title, design: .serif))
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                    .multilineTextAlignment(.center)
+
+                // Instructions
+                VStack(alignment: .leading, spacing: 10) {
+                    ForEach(Array(exercise.instructions.enumerated()), id: \.offset) { index, instruction in
+                        HStack(alignment: .top, spacing: 10) {
+                            Text("\(index + 1)")
+                                .font(.system(.body, design: .rounded))
+                                .fontWeight(.semibold)
+                                .foregroundColor(.white)
+                                .frame(width: 20, height: 20)
+                                .background(
+                                    Circle()
+                                        .fill(Color.white.opacity(0.2))
+                                )
+
+                            Text(instruction)
+                                .font(.system(.body, design: .rounded))
+                                .foregroundColor(.white.opacity(0.9))
+                                .fixedSize(horizontal: false, vertical: true)
+
+                            Spacer()
+                        }
+                    }
+                }
+                .padding(16)
                 .background(
-                    Circle()
-                        .fill(Color.white.opacity(0.2))
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(.ultraThinMaterial)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(.white.opacity(0.2), lineWidth: 1)
+                        )
                 )
-            
-            // Title
-            Text(exercise.title)
-                .font(.system(.largeTitle, design: .serif))
-                .fontWeight(.bold)
-                .foregroundColor(.white)
-                .multilineTextAlignment(.center)
-            
-            // Instructions
-            VStack(alignment: .leading, spacing: 12) {
-                ForEach(Array(exercise.instructions.enumerated()), id: \.offset) { index, instruction in
-                    HStack(alignment: .top, spacing: 12) {
-                        Text("\(index + 1)")
-                            .font(.system(.body, design: .rounded))
-                            .fontWeight(.semibold)
-                            .foregroundColor(.white)
-                            .frame(width: 24, height: 24)
-                            .background(
-                                Circle()
-                                    .fill(Color.white.opacity(0.2))
-                            )
+                .padding(.horizontal, 24)
+
+                // Science note
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack {
+                        Image(systemName: "brain.head.profile")
+                            .font(.system(size: 18))
+                            .foregroundColor(Color(hex: "#B5A7E0"))
                         
-                        Text(instruction)
-                            .font(.system(.body, design: .rounded))
-                            .foregroundColor(.white.opacity(0.9))
-                            .fixedSize(horizontal: false, vertical: true)
+                        Text("The Science")
+                            .font(.system(.headline, design: .rounded))
+                            .foregroundColor(.white)
                         
                         Spacer()
                     }
-                }
-            }
-            .padding(20)
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(.ultraThinMaterial)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 16)
-                            .stroke(.white.opacity(0.2), lineWidth: 1)
-                    )
-            )
-            .padding(.horizontal, 30)
-            
-            // Science note
-            VStack(alignment: .leading, spacing: 12) {
-                HStack {
-                    Image(systemName: "brain.head.profile")
-                        .font(.system(size: 20))
-                        .foregroundColor(Color(hex: "#B5A7E0"))
                     
-                    Text("The Science")
-                        .font(.system(.headline, design: .rounded))
-                        .foregroundColor(.white)
-                    
-                    Spacer()
-                }
-                
-                Text(exercise.scienceNote)
-                    .font(.system(.body, design: .rounded))
-                    .foregroundColor(.white.opacity(0.9))
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            .padding(20)
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(.ultraThinMaterial)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 16)
-                            .stroke(Color(hex: "#B5A7E0").opacity(0.3), lineWidth: 1)
-                    )
-            )
-            .padding(.horizontal, 30)
-            
-            Spacer()
-            
-            // Start Button
-            Button(action: {
-                withAnimation(.easeInOut(duration: 0.5)) {
-                    showBreathingAnimation = true
-                }
-                HapticFeedback.light()
-            }) {
-                HStack {
-                    Image(systemName: "play.fill")
-                        .font(.system(size: 18, weight: .semibold))
-                    Text("Start Breathing Exercise")
+                    Text(exercise.scienceNote)
                         .font(.system(.body, design: .rounded))
-                        .fontWeight(.semibold)
+                        .foregroundColor(.white.opacity(0.9))
+                        .fixedSize(horizontal: false, vertical: true)
                 }
-                .foregroundColor(Color(hex: "#6E63A4"))
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 16)
+                .padding(16)
                 .background(
-                    RoundedRectangle(cornerRadius: 25)
-                        .fill(Color.white)
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(.ultraThinMaterial)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(Color(hex: "#B5A7E0").opacity(0.3), lineWidth: 1)
+                        )
                 )
+                .padding(.horizontal, 24)
+
+                // Start Button
+                Button(action: {
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        showBreathingAnimation = true
+                    }
+                    HapticFeedback.light()
+                }) {
+                    HStack {
+                        Image(systemName: "play.fill")
+                            .font(.system(size: 18, weight: .semibold))
+                        Text("Start Breathing Exercise")
+                            .font(.system(.body, design: .rounded))
+                            .fontWeight(.semibold)
+                    }
+                    .foregroundColor(Color(hex: "#6E63A4"))
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 16)
+                    .background(
+                        RoundedRectangle(cornerRadius: 25)
+                            .fill(Color.white)
+                    )
+                }
+                .buttonStyle(ScaleButtonStyle())
+                .padding(.horizontal, 24)
+                .padding(.bottom, 100) // Extra padding to ensure button is above tab bar
             }
-            .buttonStyle(ScaleButtonStyle())
-            .padding(.horizontal, 30)
-            .padding(.bottom, 50)
         }
     }
     
     private var breathingView: some View {
         VStack(spacing: 30) {
-            // Back button
-            HStack {
-                Button(action: {
-                    withAnimation(.easeInOut(duration: 0.5)) {
-                        showBreathingAnimation = false
-                    }
-                    HapticFeedback.light()
-                }) {
-                    Image(systemName: "chevron.left")
-                        .font(.system(size: 18, weight: .medium))
-                        .foregroundColor(.white)
-                }
-                
-                Spacer()
-            }
-            .padding(.horizontal, 24)
-            .padding(.top, 20)
-            
             Spacer()
             
             // Breathing animation

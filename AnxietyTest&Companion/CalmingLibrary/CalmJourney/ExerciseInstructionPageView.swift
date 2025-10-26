@@ -13,9 +13,22 @@ struct ExerciseInstructionPageView: View {
     let exerciseTitle: String
     let promptType: InstructionPromptType
     let onContinue: (String?) -> Void
+    let showCompanion: Bool
+    let nextStepIsQuestion: Bool
+
+    init(instruction: String, exerciseType: ExerciseType, exerciseTitle: String, promptType: InstructionPromptType, onContinue: @escaping (String?) -> Void, showCompanion: Bool, nextStepIsQuestion: Bool = false) {
+        self.instruction = instruction
+        self.exerciseType = exerciseType
+        self.exerciseTitle = exerciseTitle
+        self.promptType = promptType
+        self.onContinue = onContinue
+        self.showCompanion = showCompanion
+        self.nextStepIsQuestion = nextStepIsQuestion
+    }
     
     @State private var userResponse = ""
     @State private var isTypingComplete = false
+    @FocusState private var isTextFieldFocused: Bool
     
     private var companionExpression: CompanionFaceView.Expression {
         switch exerciseType {
@@ -36,99 +49,95 @@ struct ExerciseInstructionPageView: View {
     }
     
     var body: some View {
-        VStack(spacing: 32) {
-            Spacer()
-            
-            
-            // Companion with chat bubble
-            CompanionChatBubbleView(
-                message: instruction,
-                showSpeakerIcon: false,
-                companionExpression: companionExpression
-            )
-            .onAppear {
-                // Reset user response for each new question
-                if promptType == .question {
-                    userResponse = ""
-                }
-                
-                // For non-questions, mark as complete after animation
-                if promptType != .question {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        isTypingComplete = true
-                    }
-                }
-            }
-            
-            // Text field for questions - ALWAYS show for questions
+        // A duolingo-style page: companion/bubble at top, card content in the middle,
+        // and a pinned continue button at the bottom (inside the safe area).
+        VStack(spacing: 0) {
+            // Note: Companion rendering is removed from this view to avoid duplication.
+            // The parent (session container) is responsible for showing the companion
+            // and bubble row. This view only renders the instruction/card and input.
+
+            // Lifecycle: reset or auto-complete depending on prompt type
+            Spacer().frame(height: 0) // no-op spacer to attach onAppear below
+
+            // Main content card — for questions show a TextEditor inside a glass card.
             if promptType == .question {
-                VStack(alignment: .leading, spacing: 16) {
-                    Text("Your response:")
-                        .font(.system(.headline, design: .rounded))
-                        .foregroundColor(.white)
-                    
+                ZStack(alignment: .topLeading) {
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(.ultraThinMaterial)
+
                     TextEditor(text: $userResponse)
                         .font(.body)
                         .foregroundColor(.white)
+                        .background(Color.clear)
+                        .scrollContentBackground(.hidden)
                         .padding(16)
-                        .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(.ultraThinMaterial)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .stroke(.white.opacity(0.2), lineWidth: 1)
-                                )
-                        )
-                        .frame(minHeight: 100)
-                        .overlay(
-                            // Placeholder text
-                            Group {
-                                if userResponse.isEmpty {
-                                    VStack {
-                                        HStack {
-                                            Text("Type your response here...")
-                                                .font(.body)
-                                                .foregroundColor(.white.opacity(0.6))
-                                                .padding(.leading, 20)
-                                                .padding(.top, 24)
-                                            Spacer()
-                                        }
-                                        Spacer()
-                                    }
-                                }
-                            }
-                        )
-                        .onTapGesture {
-                            // Allow text editor to receive focus
-                        }
-                        .toolbar {
-                            ToolbarItemGroup(placement: .keyboard) {
-                                Spacer()
-                                Button("Done") {
-                                    hideKeyboard()
-                                }
-                                .foregroundColor(.white)
-                            }
-                        }
-                }
-                .padding(.horizontal, 24)
-            }
-            
-            Spacer()
-            
-            // Continue button
-            if canContinue {
-                Button(action: {
-                    HapticFeedback.light()
-                    onContinue(promptType == .question ? userResponse : nil)
-                }) {
-                    HStack {
-                        Text(promptType == .question ? "Continue →" : "Next →")
-                            .font(.system(.body, design: .rounded))
-                            .fontWeight(.semibold)
-                        Image(systemName: "arrow.right")
-                            .font(.system(size: 16, weight: .semibold))
+                        .focused($isTextFieldFocused)
+
+                    if userResponse.isEmpty {
+                        Text("Type your response here...")
+                            .font(.body)
+                            .foregroundColor(.white.opacity(0.6))
+                            .padding(EdgeInsets(top: 24, leading: 28, bottom: 0, trailing: 0))
                     }
+                }
+                .frame(minHeight: 160)
+                .padding(.horizontal, 24)
+                .padding(.top, 8)
+            } else {
+                // For non-question pages, only show the instruction card if companion is not shown
+                // (when companion is shown above, the instruction is already displayed in the chat bubble)
+                if showCompanion {
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(.ultraThinMaterial)
+                        .overlay(
+                            Text(instruction)
+                                .font(.body)
+                                .foregroundColor(.white)
+                                .padding(20)
+                                .multilineTextAlignment(.leading)
+                        )
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding(.horizontal, 24)
+                        .padding(.top, 8)
+                }
+                // When showCompanion is false, the instruction is already shown in the companion chat bubble above
+                // so we don't need to display it again here
+            }
+
+            Spacer()
+        }
+        .padding(.vertical, 20)
+        .onTapGesture { hideKeyboard() }
+        .onAppear {
+            // Ensure lifecycle logic runs when this view appears.
+            if promptType == .question {
+                userResponse = ""
+                // Auto-focus if this is a question step and next step is also a question
+                if nextStepIsQuestion {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        isTextFieldFocused = true
+                    }
+                }
+            } else {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    isTypingComplete = true
+                }
+            }
+        }
+        // Pin the continue button into the safe area so it's always visible like Duolingo
+        .safeAreaInset(edge: .bottom) {
+            // Always render the button but disable it until allowed.
+            Button(action: {
+                HapticFeedback.light()
+                onContinue(promptType == .question ? userResponse : nil)
+                
+                // Don't dismiss keyboard if next step is a question - let auto-focus handle it
+                if !nextStepIsQuestion {
+                    hideKeyboard()
+                }
+            }) {
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 18, weight: .semibold))
                     .foregroundColor(Color(hex: "#6E63A4"))
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 16)
@@ -137,15 +146,12 @@ struct ExerciseInstructionPageView: View {
                             .fill(Color.white)
                             .shadow(radius: 3)
                     )
-                }
-                .buttonStyle(ScaleButtonStyle())
-                .padding(.horizontal, 24)
+                    .padding(.horizontal, 24)
+                    .padding(.bottom, 8)
             }
-        }
-        .padding(.vertical, 20)
-        .onTapGesture {
-            // Dismiss keyboard when tapping outside text field
-            hideKeyboard()
+            .buttonStyle(ScaleButtonStyle())
+            .disabled(!canContinue)
+            .opacity(canContinue ? 1.0 : 0.6)
         }
     }
     
@@ -170,7 +176,8 @@ struct ExerciseInstructionPageView: View {
                 exerciseType: .education,
                 exerciseTitle: "What happens in anxiety",
                 promptType: .statement,
-                onContinue: { _ in }
+                onContinue: { _ in },
+                showCompanion: true
             )
             
             Divider()
@@ -182,7 +189,8 @@ struct ExerciseInstructionPageView: View {
                 exerciseType: .prompt,
                 exerciseTitle: "Grounding 5-4-3-2-1",
                 promptType: .question,
-                onContinue: { _ in }
+                onContinue: { _ in },
+                showCompanion: true
             )
         }
     }

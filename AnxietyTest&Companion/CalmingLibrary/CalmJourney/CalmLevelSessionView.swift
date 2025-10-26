@@ -142,6 +142,17 @@ struct CalmLevelSessionView: View {
             // Header with progress
             headerSection
             
+            // Companion with chat bubble - only show when NOT in breathing view
+            if !showBreathingView, let currentStep = currentStep {
+                CompanionChatBubbleView(
+                    message: currentStep.instruction,
+                    showSpeakerIcon: false,
+                    companionExpression: companionExpression(for: currentStep)
+                )
+                .padding(.horizontal, 24)
+                .padding(.top, 20)
+            }
+
             if showBreathingView, let step = currentStep, step.exerciseType == .breathing {
                 // Find the original exercise to get all instructions
                 let originalExercise = level.exercises.first { $0.id == step.exerciseId }
@@ -159,7 +170,7 @@ struct CalmLevelSessionView: View {
                     }
                 )
             } else {
-                // Current instruction step
+                // Current instruction step content (without companion)
                 if let currentStep = currentStep {
                     ExerciseInstructionPageView(
                         instruction: currentStep.instruction,
@@ -168,7 +179,9 @@ struct CalmLevelSessionView: View {
                         promptType: currentStep.promptType,
                         onContinue: { response in
                             handleStepCompletion(response)
-                        }
+                        },
+                        showCompanion: false, // Hide companion since it's now above
+                        nextStepIsQuestion: isNextStepQuestion()
                     )
                     .id("step-\(currentStep.id)") // Force new view instance for each step
                     .onAppear {
@@ -375,6 +388,24 @@ struct CalmLevelSessionView: View {
         case 5: return "💚"
         default: return "🌿"
         }
+    }
+
+    private func companionExpression(for step: InstructionStep) -> CompanionFaceView.Expression {
+        switch step.exerciseType {
+        case .breathing:
+            return .calm
+        case .education:
+            return .neutral
+        case .prompt:
+            return step.promptType == .question ? .happy : .neutral
+        }
+    }
+    
+    private func isNextStepQuestion() -> Bool {
+        let nextIndex = currentStepIndex + 1
+        guard nextIndex < instructionSteps.count else { return false }
+        let nextStep = instructionSteps[nextIndex]
+        return nextStep.promptType == .question
     }
 }
 
