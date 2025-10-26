@@ -11,11 +11,9 @@ struct OnboardingView: View {
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
     @AppStorage("userName") private var userName = ""
     @State private var currentPage = 0
-    @State private var selectedMood: MoodPickerView.Mood? = nil
-    @State private var companionExpression: CompanionFaceView.Expression = .neutral
     @State private var nameInput = ""
     
-    private let totalPages = 7
+    private let totalPages = 6
     
     var body: some View {
         ZStack {
@@ -122,43 +120,7 @@ struct OnboardingView: View {
                 )
                 .tag(4)
                 
-                // Screen 6 - Personal Touch (Mood Picker)
-                OnboardingScreenView(
-                    title: "How are you feeling today?",
-                    message: "",
-                    companionExpression: companionExpression,
-                    buttonText: "Continue",
-                    onContinue: nextPage,
-                    customContent: AnyView(
-                        VStack(spacing: 30) {
-                            MoodPickerView(selectedMood: $selectedMood) { expression in
-                                withAnimation(.easeInOut(duration: 0.5)) {
-                                    companionExpression = expression
-                                }
-                            }
-                            
-                            if selectedMood != nil {
-                                Button(action: nextPage) {
-                                    Text("Continue")
-                                        .font(.system(.body, design: .rounded))
-                                        .fontWeight(.medium)
-                                        .foregroundColor(.white)
-                                        .frame(maxWidth: .infinity)
-                                        .frame(height: 50)
-                                        .background(
-                                            RoundedRectangle(cornerRadius: 25)
-                                                .fill(Color(hex: "#B5A7E0"))
-                                        )
-                                }
-                                .buttonStyle(ScaleButtonStyle())
-                                .transition(.opacity.combined(with: .move(edge: .bottom)))
-                            }
-                        }
-                    )
-                )
-                .tag(5)
-                
-                // Screen 7 - Ready
+                // Screen 6 - Ready
                 OnboardingScreenView(
                     title: "You're doing great.",
                     message: "Let's begin with a short check-in.",
@@ -167,7 +129,7 @@ struct OnboardingView: View {
                     buttonText: "Let's Begin",
                     onContinue: completeOnboarding
                 )
-                .tag(6)
+                .tag(5)
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
             .animation(.easeOut(duration: 0.8), value: currentPage)

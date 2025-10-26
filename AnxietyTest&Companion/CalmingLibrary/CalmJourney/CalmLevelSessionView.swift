@@ -49,7 +49,11 @@ struct CalmLevelSessionView: View {
             
             sessionContent
         }
-        .navigationBarHidden(true)
+        .navigationTitle("Level \(level.id)")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar(.hidden, for: .tabBar)
+        .toolbarBackground(Color(hex: "#6E63A4"), for: .navigationBar)
+        .toolbarColorScheme(.dark, for: .navigationBar)
         .onAppear {
             generateInstructionSteps()
         }
@@ -199,23 +203,6 @@ struct CalmLevelSessionView: View {
     
     private var headerSection: some View {
         VStack(spacing: 16) {
-            HStack {
-                Button(action: {
-                    HapticFeedback.light()
-                    dismiss()
-                }) {
-                    Image(systemName: "xmark")
-                        .font(.system(size: 18, weight: .medium))
-                        .foregroundColor(.white)
-                }
-                
-                Spacer()
-                
-                Text("Level \(level.id)")
-                    .font(.system(.headline, design: .rounded))
-                    .foregroundColor(.white.opacity(0.8))
-            }
-            
             // Progress indicator
             HStack {
                 Text("Progress")

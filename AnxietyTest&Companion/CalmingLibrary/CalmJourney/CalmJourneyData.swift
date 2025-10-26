@@ -367,6 +367,257 @@ class CalmJourneyDataStore: ObservableObject {
                         scienceNote: "Personal affirmations reinforce emotional safety."
                     )
                 ]
+            ),
+
+            // LEVEL 6 — Facing Fears Gently (Premium)
+            CalmLevel(
+                id: 6,
+                title: "Facing Fears Gently",
+                summary: "Build courage through small, safe steps toward feared situations.",
+                free: false,
+                exercises: [
+                    CalmExercise(
+                        id: 6,
+                        type: .education,
+                        title: "Understanding Fear",
+                        instructions: [
+                            "Fear is your body's alarm system, designed to keep you safe.",
+                            "When the alarm goes off too often, it can limit your life.",
+                            "Facing fear gently teaches your brain that safety can exist even in discomfort."
+                        ],
+                        instructionPromptTypes: [.statement, .statement, .statement],
+                        scienceNote: "Gradual exposure reduces avoidance and rewires fear pathways."
+                    ),
+                    CalmExercise(
+                        id: 7,
+                        type: .prompt,
+                        title: "Your Fear Ladder",
+                        instructions: [
+                            "List three things that make you anxious: one mild, one moderate, one strong.",
+                            "Choose one small fear to face safely this week.",
+                            "Imagine how it might feel afterward."
+                        ],
+                        instructionPromptTypes: [.question, .question, .question],
+                        scienceNote: "Breaking fears into small steps increases confidence and control."
+                    ),
+                    CalmExercise(
+                        id: 8,
+                        type: .prompt,
+                        title: "Reflect on Courage",
+                        instructions: [
+                            "Recall a time you faced something scary and it went better than expected.",
+                            "What helped you stay grounded in that moment?"
+                        ],
+                        instructionPromptTypes: [.question, .question],
+                        scienceNote: "Remembering success reinforces self-efficacy and calm."
+                    ),
+                    CalmExercise(
+                        id: 9,
+                        type: .breathing,
+                        title: "Calm Before Action",
+                        instructions: [
+                            "Before approaching a fear, pause and breathe slowly for 10 seconds.",
+                            "Inhale gently through the nose, exhale through the mouth.",
+                            "Remind yourself: 'I can do this step calmly.'"
+                        ],
+                        instructionPromptTypes: [.action, .action, .statement],
+                        scienceNote: "Pre-exposure breathing reduces physiological arousal."
+                    )
+                ]
+            ),
+
+            // LEVEL 7 — Mindful Presence (Premium)
+            CalmLevel(
+                id: 7,
+                title: "Mindful Presence",
+                summary: "Learn to stay grounded in the present moment.",
+                free: false,
+                exercises: [
+                    CalmExercise(
+                        id: 10,
+                        type: .education,
+                        title: "What Is Mindfulness?",
+                        instructions: [
+                            "Mindfulness means paying attention to now, without judging it.",
+                            "It helps you notice thoughts and sensations rather than reacting to them.",
+                            "Calm often arises when awareness replaces resistance."
+                        ],
+                        instructionPromptTypes: [.statement, .statement, .statement],
+                        scienceNote: "Mindfulness reduces rumination and increases emotional regulation."
+                    ),
+                    CalmExercise(
+                        id: 11,
+                        type: .breathing,
+                        title: "Five-Minute Presence",
+                        instructions: [
+                            "Set a timer for five minutes.",
+                            "Focus on your breath as it moves in and out.",
+                            "When your mind wanders, gently bring it back to the breath.",
+                            "Notice sensations, sounds, and the space around you."
+                        ],
+                        instructionPromptTypes: [.action, .action, .action, .statement],
+                        scienceNote: "Brief mindfulness practice activates the parasympathetic system."
+                    ),
+                    CalmExercise(
+                        id: 12,
+                        type: .prompt,
+                        title: "Observe Without Fixing",
+                        instructions: [
+                            "Recall a recent difficult emotion.",
+                            "Write what it felt like in your body without labeling it good or bad.",
+                            "What happened when you simply observed it?"
+                        ],
+                        instructionPromptTypes: [.question, .question, .question],
+                        scienceNote: "Non-judgmental observation decreases emotional reactivity."
+                    )
+                ]
+            ),
+
+            // LEVEL 8 — Emotional Balance (Premium)
+            CalmLevel(
+                id: 8,
+                title: "Emotional Balance",
+                summary: "Understand and regulate emotions with compassion.",
+                free: false,
+                exercises: [
+                    CalmExercise(
+                        id: 13,
+                        type: .education,
+                        title: "Riding Emotional Waves",
+                        instructions: [
+                            "Emotions rise and fall like waves.",
+                            "Trying to block them often makes them stronger.",
+                            "Riding the wave means allowing the feeling until it naturally fades."
+                        ],
+                        instructionPromptTypes: [.statement, .statement, .statement],
+                        scienceNote: "Emotion regulation involves acceptance rather than suppression."
+                    ),
+                    CalmExercise(
+                        id: 14,
+                        type: .prompt,
+                        title: "Name the Feeling",
+                        instructions: [
+                            "Think of something that upset you recently.",
+                            "Label the main emotion as precisely as you can.",
+                            "Where do you feel it in your body?"
+                        ],
+                        instructionPromptTypes: [.question, .question, .question],
+                        scienceNote: "Labeling emotions activates prefrontal control and reduces intensity."
+                    ),
+                    CalmExercise(
+                        id: 15,
+                        type: .prompt,
+                        title: "Pause Practice",
+                        instructions: [
+                            "When a strong emotion appears, take one slow breath.",
+                            "Ask: 'What do I need right now — to act or to rest?'",
+                            "Write a short reflection afterward."
+                        ],
+                        instructionPromptTypes: [.action, .question, .question],
+                        scienceNote: "The pause between emotion and reaction builds emotional mastery."
+                    )
+                ]
+            ),
+
+            // LEVEL 9 — Connection & Support (Premium)
+            CalmLevel(
+                id: 9,
+                title: "Connection & Support",
+                summary: "Strengthen bonds and find safety in connection.",
+                free: false,
+                exercises: [
+                    CalmExercise(
+                        id: 16,
+                        type: .education,
+                        title: "Why Connection Calms",
+                        instructions: [
+                            "Humans regulate emotions through relationships.",
+                            "Sharing stress with someone safe can lower your cortisol levels.",
+                            "Connection turns isolation into safety."
+                        ],
+                        instructionPromptTypes: [.statement, .statement, .statement],
+                        scienceNote: "Co-regulation is a proven buffer against anxiety."
+                    ),
+                    CalmExercise(
+                        id: 17,
+                        type: .prompt,
+                        title: "Safe People Map",
+                        instructions: [
+                            "List three people who make you feel calm or supported.",
+                            "What qualities make them feel safe to you?"
+                        ],
+                        instructionPromptTypes: [.question, .question],
+                        scienceNote: "Identifying supportive figures increases perceived safety."
+                    ),
+                    CalmExercise(
+                        id: 18,
+                        type: .prompt,
+                        title: "Reach Out",
+                        instructions: [
+                            "Think of someone you haven't spoken to in a while but trust.",
+                            "Send a short message or plan a brief chat.",
+                            "Afterward, reflect on how it felt to connect."
+                        ],
+                        instructionPromptTypes: [.question, .action, .question],
+                        scienceNote: "Positive social contact boosts oxytocin and reduces anxiety."
+                    )
+                ]
+            ),
+
+            // LEVEL 10 — Growth & Purpose (Premium)
+            CalmLevel(
+                id: 10,
+                title: "Growth & Purpose",
+                summary: "Integrate calm into daily life and long-term meaning.",
+                free: false,
+                exercises: [
+                    CalmExercise(
+                        id: 19,
+                        type: .education,
+                        title: "Your Calm Journey",
+                        instructions: [
+                            "Every calm skill you've learned is part of a larger growth story.",
+                            "Progress is not perfection — it's presence, patience, and practice.",
+                            "Let's look at what this growth means to you."
+                        ],
+                        instructionPromptTypes: [.statement, .statement, .statement],
+                        scienceNote: "Reflecting on progress consolidates learning and motivation."
+                    ),
+                    CalmExercise(
+                        id: 20,
+                        type: .prompt,
+                        title: "Letter to Future You",
+                        instructions: [
+                            "Write a short message to your future self for when anxiety returns.",
+                            "Include words of encouragement and a reminder of your strengths."
+                        ],
+                        instructionPromptTypes: [.question, .statement],
+                        scienceNote: "Self-directed compassion strengthens resilience over time."
+                    ),
+                    CalmExercise(
+                        id: 21,
+                        type: .prompt,
+                        title: "Purpose Compass",
+                        instructions: [
+                            "What matters most to you beyond anxiety?",
+                            "What small daily action aligns with that value?",
+                            "How could you make calm part of your purpose?"
+                        ],
+                        instructionPromptTypes: [.question, .question, .question],
+                        scienceNote: "Values-based living supports long-term emotional stability."
+                    ),
+                    CalmExercise(
+                        id: 22,
+                        type: .prompt,
+                        title: "Gratitude Grounding",
+                        instructions: [
+                            "List three things you're grateful for today.",
+                            "Notice how your body feels when focusing on gratitude."
+                        ],
+                        instructionPromptTypes: [.question, .question],
+                        scienceNote: "Gratitude practices increase positive affect and reduce anxiety symptoms."
+                    )
+                ]
             )
         ]
     }

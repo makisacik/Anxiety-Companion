@@ -16,21 +16,17 @@ struct CalmJourneyBreathingView: View {
     
     var body: some View {
         ZStack {
-            // Background gradient
-            LinearGradient(
-                colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
-            
             if !showBreathingAnimation {
                 introView
             } else {
                 breathingView
             }
         }
-        .navigationBarHidden(true)
+        .navigationTitle("Breathing Exercise")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar(.hidden, for: .tabBar)
+        .toolbarBackground(Color(hex: "#6E63A4"), for: .navigationBar)
+        .toolbarColorScheme(.dark, for: .navigationBar)
     }
     
     private var introView: some View {

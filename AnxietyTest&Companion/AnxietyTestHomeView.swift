@@ -38,6 +38,49 @@ struct AnxietyTestHomeView: View {
     @State private var showTyping = false
     @State private var companionScale: CGFloat = 1.0
     @State private var showNotificationPermission = false
+    @State private var currentGreeting = ""
+
+    private let greetingMessages = [
+        "You're stronger than you know",
+        "Your feelings are valid and important",
+        "Take a deep breath, you've got this",
+        "It's okay to feel however you're feeling",
+        "You're not alone in this journey",
+        "Every small step counts",
+        "Your courage inspires me",
+        "You're exactly where you need to be",
+        "Be gentle with yourself today",
+        "Your progress matters",
+        "You're worthy of peace and calm",
+        "Trust in your resilience",
+        "You're doing better than you think",
+        "Your feelings are temporary visitors",
+        "You have everything you need within you",
+        "Take it one moment at a time",
+        "You're braver than you believe",
+        "Your journey is uniquely yours",
+        "It's okay to rest when you need to",
+        "You're growing through this",
+        "Your heart is wise and strong",
+        "You're allowed to take breaks",
+        "Every breath is a new beginning",
+        "You're more capable than you realize",
+        "Your feelings don't define you",
+        "You're learning and growing every day",
+        "It's okay to ask for help",
+        "You're exactly enough as you are",
+        "Your inner light is always shining",
+        "You're making progress, even if it's small",
+        "Be proud of how far you've come",
+        "You're allowed to feel however you feel",
+        "Your strength is quiet but powerful",
+        "You're doing the best you can",
+        "It's okay to not be okay sometimes",
+        "You're worthy of love and kindness",
+        "Your journey is beautiful and valid",
+        "You're exactly where you need to be right now",
+        "Take time to appreciate how far you've come"
+    ]
 
     private var buttonText: String {
         if hasCompletedTest || !gad7Entries.isEmpty {
@@ -81,6 +124,7 @@ struct AnxietyTestHomeView: View {
             )
         }
         .onAppear {
+            selectRandomGreeting()
             loadLastMood()
             startGreetingAnimation()
             checkForNotificationPermission()
@@ -111,7 +155,7 @@ struct AnxietyTestHomeView: View {
                 .animation(.easeInOut(duration: 0.6), value: showGreeting)
 
             if showTyping {
-                TypingTextView(text: "How are you feeling today?") {
+                TypingTextView(text: currentGreeting) {
                     HapticFeedback.soft()
                 }
             }
@@ -215,6 +259,10 @@ struct AnxietyTestHomeView: View {
             }
         }
         .padding(.horizontal, 20)
+    }
+
+    private func selectRandomGreeting() {
+        currentGreeting = greetingMessages.randomElement() ?? "How are you feeling today?"
     }
 
     private func startGreetingAnimation() {
