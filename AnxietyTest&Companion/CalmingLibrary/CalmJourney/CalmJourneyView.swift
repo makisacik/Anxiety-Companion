@@ -2,7 +2,7 @@
 //  CalmJourneyView.swift
 //  AnxietyTest&Companion
 //
-//  Main level selection screen for Calm Journey with 5 progressive levels.
+//  Final clean version — header outside, spacing 50
 //
 
 import SwiftUI
@@ -15,20 +15,10 @@ struct CalmJourneyView: View {
     @State private var pendingLevel: CalmLevel?
     @State private var selectedLevel: CalmLevel?
 
-    private let verticalSpacing: CGFloat = 120
-    private let horizontalOffset: CGFloat = 40
-
-    private var nodePositions: [PathNodePosition] {
-        PathNodePosition.positions(
-            count: dataStore.levels.count,
-            verticalSpacing: verticalSpacing,
-            horizontalOffset: horizontalOffset
-        )
-    }
+    private let levelSpacing: CGFloat = 50
 
     var body: some View {
         ZStack {
-            // Background gradient - lavender to blush
             LinearGradient(
                 colors: [Color(hex: "#E6E6FA"), Color(hex: "#FFE4E1")],
                 startPoint: .topLeading,
@@ -36,54 +26,33 @@ struct CalmJourneyView: View {
             )
             .ignoresSafeArea()
 
-            ScrollView {
-                ZStack(alignment: .topLeading) {
-                    // Background connecting path
-                    GeometryReader { geometry in
-                        CalmJourneyPathShape(
-                            nodePositions: nodePositions,
-                            nodeRadius: 35
-                        )
-                        .stroke(
-                            LinearGradient(
-                                colors: [
-                                    Color(hex: "#C8A2C8").opacity(0.6),
-                                    Color(hex: "#B5A7E0").opacity(0.4)
-                                ],
-                                startPoint: .top,
-                                endPoint: .bottom
-                            ),
-                            style: StrokeStyle(lineWidth: 4, lineCap: .round, lineJoin: .round)
-                        )
-                        .shadow(color: Color(hex: "#C8A2C8").opacity(0.3), radius: 8, x: 0, y: 2)
-                        .frame(height: calculatePathHeight(), alignment: .topLeading)
-                    }
+            VStack(spacing: 0) {
+                // Header stays fixed at top
+                headerSection
+                    .padding(.horizontal, 24)
+                    .padding(.top, 40)
+                    .padding(.bottom, 20)
 
-                    // Content layers
-                    VStack(spacing: 0) {
-                        // Header
-                        headerSection
-                            .padding(.bottom, 40)
-                            .zIndex(1)
-
-                        // Levels with path nodes
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: levelSpacing) {
                         ForEach(Array(dataStore.levels.enumerated()), id: \.element.id) { index, level in
-                            levelRowView(level: level, index: index)
-                                .padding(.bottom, verticalSpacing - 70)
-                                .padding(.horizontal, 24)
+                            ZigZagLevelRow(
+                                level: level,
+                                index: index,
+                                isCompleted: completedLevels.contains(level.id),
+                                isPremiumUser: isPremiumUser
+                            ) {
+                                handleLevelTap(level)
+                            }
                         }
-
-                        // Extra space at bottom
-                        Spacer(minLength: 40)
                     }
+                    .padding(.horizontal, 24)
+                    .padding(.bottom, 60)
                 }
             }
         }
         .navigationBarHidden(true)
-        .sheet(isPresented: $showPaywall, onDismiss: {
-            print("🚪 Paywall dismissed, pending level: \(pendingLevel?.title ?? "none")")
-            pendingLevel = nil
-        }) {
+        .sheet(isPresented: $showPaywall) {
             PaywallView()
         }
         .background(
@@ -103,19 +72,12 @@ struct CalmJourneyView: View {
                     get: { selectedLevel != nil },
                     set: { if !$0 { selectedLevel = nil } }
                 )
-            ) {
-                EmptyView()
-            }
+            ) { EmptyView() }
         )
-        .onAppear {
-            loadCompletedLevels()
-        }
+        .onAppear { loadCompletedLevels() }
     }
 
-    private func calculatePathHeight() -> CGFloat {
-        guard dataStore.levels.count > 0 else { return 0 }
-        return CGFloat(dataStore.levels.count - 1) * verticalSpacing + 200
-    }
+    // MARK: - Header
 
     private var headerSection: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -126,99 +88,18 @@ struct CalmJourneyView: View {
             Text("Structured exercises to build lasting calm, based on proven therapy techniques.")
                 .font(.system(.body, design: .rounded))
                 .foregroundColor(Color(hex: "#7B6B9F"))
-                .fixedSize(horizontal: false, vertical: true)
-
-            // Premium status indicator
-            if isPremiumUser {
-                HStack {
-                    Image(systemName: "crown.fill")
-                        .foregroundColor(Color(hex: "#B5A7E0"))
-                    Text("Premium Unlocked")
-                        .font(.system(.caption, design: .rounded))
-                        .foregroundColor(Color(hex: "#7B6B9F"))
-                }
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(.ultraThinMaterial)
-                )
-            }
         }
-        .padding(.top, 40)
-        .padding(.horizontal, 24)
+        .multilineTextAlignment(.leading)
     }
 
-    private func levelRowView(level: CalmLevel, index: Int) -> some View {
-        let position = nodePositions[index]
-        let isCompleted = completedLevels.contains(level.id)
-        let isAccessible = level.free || isPremiumUser
-        let nodeState: NodeState = isCompleted ? .completed : (isAccessible ? .active : .locked)
-
-        return HStack(alignment: .center, spacing: 20) {
-            // Node with offset
-            CalmJourneyNodeView(level: level, state: nodeState, index: level.id)
-                .offset(x: position.xOffset, y: 0)
-
-            Spacer()
-
-            // Level info
-            VStack(alignment: .trailing, spacing: 8) {
-                Button(action: {
-                    handleLevelTap(level)
-                }) {
-                    VStack(alignment: .trailing, spacing: 6) {
-                        HStack {
-                            Spacer()
-                            Text(level.title)
-                                .font(.system(.title3, design: .serif))
-                                .fontWeight(.semibold)
-                                .foregroundColor(isAccessible ? Color(hex: "#6E63A4") : Color(hex: "#7B6B9F").opacity(0.6))
-
-                            if !isAccessible {
-                                Image(systemName: "lock.fill")
-                                    .font(.system(.caption, weight: .medium))
-                                    .foregroundColor(Color(hex: "#7B6B9F").opacity(0.6))
-                            }
-                        }
-
-                        Text(level.summary)
-                            .font(.system(.subheadline, design: .rounded))
-                            .foregroundColor(isAccessible ? Color(hex: "#7B6B9F") : Color(hex: "#7B6B9F").opacity(0.5))
-                            .multilineTextAlignment(.trailing)
-                            .fixedSize(horizontal: false, vertical: true)
-
-                        HStack {
-                            Spacer()
-                            Text("\(level.exercises.count) exercises")
-                                .font(.system(.caption, design: .rounded))
-                                .foregroundColor(isAccessible ? Color(hex: "#7B6B9F").opacity(0.7) : Color(hex: "#7B6B9F").opacity(0.4))
-
-                            if isAccessible {
-                                Image(systemName: "chevron.right")
-                                    .font(.system(.caption, weight: .medium))
-                                    .foregroundColor(Color(hex: "#7B6B9F").opacity(0.6))
-                            }
-                        }
-                    }
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-                }
-                .buttonStyle(ScaleButtonStyle())
-            }
-            .frame(minWidth: 200, alignment: .trailing)
-        }
-    }
+    // MARK: - Logic
 
     private func handleLevelTap(_ level: CalmLevel) {
         HapticFeedback.light()
-        print("🔓 Tapped level: \(level.title), isLocked: \(level.isLocked), isPremium: \(isPremiumUser)")
-
         if level.isLocked && !isPremiumUser {
             pendingLevel = level
-            print("🔒 Showing paywall for level: \(level.title)")
             showPaywall = true
         } else {
-            print("✅ Opening level directly: \(level.title)")
             selectedLevel = level
         }
     }
@@ -234,6 +115,76 @@ struct CalmJourneyView: View {
         if let data = try? JSONEncoder().encode(completedLevels) {
             UserDefaults.standard.set(data, forKey: "completedLevels")
         }
+    }
+}
+
+// MARK: - ZigZag Level Row
+
+struct ZigZagLevelRow: View {
+    let level: CalmLevel
+    let index: Int
+    let isCompleted: Bool
+    let isPremiumUser: Bool
+    let action: () -> Void
+
+    private var isLeft: Bool { index % 2 == 0 }
+
+    var body: some View {
+        HStack(alignment: .center, spacing: 12) {
+            if isLeft {
+                node
+                levelInfo
+            } else {
+                levelInfo
+                node
+            }
+        }
+        .animation(.easeInOut(duration: 0.3), value: isCompleted)
+    }
+
+    private var node: some View {
+        CalmJourneyNodeView(
+            level: level,
+            state: nodeState(),
+            index: level.id
+        )
+        .onTapGesture(perform: action)
+    }
+
+    private var levelInfo: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                Text(level.title)
+                    .font(.system(.title3, design: .serif))
+                    .fontWeight(.semibold)
+                    .foregroundColor(Color(hex: "#6E63A4"))
+
+                if !level.free && !isPremiumUser {
+                    Image(systemName: "lock.fill")
+                        .font(.system(.caption, weight: .medium))
+                        .foregroundColor(Color(hex: "#7B6B9F").opacity(0.6))
+                }
+            }
+
+            Text(level.summary)
+                .font(.system(.subheadline, design: .rounded))
+                .foregroundColor(Color(hex: "#7B6B9F"))
+        }
+        .frame(height: 120)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.vertical, 8)
+        .padding(.horizontal, 14)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color.white.opacity(0.4))
+                .shadow(radius: 1)
+        )
+        .onTapGesture(perform: action)
+    }
+
+    private func nodeState() -> NodeState {
+        if isCompleted { return .completed }
+        return (level.free || isPremiumUser) ? .active : .locked
     }
 }
 
