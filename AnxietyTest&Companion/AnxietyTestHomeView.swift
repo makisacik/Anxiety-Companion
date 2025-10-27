@@ -67,8 +67,8 @@ struct AnxietyTestHomeView: View {
             GeometryReader { geometry in
                 ScrollView {
                     VStack(spacing: 30) {
-                        greetingSection
-                        companionSection
+                        headerView
+                        
                         gad7CardSection
                         
                         moodSection
@@ -84,18 +84,23 @@ struct AnxietyTestHomeView: View {
                 }
             }
             .background(
-                Color.themeBackground
+                ZStack {
+                    Color.themeBackground
+                        .ignoresSafeArea()
+                    
+                    // Tree footer as background decoration
+                    VStack {
+                        Spacer()
+                        Image("tree-footer")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: .infinity)
+                            .opacity(0.3)
+                    }
                     .ignoresSafeArea()
+                }
             )
             .navigationTitle("")
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink(destination: SettingsView()) {
-                        Image(systemName: "gearshape.fill")
-                            .foregroundColor(.themeText)
-                    }
-                }
-            }
         }
         .onAppear {
             selectRandomGreeting()
@@ -116,8 +121,45 @@ struct AnxietyTestHomeView: View {
 
     // MARK: - Sections
     
+    private var headerView: some View {
+        HStack(alignment: .center, spacing: 16) {
+            // Companion on the left
+            CompanionFaceView(expression: companionExpression)
+                .frame(width: 100, height: 100)
+                .scaleEffect(companionScale)
+                .shadow(color: Color.themeText.opacity(0.15), radius: 10)
+                .onTapGesture {
+                    HapticFeedback.soft()
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) { companionScale = 1.1 }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) { companionScale = 1.0 }
+                    }
+                }
+            
+            // Text on the right
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Hi, \(userName) 👋")
+                    .font(.system(.title2, design: .serif))
+                    .fontWeight(.semibold)
+                    .foregroundColor(.themeText)
+                    .opacity(showGreeting ? 1 : 0)
+                    .offset(y: showGreeting ? 0 : 10)
+                    .animation(.easeInOut(duration: 0.6), value: showGreeting)
+                
+                if showTyping {
+                    TypingTextView(text: currentGreeting) { HapticFeedback.soft() }
+                        .font(.system(.subheadline, design: .rounded))
+                }
+            }
+            
+            Spacer()
+        }
+        .padding(.horizontal, 20)
+        .padding(.vertical, 16)
+    }
+    
     private var greetingSection: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 8) {
             Text("Hi, \(userName) 👋")
                 .font(.system(.title, design: .serif))
                 .fontWeight(.semibold)

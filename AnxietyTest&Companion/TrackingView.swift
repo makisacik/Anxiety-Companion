@@ -29,8 +29,21 @@ struct TrackingView: View {
         NavigationStack {
             ZStack {
                 // Background
-                Color.themeBackground
-                    .ignoresSafeArea(.all)
+                ZStack {
+                    Color.themeBackground
+                        .ignoresSafeArea(.all)
+                    
+                    // Footer background decoration
+                    VStack {
+                        Spacer()
+                        Image("tracking-footer")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: .infinity)
+                            .opacity(0.3)
+                    }
+                    .ignoresSafeArea()
+                }
 
                 ScrollView(showsIndicators: false) {
                 VStack(spacing: 24) {

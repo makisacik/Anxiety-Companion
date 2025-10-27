@@ -69,6 +69,13 @@ struct CalmJourneyView: View {
                         }
                         .padding(.horizontal, 24)
                         .padding(.bottom, 60)
+                        
+                        // Footer decoration
+                        Image("journey-footer")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: .infinity)
+                            .opacity(0.3)
                     }
                 }
 

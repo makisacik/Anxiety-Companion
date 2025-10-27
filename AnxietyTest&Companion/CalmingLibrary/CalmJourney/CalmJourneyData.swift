@@ -142,7 +142,7 @@ class CalmJourneyDataStore: ObservableObject {
                         ],
                         scienceNote: "Understanding the anxiety feedback loop is a foundation of CBT.",
                         reportValue: .exclude,
-                        imageNames: ["shadow-monster", "afraid", "inside-box-sad", "inside-box-sad", "break-egg"]
+                        imageNames: ["shadow-monster", "afraid", "inside-box-sad", "cutting-branch", "break-egg"]
                     ),
                     CalmExercise(
                         id: 2,
