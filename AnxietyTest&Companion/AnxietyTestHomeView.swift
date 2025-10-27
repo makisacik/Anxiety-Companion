@@ -69,6 +69,8 @@ struct AnxietyTestHomeView: View {
                     VStack(spacing: 30) {
                         headerView
                         
+                        dailyBreathingCardSection
+                        
                         gad7CardSection
                         
                         moodSection
@@ -120,6 +122,53 @@ struct AnxietyTestHomeView: View {
     }
 
     // MARK: - Sections
+    
+    private var dailyBreathingCardSection: some View {
+        NavigationLink(destination: DailyBreathingView()) {
+            HStack(spacing: 16) {
+                // Icon
+                Image(systemName: "wind")
+                    .font(.system(size: 32))
+                    .foregroundColor(.themeText)
+                    .frame(width: 60, height: 60)
+                    .background(
+                        Circle()
+                            .fill(Color.themeBackground)
+                    )
+                
+                // Content
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Start your calm minute 🌬️")
+                        .font(.system(.headline, design: .rounded))
+                        .fontWeight(.semibold)
+                        .foregroundColor(.themeText)
+                    
+                    Text("Take a moment to breathe and center yourself")
+                        .font(.system(.caption, design: .rounded))
+                        .foregroundColor(.themeText.opacity(0.7))
+                        .multilineTextAlignment(.leading)
+                }
+                
+                Spacer()
+                
+                // Arrow
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(.themeText.opacity(0.5))
+            }
+            .padding(20)
+            .frame(width: cardWidth > 0 ? cardWidth : nil)
+            .background(
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(Color.themeCard)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color.themeDivider, lineWidth: 1)
+                    )
+            )
+        }
+        .buttonStyle(ScaleButtonStyle())
+    }
     
     private var headerView: some View {
         HStack(alignment: .center, spacing: 16) {
