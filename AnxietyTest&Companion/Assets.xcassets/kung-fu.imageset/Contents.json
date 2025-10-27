@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "kung-fu.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

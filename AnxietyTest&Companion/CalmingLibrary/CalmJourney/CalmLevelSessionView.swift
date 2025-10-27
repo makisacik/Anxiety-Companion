@@ -188,7 +188,7 @@ struct CalmLevelSessionView: View {
                         instructionPromptTypes: [step.promptType],
                         scienceNote: "",
                         reportValue: .exclude,
-                        imageName: nil
+                        imageNames: []
                     ),
                     onComplete: {
                         handleBreathingCompletion()
@@ -257,6 +257,8 @@ struct CalmLevelSessionView: View {
             if exercise.type == .breathing {
                 // For breathing exercises, show a proper explanation instead of the first instruction
                 let explanation = "Let's practice \(exercise.title.lowercased()). This technique helps calm your nervous system by regulating your breath. Follow the guided breathing exercise that will appear next."
+                // Use first image if available
+                let imageName = exercise.imageNames.first ?? nil
                 let step = InstructionStep(
                     id: stepId,
                     instruction: explanation,
@@ -264,7 +266,7 @@ struct CalmLevelSessionView: View {
                     exerciseTitle: exercise.title,
                     exerciseId: exercise.id,
                     promptType: .statement,
-                    imageName: exercise.imageName
+                    imageName: imageName
                 )
                 steps.append(step)
                 print("🔍 Added breathing explanation step: \(explanation)")
@@ -276,6 +278,9 @@ struct CalmLevelSessionView: View {
                         ? exercise.instructionPromptTypes[index] 
                         : .statement // Default to statement if no prompt type specified
                     
+                    // Get image name for this specific instruction index
+                    let imageName = index < exercise.imageNames.count ? exercise.imageNames[index] : nil
+                    
                     let step = InstructionStep(
                         id: stepId,
                         instruction: instruction,
@@ -283,7 +288,7 @@ struct CalmLevelSessionView: View {
                         exerciseTitle: exercise.title,
                         exerciseId: exercise.id,
                         promptType: promptType,
-                        imageName: exercise.imageName
+                        imageName: imageName
                     )
                     steps.append(step)
                     print("🔍 Added step \(stepId): \(instruction) (promptType: \(promptType))")

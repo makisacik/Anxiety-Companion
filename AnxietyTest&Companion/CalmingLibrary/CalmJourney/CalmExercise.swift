@@ -26,7 +26,7 @@ struct CalmExercise: Identifiable, Codable, Hashable {
     let instructionPromptTypes: [InstructionPromptType]
     let scienceNote: String
     let reportValue: ReportValue
-    let imageName: String?
+    let imageNames: [String?]  // One image per instruction
     
     var displayType: String {
         switch type {

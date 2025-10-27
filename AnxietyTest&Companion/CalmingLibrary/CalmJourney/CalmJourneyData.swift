@@ -44,7 +44,7 @@ class CalmJourneyDataStore: ObservableObject {
                         ],
                         scienceNote: "Understanding the fight-flight-freeze response helps you recognize anxiety as a normal protective mechanism.",
                         reportValue: .exclude,
-                        imageName: "level-1-confused"
+                        imageNames: ["afraid", "afraid", "shadow-monster", "thinking-bulb"]
                     ),
                     CalmExercise(
                         id: 2,
@@ -66,7 +66,7 @@ class CalmJourneyDataStore: ObservableObject {
                         ],
                         scienceNote: "Box breathing lowers heart rate and activates the parasympathetic nervous system.",
                         reportValue: .exclude,
-                        imageName: nil
+                        imageNames: []
                     ),
                     CalmExercise(
                         id: 3,
@@ -88,7 +88,7 @@ class CalmJourneyDataStore: ObservableObject {
                         ],
                         scienceNote: "Grounding shifts attention from anxious thoughts to the present moment.",
                         reportValue: .exclude,
-                        imageName: nil
+                        imageNames: []
                     ),
                     CalmExercise(
                         id: 4,
@@ -110,7 +110,7 @@ class CalmJourneyDataStore: ObservableObject {
                         ],
                         scienceNote: "Body scans increase interoceptive awareness and reduce muscle tension.",
                         reportValue: .exclude,
-                        imageName: nil
+                        imageNames: []
                     )
                 ]
             ),
@@ -142,7 +142,7 @@ class CalmJourneyDataStore: ObservableObject {
                         ],
                         scienceNote: "Understanding the anxiety feedback loop is a foundation of CBT.",
                         reportValue: .exclude,
-                        imageName: "level-1-confused"
+                        imageNames: ["shadow-monster", "afraid", "inside-box-sad", "inside-box-sad", "break-egg"]
                     ),
                     CalmExercise(
                         id: 2,
@@ -162,7 +162,7 @@ class CalmJourneyDataStore: ObservableObject {
                         ],
                         scienceNote: "Recognizing triggers builds control over automatic reactions.",
                         reportValue: .include,
-                        imageName: nil
+                        imageNames: []
                     ),
                     CalmExercise(
                         id: 3,
@@ -180,7 +180,7 @@ class CalmJourneyDataStore: ObservableObject {
                         ],
                         scienceNote: "Behavioral change interrupts avoidance and restores control.",
                         reportValue: .include,
-                        imageName: nil
+                        imageNames: []
                     )
                 ]
             ),
@@ -208,7 +208,7 @@ class CalmJourneyDataStore: ObservableObject {
                         ],
                         scienceNote: "Cognitive restructuring reduces emotional reactivity.",
                         reportValue: .exclude,
-                        imageName: "level-1-confused"
+                        imageNames: ["thinking-bubble", "thinking-1", "question-hand"]
                     ),
                     CalmExercise(
                         id: 2,
@@ -224,7 +224,7 @@ class CalmJourneyDataStore: ObservableObject {
                         ],
                         scienceNote: "Awareness is the first step toward change.",
                         reportValue: .include,
-                        imageName: nil
+                        imageNames: []
                     ),
                     CalmExercise(
                         id: 3,
@@ -242,7 +242,7 @@ class CalmJourneyDataStore: ObservableObject {
                         ],
                         scienceNote: "CBT teaches balanced thinking to counter distorted beliefs.",
                         reportValue: .include,
-                        imageName: nil
+                        imageNames: []
                     ),
                     CalmExercise(
                         id: 4,
@@ -260,7 +260,7 @@ class CalmJourneyDataStore: ObservableObject {
                         ],
                         scienceNote: "Reframing reduces catastrophizing and promotes calm thinking.",
                         reportValue: .include,
-                        imageName: nil
+                        imageNames: []
                     )
                 ]
             ),
@@ -288,7 +288,7 @@ class CalmJourneyDataStore: ObservableObject {
                         ],
                         scienceNote: "Behavioral activation increases positive reinforcement and reduces anxiety.",
                         reportValue: .exclude,
-                        imageName: "level-1-confused"
+                        imageNames: ["thinking-bulb", "walking-up", "hands-open-smile"]
                     ),
                     CalmExercise(
                         id: 2,
@@ -304,7 +304,7 @@ class CalmJourneyDataStore: ObservableObject {
                         ],
                         scienceNote: "Linking calm behaviors to routine strengthens emotional regulation.",
                         reportValue: .include,
-                        imageName: nil
+                        imageNames: []
                     ),
                     CalmExercise(
                         id: 3,
@@ -322,7 +322,7 @@ class CalmJourneyDataStore: ObservableObject {
                         ],
                         scienceNote: "Small achievable goals build momentum and confidence.",
                         reportValue: .include,
-                        imageName: nil
+                        imageNames: []
                     )
                 ]
             ),
@@ -350,7 +350,7 @@ class CalmJourneyDataStore: ObservableObject {
                         ],
                         scienceNote: "Self-compassion improves resilience and emotion regulation.",
                         reportValue: .exclude,
-                        imageName: "level-1-confused"
+                        imageNames: ["inside-box-sad", "hands-open-smile", "shadow-angel"]
                     ),
                     CalmExercise(
                         id: 2,
@@ -368,7 +368,7 @@ class CalmJourneyDataStore: ObservableObject {
                         ],
                         scienceNote: "Reframing self-talk promotes emotional healing.",
                         reportValue: .include,
-                        imageName: nil
+                        imageNames: []
                     ),
                     CalmExercise(
                         id: 3,
@@ -384,7 +384,7 @@ class CalmJourneyDataStore: ObservableObject {
                         ],
                         scienceNote: "Acting on values builds long-term emotional balance.",
                         reportValue: .include,
-                        imageName: nil
+                        imageNames: []
                     ),
                     CalmExercise(
                         id: 4,
@@ -400,7 +400,7 @@ class CalmJourneyDataStore: ObservableObject {
                         ],
                         scienceNote: "Personal affirmations reinforce emotional safety.",
                         reportValue: .include,
-                        imageName: nil
+                        imageNames: []
                     )
                 ]
             ),
@@ -424,7 +424,7 @@ class CalmJourneyDataStore: ObservableObject {
                         instructionPromptTypes: [.statement, .statement, .statement],
                         scienceNote: "Gradual exposure reduces avoidance and rewires fear pathways.",
                         reportValue: .exclude,
-                        imageName: "level-1-confused"
+                        imageNames: ["afraid", "inside-box-sad", "shadow-hero"]
                     ),
                     CalmExercise(
                         id: 7,
@@ -438,7 +438,7 @@ class CalmJourneyDataStore: ObservableObject {
                         instructionPromptTypes: [.question, .question, .question],
                         scienceNote: "Breaking fears into small steps increases confidence and control.",
                         reportValue: .include,
-                        imageName: nil
+                        imageNames: []
                     ),
                     CalmExercise(
                         id: 8,
@@ -451,7 +451,7 @@ class CalmJourneyDataStore: ObservableObject {
                         instructionPromptTypes: [.question, .question],
                         scienceNote: "Remembering success reinforces self-efficacy and calm.",
                         reportValue: .include,
-                        imageName: nil
+                        imageNames: []
                     ),
                     CalmExercise(
                         id: 9,
@@ -465,7 +465,7 @@ class CalmJourneyDataStore: ObservableObject {
                         instructionPromptTypes: [.action, .action, .statement],
                         scienceNote: "Pre-exposure breathing reduces physiological arousal.",
                         reportValue: .exclude,
-                        imageName: nil
+                        imageNames: []
                     )
                 ]
             ),
@@ -489,7 +489,7 @@ class CalmJourneyDataStore: ObservableObject {
                         instructionPromptTypes: [.statement, .statement, .statement],
                         scienceNote: "Mindfulness reduces rumination and increases emotional regulation.",
                         reportValue: .exclude,
-                        imageName: "level-1-confused"
+                        imageNames: ["meditate-1", "thinking-1", "hands-open-smile"]
                     ),
                     CalmExercise(
                         id: 11,
@@ -504,7 +504,7 @@ class CalmJourneyDataStore: ObservableObject {
                         instructionPromptTypes: [.action, .action, .action, .statement],
                         scienceNote: "Brief mindfulness practice activates the parasympathetic system.",
                         reportValue: .exclude,
-                        imageName: nil
+                        imageNames: []
                     ),
                     CalmExercise(
                         id: 12,
@@ -518,7 +518,7 @@ class CalmJourneyDataStore: ObservableObject {
                         instructionPromptTypes: [.question, .question, .question],
                         scienceNote: "Non-judgmental observation decreases emotional reactivity.",
                         reportValue: .include,
-                        imageName: nil
+                        imageNames: []
                     )
                 ]
             ),
@@ -542,7 +542,7 @@ class CalmJourneyDataStore: ObservableObject {
                         instructionPromptTypes: [.statement, .statement, .statement],
                         scienceNote: "Emotion regulation involves acceptance rather than suppression.",
                         reportValue: .exclude,
-                        imageName: "level-1-confused"
+                        imageNames: ["thinking-bubble", "kung-fu", "meditate-1"]
                     ),
                     CalmExercise(
                         id: 14,
@@ -556,7 +556,7 @@ class CalmJourneyDataStore: ObservableObject {
                         instructionPromptTypes: [.question, .question, .question],
                         scienceNote: "Labeling emotions activates prefrontal control and reduces intensity.",
                         reportValue: .include,
-                        imageName: nil
+                        imageNames: []
                     ),
                     CalmExercise(
                         id: 15,
@@ -570,7 +570,7 @@ class CalmJourneyDataStore: ObservableObject {
                         instructionPromptTypes: [.action, .question, .question],
                         scienceNote: "The pause between emotion and reaction builds emotional mastery.",
                         reportValue: .include,
-                        imageName: nil
+                        imageNames: []
                     )
                 ]
             ),
@@ -594,7 +594,7 @@ class CalmJourneyDataStore: ObservableObject {
                         instructionPromptTypes: [.statement, .statement, .statement],
                         scienceNote: "Co-regulation is a proven buffer against anxiety.",
                         reportValue: .exclude,
-                        imageName: "level-1-confused"
+                        imageNames: ["brain-handshake", "hands-open-smile", "shadow-angel"]
                     ),
                     CalmExercise(
                         id: 17,
@@ -607,7 +607,7 @@ class CalmJourneyDataStore: ObservableObject {
                         instructionPromptTypes: [.question, .question],
                         scienceNote: "Identifying supportive figures increases perceived safety.",
                         reportValue: .include,
-                        imageName: nil
+                        imageNames: []
                     ),
                     CalmExercise(
                         id: 18,
@@ -621,7 +621,7 @@ class CalmJourneyDataStore: ObservableObject {
                         instructionPromptTypes: [.question, .action, .question],
                         scienceNote: "Positive social contact boosts oxytocin and reduces anxiety.",
                         reportValue: .include,
-                        imageName: nil
+                        imageNames: []
                     )
                 ]
             ),
@@ -645,7 +645,7 @@ class CalmJourneyDataStore: ObservableObject {
                         instructionPromptTypes: [.statement, .statement, .statement],
                         scienceNote: "Reflecting on progress consolidates learning and motivation.",
                         reportValue: .exclude,
-                        imageName: "level-1-confused"
+                        imageNames: ["walking-up", "hands-open-smile", "thinking-bulb"]
                     ),
                     CalmExercise(
                         id: 20,
@@ -658,7 +658,7 @@ class CalmJourneyDataStore: ObservableObject {
                         instructionPromptTypes: [.question, .statement],
                         scienceNote: "Self-directed compassion strengthens resilience over time.",
                         reportValue: .include,
-                        imageName: nil
+                        imageNames: []
                     ),
                     CalmExercise(
                         id: 21,
@@ -672,7 +672,7 @@ class CalmJourneyDataStore: ObservableObject {
                         instructionPromptTypes: [.question, .question, .question],
                         scienceNote: "Values-based living supports long-term emotional stability.",
                         reportValue: .include,
-                        imageName: nil
+                        imageNames: []
                     ),
                     CalmExercise(
                         id: 22,
@@ -685,7 +685,7 @@ class CalmJourneyDataStore: ObservableObject {
                         instructionPromptTypes: [.question, .question],
                         scienceNote: "Gratitude practices increase positive affect and reduce anxiety symptoms.",
                         reportValue: .include,
-                        imageName: nil
+                        imageNames: []
                     )
                 ]
             )

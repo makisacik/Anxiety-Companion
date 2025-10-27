@@ -341,7 +341,7 @@ struct CalmExerciseView: View {
             ],
             scienceNote: "Grounding shifts attention from anxious thoughts to the present moment.",
             reportValue: .exclude,
-            imageName: nil
+            imageNames: []
         ),
         onComplete: {},
         onNext: {}
