@@ -13,26 +13,19 @@ struct CalmReportPromoCard: View {
     let isCompleted: Bool
     let onViewReport: () -> Void
     let onShowPaywall: () -> Void
-    let onClose: () -> Void
-    
-    @State private var isVisible = false
-    
-    private var isMilestoneLevel: Bool {
-        return level.id == 5 || level.id == 10
-    }
     
     private var milestoneText: String {
         if isCompleted {
             if level.id == 5 {
-                return "You've completed the first 5 levels! 🌿"
+                return "Levels 1-5 complete. 🌿"
             } else {
-                return "You've completed all 10 levels! 🌿"
+                return "All 10 levels complete. 🌿"
             }
         } else {
             if level.id == 5 {
-                return "Complete the first 5 levels to unlock your report! 🌿"
+                return "Finish 1-5 to unlock your report."
             } else {
-                return "Complete all 10 levels to unlock your report! 🌿"
+                return "Finish all 10 to unlock your report."
             }
         }
     }
@@ -40,33 +33,24 @@ struct CalmReportPromoCard: View {
     private var reportDescription: String {
         if isCompleted {
             if level.id == 5 {
-                return "Your personalized report is ready! It will analyze your emotional growth from the first 5 levels and provide insights into your progress with anxiety management."
+                return "Your mid-journey summary is ready with quick insights on the first five steps."
             } else {
-                return "Your comprehensive report is ready! It will reflect on your entire Calm Journey, from initial awareness to building lasting calm habits and finding purpose."
+                return "Your full journey story is ready with highlights from every level."
             }
         } else {
             if level.id == 5 {
-                return "Complete levels 1-5 to unlock your personalized report. This will analyze your emotional growth and provide insights into your progress."
+                return "Wrap levels 1-5 to unlock a snapshot of your progress."
             } else {
-                return "Complete all 10 levels to unlock your comprehensive report. This will reflect on your entire journey and celebrate your growth."
+                return "Complete the path to see your full calm report."
             }
         }
     }
-    
-    private var actionText: String {
+
+    private var statusIcon: String {
         if isCompleted {
-            if isPremiumUser {
-                return "Generate Report"
-            } else {
-                return "Unlock Premium"
-            }
-        } else {
-            if level.id == 5 {
-                return "Complete Levels 1-5"
-            } else {
-                return "Complete All Levels"
-            }
+            return isPremiumUser ? "chevron.right" : "lock.fill"
         }
+        return "circle.dashed"
     }
     
     var body: some View {
@@ -89,7 +73,7 @@ struct CalmReportPromoCard: View {
             
             // Right side - Companion and action
             VStack(spacing: 8) {
-                // Companion face with subtle background effect
+                // Companion face with subtle background effect - positioned to overflow
                 ZStack {
                     Circle()
                         .fill(Color.white.opacity(0.2))
@@ -99,15 +83,16 @@ struct CalmReportPromoCard: View {
                         .fill(Color.white.opacity(0.1))
                         .frame(width: 70, height: 70)
                     
-                    CompanionFaceView(expression: isCompleted ? .happy : .neutral)
-                        .frame(width: 30, height: 30)
+                    CompanionFaceView(
+                        expression: isCompleted ? .happy : .neutral,
+                        animateBreathing: false
+                    )
+                        .frame(width: 90, height: 90)
                 }
-                
-                // Action text
-                Text(actionText)
-                    .font(.system(.caption, design: .rounded))
-                    .fontWeight(.semibold)
-                    .foregroundColor(.white.opacity(0.9))
+                .offset(x: 20)
+                .offset(y: -10)
+                // Push it to the right to overflow
+                .frame(width: 70, height: 70) // Constrain layout space
             }
         }
         .padding(.horizontal, 20)
@@ -138,20 +123,6 @@ struct CalmReportPromoCard: View {
                 print("Level not completed yet")
             }
         }
-        .overlay(
-            // Close button
-            Button(action: {
-                HapticFeedback.light()
-                onClose()
-            }) {
-                Image(systemName: "xmark.circle.fill")
-                    .font(.system(size: 20))
-                    .foregroundColor(.white.opacity(0.7))
-            }
-            .padding(.top, 8)
-            .padding(.trailing, 8),
-            alignment: .topTrailing
-        )
     }
 }
 
@@ -169,8 +140,7 @@ struct CalmReportPromoCard: View {
             isPremiumUser: false,
             isCompleted: true,
             onViewReport: {},
-            onShowPaywall: {},
-            onClose: {}
+            onShowPaywall: {}
         )
     }
 }

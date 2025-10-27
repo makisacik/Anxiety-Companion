@@ -7,20 +7,23 @@
 import SwiftUI
 import CoreData
 
+private enum CalmJourneyDestination: Hashable {
+    case level(CalmLevel)
+    case report
+}
+
 struct CalmJourneyView: View {
     @StateObject private var dataStore = CalmJourneyDataStore.shared
     @AppStorage("isPremiumUser") private var isPremiumUser = false
 
     @State private var completedLevels: [Int] = []
-    @State private var dismissedPromoCards: Set<Int> = []
     @State private var showPaywall = false
-    @State private var selectedLevel: CalmLevel?
-    @State private var showReportGeneration = false
+    @State private var navigationPath: [CalmJourneyDestination] = []
 
     private let levelSpacing: CGFloat = 50
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigationPath) {
             ZStack {
                 LinearGradient(
                     colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
@@ -50,21 +53,19 @@ struct CalmJourneyView: View {
                                     }
 
                                     // milestone report cards
-                                    if (level.id == 5 || level.id == 10),
-                                       !dismissedPromoCards.contains(level.id) {
+                                    if level.id == 5 || level.id == 10 {
                                         CalmReportPromoCard(
                                             level: level,
                                             isPremiumUser: isPremiumUser,
                                             isCompleted: checkCompletion(for: level.id),
                                             onViewReport: {
                                                 if isPremiumUser {
-                                                    showReportGeneration = true
+                                                    navigateToReport()
                                                 } else {
                                                     showPaywall = true
                                                 }
                                             },
-                                            onShowPaywall: { showPaywall = true },
-                                            onClose: { dismissedPromoCards.insert(level.id) }
+                                            onShowPaywall: { showPaywall = true }
                                         )
                                     }
                                 }
@@ -75,39 +76,31 @@ struct CalmJourneyView: View {
                     }
                 }
 
-                // Hidden navigation link for level view
-                NavigationLink(
-                    destination: Group {
-                        if let level = selectedLevel {
-                            CalmLevelSessionView(
-                                level: level,
-                                isPremiumUser: isPremiumUser,
-                                onLevelCompleted: { id in
-                                    if !completedLevels.contains(id) {
-                                        completedLevels.append(id)
-                                        saveCompletedLevels()
-                                    }
-                                },
-                                onViewReport: { showReportGeneration = true },
-                                onShowPaywall: { showPaywall = true }
-                            )
-                        }
-                    },
-                    isActive: Binding(
-                        get: { selectedLevel != nil },
-                        set: { if !$0 { selectedLevel = nil } }
-                    )
-                ) { EmptyView() }
-
             }
             .navigationBarHidden(true)
             .sheet(isPresented: $showPaywall) {
                 PaywallView()
             }
-            .sheet(isPresented: $showReportGeneration) {
-                CalmReportGenerationView() // self-contained
-            }
             .onAppear(perform: loadCompletedLevels)
+            .navigationDestination(for: CalmJourneyDestination.self) { destination in
+                switch destination {
+                case .level(let level):
+                    CalmLevelSessionView(
+                        level: level,
+                        isPremiumUser: isPremiumUser,
+                        onLevelCompleted: { id in
+                            if !completedLevels.contains(id) {
+                                completedLevels.append(id)
+                                saveCompletedLevels()
+                            }
+                        },
+                        onViewReport: { navigateToReport() },
+                        onShowPaywall: { showPaywall = true }
+                    )
+                case .report:
+                    CalmReportGenerationView()
+                }
+            }
         }
     }
 
@@ -131,8 +124,15 @@ struct CalmJourneyView: View {
         if level.isLocked && !isPremiumUser {
             showPaywall = true
         } else {
-            selectedLevel = level
+            navigationPath.append(.level(level))
         }
+    }
+
+    private func navigateToReport() {
+        if let last = navigationPath.last, case .report = last {
+            return
+        }
+        navigationPath.append(.report)
     }
 
     private func checkCompletion(for id: Int) -> Bool {

@@ -10,16 +10,14 @@ import SwiftUI
 struct CalmJourneyBreathingView: View {
     let exercise: CalmExercise
     let onComplete: () -> Void
-    @StateObject private var manager = BreathingManager()
-    @Environment(\.dismiss) private var dismiss
-    @State private var showBreathingAnimation = false
+    @State private var hasStartedPractice = false
     
     var body: some View {
         ZStack {
-            if !showBreathingAnimation {
-                introView
+            if hasStartedPractice {
+                practiceView
             } else {
-                breathingView
+                introView
             }
         }
         .navigationTitle("Breathing Exercise")
@@ -116,8 +114,8 @@ struct CalmJourneyBreathingView: View {
 
                 // Start Button
                 Button(action: {
-                    withAnimation(.easeInOut(duration: 0.5)) {
-                        showBreathingAnimation = true
+                    withAnimation(.easeInOut(duration: 0.4)) {
+                        hasStartedPractice = true
                     }
                     HapticFeedback.light()
                 }) {
@@ -143,68 +141,74 @@ struct CalmJourneyBreathingView: View {
         }
     }
     
-    private var breathingView: some View {
-        VStack(spacing: 30) {
-            Spacer()
-            
-            // Breathing animation
-            BreathingCircleViewCustom(
-                isExpanded: $manager.isExpanded,
-                onPhaseChange: manager.updatePhase
-            )
-            
-            Spacer()
-            
-            // Completion message and button
-            if manager.isFinished {
-                VStack(spacing: 20) {
-                    Text("Great job! 🌿")
-                        .font(.system(.title2, design: .rounded))
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .multilineTextAlignment(.center)
+    private var practiceView: some View {
+        ScrollView {
+            VStack(spacing: 28) {
+                Spacer(minLength: 20)
 
-                    Text("You've completed the breathing exercise")
-                        .font(.system(.body, design: .rounded))
-                        .foregroundColor(.white.opacity(0.8))
-                        .multilineTextAlignment(.center)
-                    Button("Continue to Next Exercise →") {
-                        print("🫁 User tapped continue button")
-                        HapticFeedback.success()
-                        onComplete()
-                    }
-                    .padding(.horizontal, 40)
-                    .padding(.vertical, 16)
-                    .background(
-                        RoundedRectangle(cornerRadius: 25)
-                            .fill(Color.white)
-                            .shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4)
-                    )
-                    .foregroundColor(Color(hex: "#6E63A4"))
-                    .font(.system(.body, design: .rounded))
-                    .fontWeight(.semibold)
+                CompanionFaceView(expression: .calm)
+                    .frame(width: 140, height: 140)
+
+                Text("Take five rounds at your own pace.")
+                    .font(.system(.title3, design: .rounded).bold())
+                    .foregroundColor(.white)
+                    .multilineTextAlignment(.center)
+
+                VStack(alignment: .leading, spacing: 14) {
+                    practiceStep(number: 1, text: "Inhale gently for four counts.")
+                    practiceStep(number: 2, text: "Pause for four counts.")
+                    practiceStep(number: 3, text: "Exhale slowly for four counts.")
+                    practiceStep(number: 4, text: "Pause again before the next cycle.")
                 }
-                .transition(.opacity.combined(with: .offset(y: 20)))
-                .animation(.easeInOut(duration: 0.6), value: manager.isFinished)
-                .padding(.bottom, 50)
-            } else {
-                // Show a manual finish button as fallback
-                Button("Finish Exercise") {
-                    print("🫁 User manually finished exercise")
-                    manager.finishSession()
-                    HapticFeedback.success()
-                }
-                .padding(.horizontal, 40)
-                .padding(.vertical, 16)
+                .padding(20)
                 .background(
-                    RoundedRectangle(cornerRadius: 25)
-                        .fill(Color.white.opacity(0.8))
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(.ultraThinMaterial)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(.white.opacity(0.2), lineWidth: 1)
+                        )
                 )
-                .foregroundColor(Color(hex: "#6E63A4"))
-                .font(.system(.body, design: .rounded))
-                .fontWeight(.semibold)
-                .padding(.bottom, 50)
+                .padding(.horizontal, 24)
+
+                Button(action: {
+                    HapticFeedback.success()
+                    onComplete()
+                }) {
+                    Text("Continue →")
+                        .font(.system(.body, design: .rounded).bold())
+                        .foregroundColor(Color(hex: "#6E63A4"))
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 16)
+                        .background(
+                            RoundedRectangle(cornerRadius: 24)
+                                .fill(Color.white)
+                        )
+                }
+                .buttonStyle(.plain)
+                .padding(.horizontal, 24)
+                .padding(.bottom, 60)
             }
+        }
+    }
+
+    private func practiceStep(number: Int, text: String) -> some View {
+        HStack(alignment: .top, spacing: 12) {
+            Text("\(number)")
+                .font(.system(.body, design: .rounded).bold())
+                .foregroundColor(.white)
+                .frame(width: 22, height: 22)
+                .background(
+                    Circle()
+                        .fill(Color.white.opacity(0.25))
+                )
+
+            Text(text)
+                .font(.system(.body, design: .rounded))
+                .foregroundColor(.white.opacity(0.9))
+                .fixedSize(horizontal: false, vertical: true)
+
+            Spacer(minLength: 0)
         }
     }
 }

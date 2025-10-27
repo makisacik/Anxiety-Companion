@@ -14,30 +14,41 @@ struct CompanionFaceView: View {
 
     var expression: Expression = .neutral
     var showGlow: Bool = false
+    var animateBreathing: Bool = true
+    var size: CGFloat = 120
 
     @State private var blink = false
     @State private var breathing = false
     @State private var glowPulse = false
 
     var body: some View {
-        ZStack {
-            // Body (orb)
-            Circle()
-                .fill(
-                    LinearGradient(
-                        colors: [
-                            Color(hex: "#E2D9F7"), // soft light lavender
-                            Color(hex: "#B5A7E0"), // main lavender tone
-                            Color(hex: "#A493D6")  // deeper lavender
-                        ],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
+        GeometryReader { geometry in
+            let actualSize = min(geometry.size.width, geometry.size.height)
+            let scaleFactor = actualSize / 120.0 // Base size reference
+            
+            ZStack {
+                // Body (orb)
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                Color(hex: "#E2D9F7"), // soft light lavender
+                                Color(hex: "#B5A7E0"), // main lavender tone
+                                Color(hex: "#A493D6")  // deeper lavender
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
                     )
+                    .frame(width: actualSize, height: actualSize)
+                .scaleEffect(animateBreathing ? (breathing ? 1.05 : 0.95) : 1.0)
+                .animation(
+                    animateBreathing
+                    ? .easeInOut(duration: 3).repeatForever(autoreverses: true)
+                    : .default,
+                    value: breathing
                 )
-                .frame(width: 120, height: 120)
-                .scaleEffect(breathing ? 1.05 : 0.95)
-                .animation(.easeInOut(duration: 3).repeatForever(autoreverses: true), value: breathing)
-                .overlay(faceLayer)
+                .overlay(faceLayer(scaleFactor: scaleFactor))
                 .overlay(
                     // Glow effect for final screen
                     Circle()
@@ -49,16 +60,22 @@ struct CompanionFaceView: View {
                                 ],
                                 center: .center,
                                 startRadius: 0,
-                                endRadius: 80
+                                endRadius: actualSize * 0.67
                             )
                         )
                         .scaleEffect(glowPulse ? 1.2 : 0.8)
                         .opacity(showGlow ? 1 : 0)
                         .animation(.easeInOut(duration: 4).repeatForever(autoreverses: true), value: glowPulse)
                 )
+            }
+            .frame(width: actualSize, height: actualSize)
+            .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
         }
+        .frame(width: 120, height: 120)
         .onAppear {
-            breathing.toggle()
+            if animateBreathing {
+                breathing.toggle()
+            }
             startBlinking()
             if showGlow {
                 startGlowPulse()
@@ -74,43 +91,49 @@ struct CompanionFaceView: View {
     }
 
     // MARK: - Face Layout
-    private var faceLayer: some View {
-        VStack(spacing: 10) {
+    private func faceLayer(scaleFactor: CGFloat) -> some View {
+        VStack(spacing: 10 * scaleFactor) {
             // Eyes
-            HStack(spacing: 30) {
-                eye
-                eye
+            HStack(spacing: 30 * scaleFactor) {
+                eye(scaleFactor: scaleFactor)
+                eye(scaleFactor: scaleFactor)
             }
             // Mouth
-            mouth
+            mouth(scaleFactor: scaleFactor)
         }
     }
 
-    private var eye: some View {
-        Capsule()
+    private func eye(scaleFactor: CGFloat) -> some View {
+        let baseWidth = expression == .calm ? 6.0 : 8.0
+        let blinkWidth = 2.0
+        
+        return Capsule()
             .fill(Color.black.opacity(0.6))
-            .frame(width: blink ? 2 : (expression == .calm ? 6 : 8), height: 8)
+            .frame(
+                width: (blink ? blinkWidth : baseWidth) * scaleFactor,
+                height: 8 * scaleFactor
+            )
             .animation(.easeInOut(duration: 0.2), value: blink)
     }
 
     // MARK: - Mouth
     @ViewBuilder
-    private var mouth: some View {
+    private func mouth(scaleFactor: CGFloat) -> some View {
         switch expression {
         case .happy, .smile:
             // gentle smile curve (visible but subtle)
             HappyMouthShape()
-                .stroke(Color.black.opacity(0.6), lineWidth: 3)
-                .frame(width: 36, height: 10)
-                .offset(y: 5)
+                .stroke(Color.black.opacity(0.6), lineWidth: 3 * scaleFactor)
+                .frame(width: 36 * scaleFactor, height: 10 * scaleFactor)
+                .offset(y: 5 * scaleFactor)
                 .transition(.opacity)
         default:
             // straight or tilted line for other moods
-            RoundedRectangle(cornerRadius: 3)
+            RoundedRectangle(cornerRadius: 3 * scaleFactor)
                 .fill(Color.black.opacity(0.5))
-                .frame(width: 30, height: 3)
+                .frame(width: 30 * scaleFactor, height: 3 * scaleFactor)
                 .rotationEffect(mouthRotation)
-                .offset(x: mouthOffsetX, y: mouthOffsetY)
+                .offset(x: mouthOffsetX * scaleFactor, y: mouthOffsetY * scaleFactor)
                 .transition(.opacity)
         }
     }
