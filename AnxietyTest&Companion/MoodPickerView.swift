@@ -79,15 +79,7 @@ struct MoodPickerView: View {
                     .accessibilityAddTraits(selectedMood == mood ? .isSelected : [])
                 }
             }
-            
-            if selectedMood != nil {
-                Text("Thank you for sharing")
-                    .font(.system(.caption, design: .rounded))
-                    .foregroundColor(.white.opacity(0.7))
-                    .transition(.opacity.combined(with: .move(edge: .bottom)))
-            }
         }
-        .padding(.horizontal, 20)
     }
 }
 

@@ -15,22 +15,23 @@ struct AnxietyTestHomeView: View {
     @AppStorage("hasCompletedTest") private var hasCompletedTest = false
     @AppStorage("lastGAD7Score") private var lastGAD7Score = 0
     @AppStorage("lastGAD7DateTimestamp") private var lastGAD7DateTimestamp: Double = 0
-    @AppStorage("lastMood") private var lastMood = 0
-
+    @AppStorage("lastMood") private var lastMood = -1 // default none
+    @AppStorage("lastMoodDate") private var lastMoodDateTimestamp: Double = 0 // store mood date
+    
     private var lastGAD7Date: Date {
-        get {
-            lastGAD7DateTimestamp == 0 ? Date() : Date(timeIntervalSince1970: lastGAD7DateTimestamp)
-        }
-        set {
-            lastGAD7DateTimestamp = newValue.timeIntervalSince1970
-        }
+        get { lastGAD7DateTimestamp == 0 ? Date() : Date(timeIntervalSince1970: lastGAD7DateTimestamp) }
+        set { lastGAD7DateTimestamp = newValue.timeIntervalSince1970 }
+    }
+    
+    private var lastMoodDate: Date {
+        get { lastMoodDateTimestamp == 0 ? Date(timeIntervalSince1970: 0) : Date(timeIntervalSince1970: lastMoodDateTimestamp) }
+        set { lastMoodDateTimestamp = newValue.timeIntervalSince1970 }
     }
 
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \GAD7Entry.date, ascending: false)],
         animation: .default
-    )
-    private var gad7Entries: FetchedResults<GAD7Entry>
+    ) private var gad7Entries: FetchedResults<GAD7Entry>
 
     @State private var companionExpression: CompanionFaceView.Expression = .neutral
     @State private var selectedMood: MoodPickerView.Mood? = nil
@@ -39,49 +40,15 @@ struct AnxietyTestHomeView: View {
     @State private var companionScale: CGFloat = 1.0
     @State private var showNotificationPermission = false
     @State private var currentGreeting = ""
-
+    @State private var showThankYou = false
+    @State private var cardWidth: CGFloat = 0
+    
     private let greetingMessages = [
-        "You're stronger than you know",
-        "Your feelings are valid and important",
-        "Take a deep breath, you've got this",
-        "It's okay to feel however you're feeling",
-        "You're not alone in this journey",
-        "Every small step counts",
-        "Your courage inspires me",
-        "You're exactly where you need to be",
-        "Be gentle with yourself today",
-        "Your progress matters",
-        "You're worthy of peace and calm",
-        "Trust in your resilience",
-        "You're doing better than you think",
-        "Your feelings are temporary visitors",
-        "You have everything you need within you",
-        "Take it one moment at a time",
-        "You're braver than you believe",
-        "Your journey is uniquely yours",
-        "It's okay to rest when you need to",
-        "You're growing through this",
-        "Your heart is wise and strong",
-        "You're allowed to take breaks",
-        "Every breath is a new beginning",
-        "You're more capable than you realize",
-        "Your feelings don't define you",
-        "You're learning and growing every day",
-        "It's okay to ask for help",
-        "You're exactly enough as you are",
-        "Your inner light is always shining",
-        "You're making progress, even if it's small",
-        "Be proud of how far you've come",
-        "You're allowed to feel however you feel",
-        "Your strength is quiet but powerful",
-        "You're doing the best you can",
-        "It's okay to not be okay sometimes",
-        "You're worthy of love and kindness",
-        "Your journey is beautiful and valid",
-        "You're exactly where you need to be right now",
-        "Take time to appreciate how far you've come"
+        "You're stronger than you know", "Your feelings are valid and important", "Take a deep breath, you've got this",
+        "It's okay to feel however you're feeling", "You're not alone in this journey", "Every small step counts",
+        "Be gentle with yourself today", "You're worthy of peace and calm", "You're doing better than you think"
     ]
-
+    
     private var buttonText: String {
         if hasCompletedTest || !gad7Entries.isEmpty {
             let daysAgo = Calendar.current.dateComponents([.day], from: lastGAD7Date, to: Date()).day ?? 0
@@ -90,29 +57,31 @@ struct AnxietyTestHomeView: View {
             return "Take Test"
         }
     }
-
+    
+    private var isMoodForToday: Bool {
+        Calendar.current.isDateInToday(lastMoodDate)
+    }
+    
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(spacing: 30) {
-                    // Greeting Section
-                    greetingSection
-
-                    // Companion Bubble
-                    companionSection
-
-                    // GAD-7 Check-in Card
-                    gad7CardSection
-
-                    // Mood Quick Check
-                    moodSection
-
-                    // Daily Tip
-                    DailyTipView()
-                        .padding(.horizontal, 20)
+            GeometryReader { geometry in
+                ScrollView {
+                    VStack(spacing: 30) {
+                        greetingSection
+                        companionSection
+                        gad7CardSection
+                        
+                        moodSection
+                        
+                        DailyTipView()
+                    }
+                    .padding(.top, 40)
+                    .padding(.bottom, 60)
+                    .padding(.horizontal, 20)
                 }
-                .padding(.top, 40)
-                .padding(.bottom, 60)
+                .onAppear {
+                    cardWidth = geometry.size.width - 40 // screen width minus padding
+                }
             }
             .background(
                 LinearGradient(
@@ -122,6 +91,15 @@ struct AnxietyTestHomeView: View {
                 )
                 .ignoresSafeArea()
             )
+            .navigationTitle("")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink(destination: SettingsView()) {
+                        Image(systemName: "gearshape.fill")
+                            .foregroundColor(.white)
+                    }
+                }
+            }
         }
         .onAppear {
             selectRandomGreeting()
@@ -134,16 +112,14 @@ struct AnxietyTestHomeView: View {
         }
         .sheet(isPresented: $showNotificationPermission) {
             NotificationPermissionView(
-                onPermissionGranted: {
-                    print("User granted notification permission")
-                },
-                onDismiss: {
-                    print("User dismissed notification permission")
-                }
+                onPermissionGranted: { print("✅ Granted") },
+                onDismiss: { print("❌ Dismissed") }
             )
         }
     }
 
+    // MARK: - Sections
+    
     private var greetingSection: some View {
         VStack(spacing: 16) {
             Text("Hi, \(userName) 👋")
@@ -153,29 +129,22 @@ struct AnxietyTestHomeView: View {
                 .opacity(showGreeting ? 1 : 0)
                 .offset(y: showGreeting ? 0 : 10)
                 .animation(.easeInOut(duration: 0.6), value: showGreeting)
-
+            
             if showTyping {
-                TypingTextView(text: currentGreeting) {
-                    HapticFeedback.soft()
-                }
+                TypingTextView(text: currentGreeting) { HapticFeedback.soft() }
             }
         }
-        .padding(.horizontal, 40)
     }
 
     private var companionSection: some View {
         CompanionFaceView(expression: companionExpression)
             .scaleEffect(companionScale)
-            .shadow(color: Color.white.opacity(0.25), radius: 10, x: 0, y: 5)
+            .shadow(color: Color.white.opacity(0.25), radius: 10)
             .onTapGesture {
                 HapticFeedback.soft()
-                withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
-                    companionScale = 1.1
-                }
+                withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) { companionScale = 1.1 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
-                        companionScale = 1.0
-                    }
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) { companionScale = 1.0 }
                 }
             }
     }
@@ -188,7 +157,7 @@ struct AnxietyTestHomeView: View {
                         .font(.system(.title2, design: .serif))
                         .fontWeight(.semibold)
                         .foregroundColor(.white)
-
+                    
                     if hasCompletedTest || !gad7Entries.isEmpty {
                         let daysAgo = Calendar.current.dateComponents([.day], from: lastGAD7Date, to: Date()).day ?? 0
                         let category = getScoreCategory(lastGAD7Score)
@@ -201,14 +170,13 @@ struct AnxietyTestHomeView: View {
                             .foregroundColor(.white.opacity(0.8))
                     }
                 }
-
+                
                 Spacer()
-
                 if hasCompletedTest || !gad7Entries.isEmpty {
                     CircularProgressView(score: lastGAD7Score, maxScore: 21)
                 }
             }
-
+            
             NavigationLink(destination: GAD7TestView()) {
                 Text(buttonText)
                     .font(.system(.body, design: .rounded))
@@ -222,17 +190,9 @@ struct AnxietyTestHomeView: View {
                     )
             }
             .buttonStyle(ScaleButtonStyle())
-            .simultaneousGesture(
-                TapGesture()
-                    .onEnded {
-                        HapticFeedback.success()
-                        withAnimation(.easeInOut(duration: 0.3)) {
-                            companionExpression = .happy
-                        }
-                    }
-            )
         }
         .padding(20)
+        .frame(width: cardWidth > 0 ? cardWidth : nil)
         .background(
             RoundedRectangle(cornerRadius: 20)
                 .fill(.ultraThinMaterial)
@@ -241,46 +201,72 @@ struct AnxietyTestHomeView: View {
                         .stroke(Color.white.opacity(0.2), lineWidth: 1)
                 )
         )
-        .padding(.horizontal, 20)
     }
 
     private var moodSection: some View {
-        VStack(spacing: 20) {
-            Text("How do you feel right now?")
-                .font(.system(.headline, design: .rounded))
-                .foregroundColor(.white)
-
-            MoodPickerView(selectedMood: $selectedMood) { expression in
-                HapticFeedback.light()
-                withAnimation(.easeInOut(duration: 0.5)) {
-                    companionExpression = expression
+        Group {
+            if !isMoodForToday {
+                VStack(spacing: 20) {
+                    Text("How do you feel right now?")
+                        .font(.system(.headline, design: .rounded))
+                        .foregroundColor(.white)
+                    
+                    MoodPickerView(selectedMood: $selectedMood) { expression in
+                        HapticFeedback.light()
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            companionExpression = expression
+                        }
+                        saveMood()
+                        withAnimation(.spring()) {
+                            showThankYou = true
+                        }
+                    }
+                    
+                    if showThankYou {
+                        Text("💜 Thank you for sharing how you feel today!")
+                            .font(.system(.subheadline, design: .rounded))
+                            .foregroundColor(.white.opacity(0.9))
+                            .multilineTextAlignment(.center)
+                            .transition(.opacity.combined(with: .move(edge: .top)))
+                    }
                 }
-                saveMood()
+                .padding(20)
+                .frame(width: cardWidth > 0 ? cardWidth : nil)
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(.ultraThinMaterial)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                        )
+                )
             }
         }
-        .padding(.horizontal, 20)
     }
 
+    // MARK: - Helpers
+    
     private func selectRandomGreeting() {
         currentGreeting = greetingMessages.randomElement() ?? "How are you feeling today?"
     }
 
     private func startGreetingAnimation() {
-        withAnimation(.easeInOut(duration: 0.6)) {
-            showGreeting = true
-        }
-
+        withAnimation(.easeInOut(duration: 0.6)) { showGreeting = true }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-            withAnimation(.easeInOut(duration: 0.6)) {
-                showTyping = true
-            }
+            withAnimation(.easeInOut(duration: 0.6)) { showTyping = true }
         }
     }
 
     private func loadLastMood() {
-        if lastMood >= 0 && lastMood < MoodPickerView.Mood.allCases.count {
-            selectedMood = MoodPickerView.Mood.allCases[lastMood]
-            companionExpression = selectedMood?.companionExpression ?? .neutral
+        if Calendar.current.isDateInToday(lastMoodDate) {
+            if lastMood >= 0, lastMood < MoodPickerView.Mood.allCases.count {
+                selectedMood = MoodPickerView.Mood.allCases[lastMood]
+                companionExpression = selectedMood?.companionExpression ?? .neutral
+                showThankYou = true
+            }
+        } else {
+            selectedMood = nil
+            showThankYou = false
         }
     }
 
@@ -288,29 +274,19 @@ struct AnxietyTestHomeView: View {
         if let mood = selectedMood,
            let index = MoodPickerView.Mood.allCases.firstIndex(of: mood) {
             lastMood = index
+            lastMoodDateTimestamp = Date().timeIntervalSince1970
         }
     }
 
     private func checkForNotificationPermission() {
-        // Check if user just completed their first test and we haven't shown the permission prompt yet
         let isFirstTestCompletion = UserDefaults.standard.bool(forKey: "isFirstTestCompletion")
         let reminderPromptShown = UserDefaults.standard.bool(forKey: "reminderPromptShown")
 
-        print("🔔 Notification Permission Check:")
-        print("   - isFirstTestCompletion: \(isFirstTestCompletion)")
-        print("   - reminderPromptShown: \(reminderPromptShown)")
-
         if isFirstTestCompletion && !reminderPromptShown {
-            print("   - ✅ Showing notification permission sheet")
-            // Clear the first test completion flag
             UserDefaults.standard.set(false, forKey: "isFirstTestCompletion")
-
-            // Show notification permission after a brief delay
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 showNotificationPermission = true
             }
-        } else {
-            print("   - ❌ Not showing notification permission sheet")
         }
     }
 
@@ -324,44 +300,46 @@ struct AnxietyTestHomeView: View {
     }
 }
 
+// MARK: - Circular Progress View
+
 struct CircularProgressView: View {
     let score: Int
     let maxScore: Int
-
+    
     private var progress: Double {
         Double(score) / Double(maxScore)
     }
-
-    private var color: Color {
+    
+    private var progressColor: Color {
         switch score {
-        case 0...4: return .green
-        case 5...9: return .yellow
-        case 10...14: return .orange
-        default: return .red
+        case 0...4:
+            return .green
+        case 5...9:
+            return .yellow
+        case 10...14:
+            return .orange
+        default:
+            return .red
         }
     }
-
+    
     var body: some View {
         ZStack {
             Circle()
-                .stroke(Color.white.opacity(0.2), lineWidth: 4)
-                .frame(width: 40, height: 40)
-
+                .stroke(Color.white.opacity(0.3), lineWidth: 4)
+                .frame(width: 50, height: 50)
+            
             Circle()
                 .trim(from: 0, to: progress)
-                .stroke(color, style: StrokeStyle(lineWidth: 4, lineCap: .round))
-                .frame(width: 40, height: 40)
+                .stroke(progressColor, style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                .frame(width: 50, height: 50)
                 .rotationEffect(.degrees(-90))
-                .animation(.easeInOut(duration: 1.0), value: progress)
-
+                .animation(.easeInOut(duration: 0.5), value: progress)
+            
             Text("\(score)")
                 .font(.system(.caption, design: .rounded))
-                .fontWeight(.medium)
+                .fontWeight(.bold)
                 .foregroundColor(.white)
         }
     }
-}
-
-#Preview {
-    AnxietyTestHomeView()
 }

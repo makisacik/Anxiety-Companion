@@ -166,6 +166,45 @@ struct SettingsView: View {
                                     isEnabled: false
                                 )
                                 
+                                // Reset Mood Button
+                                Button(action: {
+                                    resetMoodForToday()
+                                }) {
+                                    HStack(spacing: 16) {
+                                        Image(systemName: "arrow.counterclockwise.circle.fill")
+                                            .foregroundColor(Color(hex: "#B5A7E0"))
+                                            .font(.system(size: 18))
+                                            .frame(width: 24)
+                                        
+                                        VStack(alignment: .leading, spacing: 2) {
+                                            Text("Reset Today's Mood")
+                                                .font(.system(.body, design: .rounded))
+                                                .fontWeight(.medium)
+                                                .foregroundColor(.white)
+                                            
+                                            Text("Clear today's mood selection for testing")
+                                                .font(.system(.caption, design: .rounded))
+                                                .foregroundColor(.white.opacity(0.7))
+                                        }
+                                        
+                                        Spacer()
+                                        
+                                        Image(systemName: "chevron.right")
+                                            .foregroundColor(.white.opacity(0.4))
+                                            .font(.system(size: 12))
+                                    }
+                                    .padding(16)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .fill(.ultraThinMaterial)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 12)
+                                                    .stroke(Color.white.opacity(0.1), lineWidth: 1)
+                                            )
+                                    )
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                                
                                 // Debug button for filling test data
                                 Button(action: {
                                     fillDebugData()
@@ -260,6 +299,13 @@ struct SettingsView: View {
             ReminderScheduler.shared.cancelReminders()
             actualNotificationStatus = false
         }
+    }
+    
+    private func resetMoodForToday() {
+        HapticFeedback.light()
+        UserDefaults.standard.set(-1, forKey: "lastMood")
+        UserDefaults.standard.set(0.0, forKey: "lastMoodDate")
+        HapticFeedback.success()
     }
     
     private func fillDebugData() {
@@ -397,6 +443,10 @@ struct SettingsRow: View {
                 )
         )
     }
+}
+
+#Preview {
+    SettingsView()
 }
 
 #Preview {
