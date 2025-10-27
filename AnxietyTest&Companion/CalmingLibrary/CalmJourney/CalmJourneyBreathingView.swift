@@ -11,6 +11,7 @@ struct CalmJourneyBreathingView: View {
     let exercise: CalmExercise
     let onComplete: () -> Void
     @State private var hasStartedPractice = false
+    @StateObject private var manager = BreathingManager()
     
     var body: some View {
         ZStack {
@@ -142,35 +143,19 @@ struct CalmJourneyBreathingView: View {
     }
     
     private var practiceView: some View {
-        ScrollView {
-            VStack(spacing: 28) {
-                Spacer(minLength: 20)
-
-                CompanionFaceView(expression: .calm)
-                    .frame(width: 140, height: 140)
-
-                Text("Take five rounds at your own pace.")
-                    .font(.system(.title3, design: .rounded).bold())
-                    .foregroundColor(.themeText)
-                    .multilineTextAlignment(.center)
-
-                VStack(alignment: .leading, spacing: 14) {
-                    practiceStep(number: 1, text: "Inhale gently for four counts.")
-                    practiceStep(number: 2, text: "Pause for four counts.")
-                    practiceStep(number: 3, text: "Exhale slowly for four counts.")
-                    practiceStep(number: 4, text: "Pause again before the next cycle.")
-                }
-                .padding(20)
-                .background(
-                    RoundedRectangle(cornerRadius: 20)
-                        .fill(Color.themeCard)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(Color.themeDivider, lineWidth: 1)
-                        )
-                )
-                .padding(.horizontal, 24)
-
+        VStack(spacing: 30) {
+            Spacer()
+            
+            // Animated breathing circle
+            BreathingCircleViewCustom(
+                isExpanded: $manager.isExpanded,
+                onPhaseChange: manager.updatePhase
+            )
+            
+            Spacer()
+            
+            // Show Continue button when finished, otherwise show Skip button
+            if manager.isFinished {
                 Button(action: {
                     HapticFeedback.success()
                     onComplete()
@@ -181,34 +166,34 @@ struct CalmJourneyBreathingView: View {
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 16)
                         .background(
-                            RoundedRectangle(cornerRadius: 24)
+                            RoundedRectangle(cornerRadius: 25)
                                 .fill(Color.themeCard)
                         )
                 }
                 .buttonStyle(.plain)
-                .padding(.horizontal, 24)
-                .padding(.bottom, 60)
+                .padding(.horizontal, 30)
+                .padding(.bottom, 50)
+                .transition(.scale.combined(with: .opacity))
+            } else {
+                Button(action: {
+                    HapticFeedback.light()
+                    manager.finishSession()
+                    onComplete()
+                }) {
+                    Text("Skip Exercise")
+                        .font(.system(.body, design: .rounded))
+                        .foregroundColor(.themeText.opacity(0.7))
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                        .background(
+                            RoundedRectangle(cornerRadius: 25)
+                                .stroke(Color.themeText.opacity(0.3), lineWidth: 1)
+                        )
+                }
+                .buttonStyle(.plain)
+                .padding(.horizontal, 30)
+                .padding(.bottom, 50)
             }
-        }
-    }
-
-    private func practiceStep(number: Int, text: String) -> some View {
-        HStack(alignment: .top, spacing: 12) {
-            Text("\(number)")
-                .font(.system(.body, design: .rounded).bold())
-                .foregroundColor(.themeText)
-                .frame(width: 22, height: 22)
-                .background(
-                    Circle()
-                        .fill(Color.themeCard)
-                )
-
-            Text(text)
-                .font(.system(.body, design: .rounded))
-                .foregroundColor(.themeText.opacity(0.8))
-                .fixedSize(horizontal: false, vertical: true)
-
-            Spacer(minLength: 0)
         }
     }
 }

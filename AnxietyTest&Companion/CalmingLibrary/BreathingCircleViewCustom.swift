@@ -28,7 +28,7 @@ struct BreathingCircleViewCustom: View {
         ZStack {
             // Outer circle (border)
             Circle()
-                .strokeBorder(Color.white.opacity(0.5), lineWidth: 4)
+                .strokeBorder(Color.themeText.opacity(0.3), lineWidth: 4)
                 .frame(width: isExpanded ? 200 : 120,
                        height: isExpanded ? 200 : 120)
                 .animation(.easeInOut(duration: inhaleDuration), value: isExpanded)
@@ -36,23 +36,23 @@ struct BreathingCircleViewCustom: View {
             // Inner circle (main breathing circle)
             Circle()
                 .fill(LinearGradient(
-                    colors: [Color(hex: "#B5A7E0"), Color(hex: "#6E63A4")],
+                    colors: [Color.themeCompanionDark, Color.themeCompanionMid],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing))
                 .frame(width: isExpanded ? 180 : 100,
                        height: isExpanded ? 180 : 100)
                 .clipShape(Circle())
-                .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
+                .shadow(color: Color.themeText.opacity(0.15), radius: 8, x: 0, y: 4)
                 .animation(.easeInOut(duration: inhaleDuration), value: isExpanded)
 
             VStack {
                 Text(phaseLabel)
                     .font(.title3.weight(.semibold))
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                     .padding(.top, 10)
                 Text("Cycle \(cycleCount)/5")
                     .font(.footnote)
-                    .foregroundColor(.white.opacity(0.7))
+                    .foregroundColor(.themeText.opacity(0.7))
             }
             .offset(y: 150)
         }

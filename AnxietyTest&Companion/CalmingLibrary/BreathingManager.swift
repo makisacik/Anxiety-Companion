@@ -27,11 +27,9 @@ final class BreathingManager: ObservableObject {
                 HapticManager.shared.soft()
 
             case "end":
-                self.cycleCount += 1
-                if self.cycleCount >= 5 {
-                    self.isFinished = true
-                    HapticManager.shared.success()
-                }
+                // This is called once after all 5 cycles are complete
+                self.isFinished = true
+                HapticManager.shared.success()
 
             default: break
             }

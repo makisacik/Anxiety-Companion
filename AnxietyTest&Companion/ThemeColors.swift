@@ -28,11 +28,10 @@ extension Color {
     
     // MARK: - Companion Gradient Colors (similar to original purple gradient)
     /// Soft light tone for companion gradient
-    static let themeCompanionLight = Color(hex: "#D4D4D4")
-    /// Main tone for companion gradient
-    static let themeCompanionMid = Color(hex: "#A8A8A8")
-    /// Deeper tone for companion gradient
-    static let themeCompanionDark = Color(hex: "#8C8C8C")
+    static let themeCompanionLight = Color(hex: "#F2F2F2") // almost white, gentle tone
+    static let themeCompanionMid   = Color(hex: "#E0E0E0") // light neutral gray
+    static let themeCompanionDark  = Color(hex: "#CFCFCF") // slightly deeper, still soft
+
 }
 
 // MARK: - Force Light Mode View Modifier
