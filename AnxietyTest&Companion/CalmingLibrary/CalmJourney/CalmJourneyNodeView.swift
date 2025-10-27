@@ -21,51 +21,25 @@ struct CalmJourneyNodeView: View {
     
     var body: some View {
         ZStack {
-            // Outer glow for completed nodes
+            // Background image based on completion state
             if state == .completed {
-                Circle()
-                    .fill(
-                        RadialGradient(
-                            colors: [
-                                Color.themeText.opacity(0.3),
-                                Color.themeText.opacity(0.0)
-                            ],
-                            center: .center,
-                            startRadius: 25,
-                            endRadius: 50
-                        )
-                    )
+                Image("journey-level-done")
+                    .renderingMode(.original)
+                    .resizable()
+                    .interpolation(.none)
+                    .scaledToFit()
                     .frame(width: 70, height: 70)
-                    .blur(radius: 10)
-            }
-            
-            // Main circle
-            Circle()
-                .fill(
-                    state == .completed ? completedGradient :
-                    state == .active ? activeGradient :
-                    lockedGradient
-                )
-                .frame(width: 70, height: 70)
-                .shadow(
-                    color: state == .completed ? Color.themeText.opacity(0.4) :
-                           state == .active ? Color.themeText.opacity(0.2) :
-                           Color.black.opacity(0.15),
-                    radius: state == .completed ? 12 : 8,
-                    x: 0,
-                    y: 4
-                )
-            
-            // Inner content
-            Group {
-                if state == .completed {
-                    Image(systemName: "checkmark")
-                        .font(.system(size: 28, weight: .bold))
-                        .foregroundColor(.themeBackgroundPure)
-                } else if state == .active {
+            } else {
+                Image("journey-level-number")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 70, height: 70)
+                
+                // Overlay content for non-completed states
+                if state == .active {
                     Text("\(index)")
                         .font(.system(size: 24, weight: .bold, design: .rounded))
-                        .foregroundColor(.themeBackgroundPure)
+                        .foregroundColor(.themeText)
                 } else {
                     Image(systemName: "lock.fill")
                         .font(.system(size: 22, weight: .semibold))
@@ -80,30 +54,6 @@ struct CalmJourneyNodeView: View {
                 animateIn = true
             }
         }
-    }
-    
-    private var completedGradient: LinearGradient {
-        LinearGradient(
-            colors: [Color.themeText, Color.themeText.opacity(0.8)],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    }
-    
-    private var activeGradient: LinearGradient {
-        LinearGradient(
-            colors: [Color.themeText.opacity(0.8), Color.themeText.opacity(0.6)],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    }
-    
-    private var lockedGradient: LinearGradient {
-        LinearGradient(
-            colors: [Color.themeDivider.opacity(0.6), Color.themeDivider.opacity(0.4)],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
     }
 }
 
