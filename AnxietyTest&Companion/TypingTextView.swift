@@ -24,7 +24,7 @@ struct TypingTextView: View {
         VStack(alignment: .leading, spacing: 0) {
             Text(displayedText)
                 .font(.system(.body, design: .rounded))
-                .foregroundColor(.white)
+                .foregroundColor(.themeText)
                 .multilineTextAlignment(.leading)
                 .accessibilityLabel(isComplete ? text : displayedText)
                 .accessibilityAddTraits(isComplete ? [] : .updatesFrequently)
@@ -90,11 +90,5 @@ struct TypingTextView: View {
         }
     }
     .padding()
-    .background(
-        LinearGradient(
-            colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    )
+    .background(Color.themeBackground)
 }

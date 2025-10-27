@@ -32,9 +32,9 @@ struct CompanionFaceView: View {
                     .fill(
                         LinearGradient(
                             colors: [
-                                Color(hex: "#E2D9F7"), // soft light lavender
-                                Color(hex: "#B5A7E0"), // main lavender tone
-                                Color(hex: "#A493D6")  // deeper lavender
+                                Color.themeCompanionLight, // soft light gray
+                                Color.themeCompanionMid,   // main gray tone
+                                Color.themeCompanionDark   // deeper gray
                             ],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
@@ -108,7 +108,7 @@ struct CompanionFaceView: View {
         let blinkWidth = 2.0
         
         return Capsule()
-            .fill(Color.black.opacity(0.6))
+            .fill(Color.themeCompanionOutline)
             .frame(
                 width: (blink ? blinkWidth : baseWidth) * scaleFactor,
                 height: 8 * scaleFactor
@@ -123,14 +123,14 @@ struct CompanionFaceView: View {
         case .happy, .smile:
             // gentle smile curve (visible but subtle)
             HappyMouthShape()
-                .stroke(Color.black.opacity(0.6), lineWidth: 3 * scaleFactor)
+                .stroke(Color.themeCompanionOutline, lineWidth: 3 * scaleFactor)
                 .frame(width: 36 * scaleFactor, height: 10 * scaleFactor)
                 .offset(y: 5 * scaleFactor)
                 .transition(.opacity)
         default:
             // straight or tilted line for other moods
             RoundedRectangle(cornerRadius: 3 * scaleFactor)
-                .fill(Color.black.opacity(0.5))
+                .fill(Color.themeCompanionOutline)
                 .frame(width: 30 * scaleFactor, height: 3 * scaleFactor)
                 .rotationEffect(mouthRotation)
                 .offset(x: mouthOffsetX * scaleFactor, y: mouthOffsetY * scaleFactor)

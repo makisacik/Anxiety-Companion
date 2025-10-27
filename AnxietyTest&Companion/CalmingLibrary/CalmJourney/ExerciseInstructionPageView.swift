@@ -67,7 +67,7 @@ struct ExerciseInstructionPageView: View {
 
                     TextEditor(text: $userResponse)
                         .font(.body)
-                        .foregroundColor(.white)
+                        .foregroundColor(.themeText)
                         .background(Color.clear)
                         .scrollContentBackground(.hidden)
                         .padding(16)
@@ -76,7 +76,7 @@ struct ExerciseInstructionPageView: View {
                     if userResponse.isEmpty {
                         Text("Type your response here...")
                             .font(.body)
-                            .foregroundColor(.white.opacity(0.6))
+                            .foregroundColor(.themeText.opacity(0.6))
                             .padding(EdgeInsets(top: 24, leading: 28, bottom: 0, trailing: 0))
                     }
                 }
@@ -88,11 +88,11 @@ struct ExerciseInstructionPageView: View {
                 // (when companion is shown above, the instruction is already displayed in the chat bubble)
                 if showCompanion {
                     RoundedRectangle(cornerRadius: 20)
-                        .fill(.ultraThinMaterial)
+                        .fill(Color.themeCard)
                         .overlay(
                             Text(instruction)
                                 .font(.body)
-                                .foregroundColor(.white)
+                                .foregroundColor(.themeText)
                                 .padding(20)
                                 .multilineTextAlignment(.leading)
                         )
@@ -138,12 +138,12 @@ struct ExerciseInstructionPageView: View {
             }) {
                 Image(systemName: "chevron.right")
                     .font(.system(size: 18, weight: .semibold))
-                    .foregroundColor(Color(hex: "#6E63A4"))
+                    .foregroundColor(.themeText)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 16)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.white)
+                            .fill(Color.themeCard)
                             .shadow(radius: 3)
                     )
                     .padding(.horizontal, 24)
@@ -162,12 +162,8 @@ struct ExerciseInstructionPageView: View {
 
 #Preview {
     ZStack {
-        LinearGradient(
-            colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-        .ignoresSafeArea()
+        Color.themeBackground
+            .ignoresSafeArea()
         
         VStack {
             // Education instruction

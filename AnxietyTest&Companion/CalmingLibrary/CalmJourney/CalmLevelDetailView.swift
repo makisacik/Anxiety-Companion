@@ -30,13 +30,9 @@ struct CalmLevelDetailView: View {
     
     var body: some View {
         ZStack {
-            // Background gradient
-            LinearGradient(
-                colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
+            // Background
+            Color.themeBackground
+                .ignoresSafeArea()
             
             if showExercise, let exercise = currentExercise {
                 if exercise.type == .breathing {
@@ -80,25 +76,25 @@ struct CalmLevelDetailView: View {
                     }) {
                         Image(systemName: "chevron.left")
                             .font(.system(size: 18, weight: .medium))
-                            .foregroundColor(.white)
+                            .foregroundColor(.themeText)
                     }
                     
                     Spacer()
                     
                     Text("Level \(level.id)")
                         .font(.system(.headline, design: .rounded))
-                        .foregroundColor(.white.opacity(0.8))
+                        .foregroundColor(.themeText.opacity(0.7))
                 }
                 
                 Text(level.title)
                     .font(.system(.largeTitle, design: .serif))
                     .fontWeight(.bold)
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                     .multilineTextAlignment(.center)
                 
                 Text(level.summary)
                     .font(.system(.body, design: .rounded))
-                    .foregroundColor(.white.opacity(0.9))
+                    .foregroundColor(.themeText.opacity(0.8))
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -138,12 +134,12 @@ struct CalmLevelDetailView: View {
                             .font(.system(.body, design: .rounded))
                             .fontWeight(.semibold)
                     }
-                    .foregroundColor(Color(hex: "#6E63A4"))
+                    .foregroundColor(.themeText)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 16)
                     .background(
                         RoundedRectangle(cornerRadius: 25)
-                            .fill(Color.white)
+                            .fill(Color.themeCard)
                     )
                 }
                 .buttonStyle(ScaleButtonStyle())
@@ -158,17 +154,17 @@ struct CalmLevelDetailView: View {
             HStack {
                 Text("Progress")
                     .font(.system(.headline, design: .rounded))
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                 
                 Spacer()
                 
                 Text("\(completedExercises.count)/\(level.exercises.count)")
                     .font(.system(.headline, design: .rounded))
-                    .foregroundColor(.white.opacity(0.8))
+                    .foregroundColor(.themeText.opacity(0.7))
             }
             
             ProgressView(value: Double(completedExercises.count), total: Double(level.exercises.count))
-                .progressViewStyle(LinearProgressViewStyle(tint: Color.white))
+                .progressViewStyle(LinearProgressViewStyle(tint: Color.themeText))
                 .scaleEffect(x: 1, y: 2, anchor: .center)
         }
         .padding(.horizontal, 24)
@@ -182,16 +178,16 @@ struct CalmLevelDetailView: View {
             VStack(spacing: 20) {
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 80))
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                 
                 Text("Level Complete! 🎉")
                     .font(.system(.largeTitle, design: .serif))
                     .fontWeight(.bold)
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                 
                 Text("You've completed all exercises in \(level.title)")
                     .font(.system(.body, design: .rounded))
-                    .foregroundColor(.white.opacity(0.9))
+                    .foregroundColor(.themeText.opacity(0.8))
                     .multilineTextAlignment(.center)
             }
             
@@ -210,12 +206,12 @@ struct CalmLevelDetailView: View {
                             .font(.system(.body, design: .rounded))
                             .fontWeight(.semibold)
                     }
-                    .foregroundColor(Color(hex: "#6E63A4"))
+                    .foregroundColor(.themeText)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 16)
                     .background(
                         RoundedRectangle(cornerRadius: 25)
-                            .fill(Color.white)
+                            .fill(Color.themeCard)
                     )
                 }
                 .buttonStyle(ScaleButtonStyle())
@@ -235,12 +231,12 @@ struct CalmLevelDetailView: View {
                             .font(.system(.body, design: .rounded))
                             .fontWeight(.semibold)
                     }
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 16)
                     .background(
                         RoundedRectangle(cornerRadius: 25)
-                            .stroke(.white.opacity(0.3), lineWidth: 1)
+                            .stroke(Color.themeDivider, lineWidth: 1)
                     )
                 }
                 .buttonStyle(ScaleButtonStyle())
@@ -308,18 +304,18 @@ struct ExerciseRowView: View {
                 // Exercise number/status
                 ZStack {
                     Circle()
-                        .fill(isCompleted ? Color.white : (isCurrent ? Color.white.opacity(0.3) : Color.white.opacity(0.1)))
+                        .fill(isCompleted ? Color.themeText : (isCurrent ? Color.themeText.opacity(0.3) : Color.themeDivider.opacity(0.5)))
                         .frame(width: 40, height: 40)
                     
                     if isCompleted {
                         Image(systemName: "checkmark")
                             .font(.system(.body, weight: .semibold))
-                            .foregroundColor(Color(hex: "#6E63A4"))
+                            .foregroundColor(.themeBackground)
                     } else {
                         Text("\(index + 1)")
                             .font(.system(.body, design: .rounded))
                             .fontWeight(.semibold)
-                            .foregroundColor(isCurrent ? .white : .white.opacity(0.6))
+                            .foregroundColor(isCurrent ? .themeText : .themeText.opacity(0.6))
                     }
                 }
                 
@@ -328,33 +324,33 @@ struct ExerciseRowView: View {
                     HStack {
                         Image(systemName: exercise.icon)
                             .font(.system(.caption, weight: .medium))
-                            .foregroundColor(.white.opacity(0.7))
+                            .foregroundColor(.themeText.opacity(0.7))
                         
                         Text(exercise.title)
                             .font(.system(.headline, design: .rounded))
-                            .foregroundColor(isCompleted ? .white : (isCurrent ? .white : .white.opacity(0.7)))
+                            .foregroundColor(isCompleted ? .themeText : (isCurrent ? .themeText : .themeText.opacity(0.7)))
                         
                         Spacer()
                         
                         if isCurrent && !isCompleted {
                             Image(systemName: "play.circle.fill")
                                 .font(.system(.title3))
-                                .foregroundColor(.white)
+                                .foregroundColor(.themeText)
                         }
                     }
                     
                     Text(exercise.displayType)
                         .font(.system(.caption, design: .rounded))
-                        .foregroundColor(.white.opacity(0.6))
+                        .foregroundColor(.themeText.opacity(0.6))
                 }
             }
             .padding(16)
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(.ultraThinMaterial)
+                    .fill(Color.themeCard)
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
-                            .stroke(isCurrent ? .white.opacity(0.3) : .white.opacity(0.1), lineWidth: 1)
+                            .stroke(isCurrent ? Color.themeText.opacity(0.3) : Color.themeDivider.opacity(0.5), lineWidth: 1)
                     )
             )
         }

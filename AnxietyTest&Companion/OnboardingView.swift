@@ -17,13 +17,9 @@ struct OnboardingView: View {
     
     var body: some View {
         ZStack {
-            // Background gradient
-            LinearGradient(
-                colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
+            // Background
+            Color.themeBackground
+                .ignoresSafeArea()
             
             TabView(selection: $currentPage) {
                 // Screen 1 - Welcome
@@ -50,16 +46,16 @@ struct OnboardingView: View {
                             
                             TextField("Your name", text: $nameInput)
                                 .font(.system(.body, design: .rounded))
-                                .foregroundColor(.white)
+                                .foregroundColor(.themeText)
                                 .multilineTextAlignment(.center)
                                 .padding(.horizontal, 20)
                                 .padding(.vertical, 15)
                                 .background(
                                     RoundedRectangle(cornerRadius: 25)
-                                        .fill(Color.white.opacity(0.2))
+                                        .fill(Color.themeCard)
                                         .overlay(
                                             RoundedRectangle(cornerRadius: 25)
-                                                .stroke(Color.white.opacity(0.3), lineWidth: 1)
+                                                .stroke(Color.themeDivider, lineWidth: 1)
                                         )
                                 )
                                 .onSubmit {
@@ -68,22 +64,20 @@ struct OnboardingView: View {
                                     }
                                 }
                             
-                            if !nameInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                                Button(action: saveNameAndContinue) {
-                                    Text("Continue")
-                                        .font(.system(.body, design: .rounded))
-                                        .fontWeight(.medium)
-                                        .foregroundColor(.white)
-                                        .frame(maxWidth: .infinity)
-                                        .frame(height: 50)
-                                        .background(
-                                            RoundedRectangle(cornerRadius: 25)
-                                                .fill(Color(hex: "#B5A7E0"))
-                                        )
-                                }
-                                .buttonStyle(ScaleButtonStyle())
-                                .transition(.opacity.combined(with: .move(edge: .bottom)))
+                            Button(action: saveNameAndContinue) {
+                                Text("Continue")
+                                    .font(.system(.body, design: .rounded))
+                                    .fontWeight(.medium)
+                                    .foregroundColor(.themeText)
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 50)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 25)
+                                            .fill(Color.themeCard)
+                                    )
                             }
+                            .buttonStyle(ScaleButtonStyle())
+                            .transition(.opacity.combined(with: .move(edge: .bottom)))
                         }
                         .onTapGesture {
                             // Dismiss keyboard when tapping outside the TextField
@@ -166,6 +160,7 @@ struct OnboardingView: View {
         }
     }
 }
+
 
 #Preview {
     OnboardingView()

@@ -28,13 +28,9 @@ struct TrackingView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                // Background gradient
-                LinearGradient(
-                    colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-                .ignoresSafeArea(.all)
+                // Background
+                Color.themeBackground
+                    .ignoresSafeArea(.all)
 
                 ScrollView(showsIndicators: false) {
                 VStack(spacing: 24) {

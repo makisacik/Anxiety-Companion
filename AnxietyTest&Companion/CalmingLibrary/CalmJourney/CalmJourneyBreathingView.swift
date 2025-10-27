@@ -23,8 +23,8 @@ struct CalmJourneyBreathingView: View {
         .navigationTitle("Breathing Exercise")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.hidden, for: .tabBar)
-        .toolbarBackground(Color(hex: "#6E63A4"), for: .navigationBar)
-        .toolbarColorScheme(.dark, for: .navigationBar)
+        .toolbarBackground(Color.themeBackground, for: .navigationBar)
+        .toolbarColorScheme(.light, for: .navigationBar)
     }
     
     private var introView: some View {
@@ -33,11 +33,11 @@ struct CalmJourneyBreathingView: View {
                 // Icon
                 Image(systemName: "lungs.fill")
                     .font(.system(size: 50))
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                     .padding(20)
                     .background(
                         Circle()
-                            .fill(Color.white.opacity(0.2))
+                            .fill(Color.themeCard)
                     )
                     .padding(.top, 20)
 
@@ -45,7 +45,7 @@ struct CalmJourneyBreathingView: View {
                 Text(exercise.title)
                     .font(.system(.title, design: .serif))
                     .fontWeight(.bold)
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                     .multilineTextAlignment(.center)
 
                 // Instructions
@@ -55,16 +55,16 @@ struct CalmJourneyBreathingView: View {
                             Text("\(index + 1)")
                                 .font(.system(.body, design: .rounded))
                                 .fontWeight(.semibold)
-                                .foregroundColor(.white)
+                                .foregroundColor(.themeText)
                                 .frame(width: 20, height: 20)
                                 .background(
                                     Circle()
-                                        .fill(Color.white.opacity(0.2))
+                                        .fill(Color.themeCard)
                                 )
 
                             Text(instruction)
                                 .font(.system(.body, design: .rounded))
-                                .foregroundColor(.white.opacity(0.9))
+                                .foregroundColor(.themeText.opacity(0.8))
                                 .fixedSize(horizontal: false, vertical: true)
 
                             Spacer()
@@ -74,10 +74,10 @@ struct CalmJourneyBreathingView: View {
                 .padding(16)
                 .background(
                     RoundedRectangle(cornerRadius: 16)
-                        .fill(.ultraThinMaterial)
+                        .fill(Color.themeCard)
                         .overlay(
                             RoundedRectangle(cornerRadius: 16)
-                                .stroke(.white.opacity(0.2), lineWidth: 1)
+                                .stroke(Color.themeDivider, lineWidth: 1)
                         )
                 )
                 .padding(.horizontal, 24)
@@ -87,27 +87,27 @@ struct CalmJourneyBreathingView: View {
                     HStack {
                         Image(systemName: "brain.head.profile")
                             .font(.system(size: 18))
-                            .foregroundColor(Color(hex: "#B5A7E0"))
+                            .foregroundColor(.themeText)
                         
                         Text("The Science")
                             .font(.system(.headline, design: .rounded))
-                            .foregroundColor(.white)
+                            .foregroundColor(.themeText)
                         
                         Spacer()
                     }
                     
                     Text(exercise.scienceNote)
                         .font(.system(.body, design: .rounded))
-                        .foregroundColor(.white.opacity(0.9))
+                        .foregroundColor(.themeText.opacity(0.8))
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 .padding(16)
                 .background(
                     RoundedRectangle(cornerRadius: 16)
-                        .fill(.ultraThinMaterial)
+                        .fill(Color.themeCard)
                         .overlay(
                             RoundedRectangle(cornerRadius: 16)
-                                .stroke(Color(hex: "#B5A7E0").opacity(0.3), lineWidth: 1)
+                                .stroke(Color.themeDivider, lineWidth: 1)
                         )
                 )
                 .padding(.horizontal, 24)
@@ -126,12 +126,12 @@ struct CalmJourneyBreathingView: View {
                             .font(.system(.body, design: .rounded))
                             .fontWeight(.semibold)
                     }
-                    .foregroundColor(Color(hex: "#6E63A4"))
+                    .foregroundColor(.themeText)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 16)
                     .background(
                         RoundedRectangle(cornerRadius: 25)
-                            .fill(Color.white)
+                            .fill(Color.themeCard)
                     )
                 }
                 .buttonStyle(ScaleButtonStyle())
@@ -151,7 +151,7 @@ struct CalmJourneyBreathingView: View {
 
                 Text("Take five rounds at your own pace.")
                     .font(.system(.title3, design: .rounded).bold())
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                     .multilineTextAlignment(.center)
 
                 VStack(alignment: .leading, spacing: 14) {
@@ -163,10 +163,10 @@ struct CalmJourneyBreathingView: View {
                 .padding(20)
                 .background(
                     RoundedRectangle(cornerRadius: 20)
-                        .fill(.ultraThinMaterial)
+                        .fill(Color.themeCard)
                         .overlay(
                             RoundedRectangle(cornerRadius: 20)
-                                .stroke(.white.opacity(0.2), lineWidth: 1)
+                                .stroke(Color.themeDivider, lineWidth: 1)
                         )
                 )
                 .padding(.horizontal, 24)
@@ -177,12 +177,12 @@ struct CalmJourneyBreathingView: View {
                 }) {
                     Text("Continue →")
                         .font(.system(.body, design: .rounded).bold())
-                        .foregroundColor(Color(hex: "#6E63A4"))
+                        .foregroundColor(.themeText)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 16)
                         .background(
                             RoundedRectangle(cornerRadius: 24)
-                                .fill(Color.white)
+                                .fill(Color.themeCard)
                         )
                 }
                 .buttonStyle(.plain)
@@ -196,16 +196,16 @@ struct CalmJourneyBreathingView: View {
         HStack(alignment: .top, spacing: 12) {
             Text("\(number)")
                 .font(.system(.body, design: .rounded).bold())
-                .foregroundColor(.white)
+                .foregroundColor(.themeText)
                 .frame(width: 22, height: 22)
                 .background(
                     Circle()
-                        .fill(Color.white.opacity(0.25))
+                        .fill(Color.themeCard)
                 )
 
             Text(text)
                 .font(.system(.body, design: .rounded))
-                .foregroundColor(.white.opacity(0.9))
+                .foregroundColor(.themeText.opacity(0.8))
                 .fixedSize(horizontal: false, vertical: true)
 
             Spacer(minLength: 0)

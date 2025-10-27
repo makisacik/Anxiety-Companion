@@ -27,8 +27,8 @@ struct CalmJourneyNodeView: View {
                     .fill(
                         RadialGradient(
                             colors: [
-                                Color(hex: "#B5A7E0").opacity(0.4),
-                                Color(hex: "#B5A7E0").opacity(0.0)
+                                Color.themeText.opacity(0.3),
+                                Color.themeText.opacity(0.0)
                             ],
                             center: .center,
                             startRadius: 25,
@@ -48,8 +48,8 @@ struct CalmJourneyNodeView: View {
                 )
                 .frame(width: 70, height: 70)
                 .shadow(
-                    color: state == .completed ? Color(hex: "#B5A7E0").opacity(0.5) :
-                           state == .active ? Color(hex: "#C8A2C8").opacity(0.3) :
+                    color: state == .completed ? Color.themeText.opacity(0.4) :
+                           state == .active ? Color.themeText.opacity(0.2) :
                            Color.black.opacity(0.15),
                     radius: state == .completed ? 12 : 8,
                     x: 0,
@@ -61,15 +61,15 @@ struct CalmJourneyNodeView: View {
                 if state == .completed {
                     Image(systemName: "checkmark")
                         .font(.system(size: 28, weight: .bold))
-                        .foregroundColor(.white)
+                        .foregroundColor(.themeBackgroundPure)
                 } else if state == .active {
                     Text("\(index)")
                         .font(.system(size: 24, weight: .bold, design: .rounded))
-                        .foregroundColor(.white)
+                        .foregroundColor(.themeBackgroundPure)
                 } else {
                     Image(systemName: "lock.fill")
                         .font(.system(size: 22, weight: .semibold))
-                        .foregroundColor(.white.opacity(0.6))
+                        .foregroundColor(.themeText.opacity(0.4))
                 }
             }
         }
@@ -84,7 +84,7 @@ struct CalmJourneyNodeView: View {
     
     private var completedGradient: LinearGradient {
         LinearGradient(
-            colors: [Color(hex: "#B5A7E0"), Color(hex: "#C8A2C8")],
+            colors: [Color.themeText, Color.themeText.opacity(0.8)],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
         )
@@ -92,7 +92,7 @@ struct CalmJourneyNodeView: View {
     
     private var activeGradient: LinearGradient {
         LinearGradient(
-            colors: [Color(hex: "#C8A2C8"), Color(hex: "#E6D4F3")],
+            colors: [Color.themeText.opacity(0.8), Color.themeText.opacity(0.6)],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
         )
@@ -100,7 +100,7 @@ struct CalmJourneyNodeView: View {
     
     private var lockedGradient: LinearGradient {
         LinearGradient(
-            colors: [Color.white.opacity(0.2), Color.white.opacity(0.1)],
+            colors: [Color.themeDivider.opacity(0.6), Color.themeDivider.opacity(0.4)],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
         )

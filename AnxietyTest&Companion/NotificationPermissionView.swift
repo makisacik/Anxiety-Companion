@@ -18,13 +18,9 @@ struct NotificationPermissionView: View {
 
     var body: some View {
         ZStack {
-            // Background gradient
-            LinearGradient(
-                colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
+            // Background
+            Color.themeBackground
+                .ignoresSafeArea()
 
             VStack(spacing: 0) {
                 Spacer()
@@ -42,13 +38,13 @@ struct NotificationPermissionView: View {
                     Text("🌿 Stay mindful of your calm.")
                         .font(.system(.title2, design: .serif))
                         .fontWeight(.bold)
-                        .foregroundColor(.white)
+                        .foregroundColor(.themeText)
                         .multilineTextAlignment(.center)
 
                     // Body text
                     Text("Would you like gentle reminders to check in on how you're feeling? You'll only get them every few days — no spam, just care.")
                         .font(.system(.body, design: .rounded))
-                        .foregroundColor(.white.opacity(0.9))
+                        .foregroundColor(.themeText.opacity(0.8))
                         .multilineTextAlignment(.center)
                         .lineSpacing(4)
 
@@ -62,12 +58,12 @@ struct NotificationPermissionView: View {
                             Text("Yes, remind me 🌤️")
                                 .font(.system(.body, design: .rounded))
                                 .fontWeight(.medium)
-                                .foregroundColor(.white)
+                                .foregroundColor(.themeText)
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 50)
                                 .background(
                                     RoundedRectangle(cornerRadius: 25)
-                                        .fill(Color(hex: "#B5A7E0"))
+                                        .fill(Color.themeCard)
                                 )
                         }
                         .buttonStyle(ScaleButtonStyle())
@@ -81,12 +77,12 @@ struct NotificationPermissionView: View {
                             Text("Not now")
                                 .font(.system(.body, design: .rounded))
                                 .fontWeight(.medium)
-                                .foregroundColor(.white)
+                                .foregroundColor(.themeText)
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 50)
                                 .background(
                                     RoundedRectangle(cornerRadius: 25)
-                                        .stroke(Color.white.opacity(0.3), lineWidth: 1)
+                                        .stroke(Color.themeDivider, lineWidth: 1)
                                 )
                         }
                         .buttonStyle(ScaleButtonStyle())
@@ -96,10 +92,10 @@ struct NotificationPermissionView: View {
                 .padding(24)
                 .background(
                     RoundedRectangle(cornerRadius: 20)
-                        .fill(.ultraThinMaterial)
+                        .fill(Color.themeCard)
                         .overlay(
                             RoundedRectangle(cornerRadius: 20)
-                                .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                                .stroke(Color.themeDivider, lineWidth: 1)
                         )
                 )
                 .padding(.horizontal, 20)

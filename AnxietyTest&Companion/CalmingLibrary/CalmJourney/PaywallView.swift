@@ -13,13 +13,9 @@ struct PaywallView: View {
     
     var body: some View {
         ZStack {
-            // Background gradient
-            LinearGradient(
-                colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
+            // Background
+            Color.themeBackground
+                .ignoresSafeArea()
             
             VStack(spacing: 32) {
                 Spacer()
@@ -28,17 +24,17 @@ struct PaywallView: View {
                 VStack(spacing: 16) {
                     Image(systemName: "crown.fill")
                         .font(.system(size: 60))
-                        .foregroundColor(.white)
+                        .foregroundColor(.themeText)
                         .padding(30)
                         .background(
                             Circle()
-                                .fill(Color.white.opacity(0.2))
+                                .fill(Color.themeDivider.opacity(0.3))
                         )
                     
                     Text("Unlock Your Next Calm Levels 🌿")
                         .font(.system(.largeTitle, design: .serif))
                         .fontWeight(.bold)
-                        .foregroundColor(.white)
+                        .foregroundColor(.themeText)
                         .multilineTextAlignment(.center)
                 }
                 
@@ -88,12 +84,12 @@ struct PaywallView: View {
                                 .font(.system(.body, design: .rounded))
                                 .fontWeight(.semibold)
                         }
-                        .foregroundColor(Color(hex: "#6E63A4"))
+                        .foregroundColor(.themeText)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 16)
                         .background(
                             RoundedRectangle(cornerRadius: 25)
-                                .fill(Color.white)
+                                .fill(Color.themeCard)
                         )
                     }
                     .buttonStyle(ScaleButtonStyle())
@@ -106,7 +102,7 @@ struct PaywallView: View {
                         Text("Maybe Later")
                             .font(.system(.body, design: .rounded))
                             .fontWeight(.medium)
-                            .foregroundColor(.white.opacity(0.8))
+                            .foregroundColor(.themeText.opacity(0.6))
                     }
                 }
                 .padding(.horizontal, 30)
@@ -119,17 +115,17 @@ struct PaywallView: View {
         HStack(alignment: .top, spacing: 16) {
             Image(systemName: icon)
                 .font(.system(size: 24))
-                .foregroundColor(Color(hex: "#B5A7E0"))
+                .foregroundColor(.themeText)
                 .frame(width: 32)
             
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
                     .font(.system(.headline, design: .rounded))
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                 
                 Text(description)
                     .font(.system(.subheadline, design: .rounded))
-                    .foregroundColor(.white.opacity(0.9))
+                    .foregroundColor(.themeText.opacity(0.8))
                     .fixedSize(horizontal: false, vertical: true)
             }
         }

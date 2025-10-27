@@ -22,12 +22,12 @@ struct IntroOverlayView: View {
                 Text("Welcome to your Progress Page 🌿")
                     .font(.system(.title2, design: .serif))
                     .fontWeight(.semibold)
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                     .multilineTextAlignment(.center)
                 
                 Text("Here you'll see how your check-ins and moods change over time. It's not about being perfect — it's about understanding yourself better.")
                     .font(.system(.body, design: .rounded))
-                    .foregroundColor(.white.opacity(0.9))
+                    .foregroundColor(.themeText.opacity(0.8))
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 8)
                 
@@ -35,12 +35,12 @@ struct IntroOverlayView: View {
                     Text("Got it")
                         .font(.system(.body, design: .rounded))
                         .fontWeight(.medium)
-                        .foregroundColor(.white)
+                        .foregroundColor(.themeText)
                         .padding(.horizontal, 40)
                         .padding(.vertical, 12)
                         .background(
                             RoundedRectangle(cornerRadius: 30)
-                                .fill(Color(hex: "#B5A7E0"))
+                                .fill(Color.themeCard)
                         )
                 }
                 .buttonStyle(ScaleButtonStyle())
@@ -48,7 +48,7 @@ struct IntroOverlayView: View {
             .padding(32)
             .background(
                 RoundedRectangle(cornerRadius: 24)
-                    .fill(.ultraThinMaterial)
+                    .fill(Color.themeCard)
             )
             .padding(.horizontal, 32)
         }

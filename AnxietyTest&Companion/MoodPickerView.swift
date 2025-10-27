@@ -65,10 +65,10 @@ struct MoodPickerView: View {
                             .frame(width: 60, height: 60)
                             .background(
                                 RoundedRectangle(cornerRadius: 16)
-                                    .fill(selectedMood == mood ? Color.white.opacity(0.2) : Color.clear)
+                                    .fill(selectedMood == mood ? Color.themeDivider.opacity(0.5) : Color.clear)
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 16)
-                                            .stroke(selectedMood == mood ? Color.white.opacity(0.5) : Color.clear, lineWidth: 2)
+                                            .stroke(selectedMood == mood ? Color.themeDivider : Color.clear, lineWidth: 2)
                                     )
                             )
                             .scaleEffect(selectedMood == mood ? 1.05 : 1.0)
@@ -94,13 +94,7 @@ struct MoodPickerView: View {
                 }
             }
             .padding()
-            .background(
-                LinearGradient(
-                    colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-            )
+            .background(Color.themeBackground)
         }
     }
 

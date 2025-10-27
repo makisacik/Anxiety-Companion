@@ -16,7 +16,7 @@ struct CompanionDialogueView: View {
     var body: some View {
         Text(displayedText)
             .font(.title3.weight(.medium))
-            .foregroundColor(.white)
+            .foregroundColor(.themeText)
             .multilineTextAlignment(.center)
             .frame(maxWidth: .infinity)
             .onAppear {

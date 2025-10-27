@@ -13,21 +13,17 @@ struct CalmingLibraryView: View {
 
     var body: some View {
         ZStack {
-            LinearGradient(
-                colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
+            Color.themeBackground
+                .ignoresSafeArea()
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     Text("Find Your Calm 🌿")
                         .font(.largeTitle.bold())
-                        .foregroundColor(.white)
+                        .foregroundColor(.themeText)
 
                     Text("Choose a small action to reset your mind.")
-                        .foregroundColor(.white.opacity(0.9))
+                        .foregroundColor(.themeText.opacity(0.8))
 
                     LazyVStack(spacing: 16) {
                         ForEach(activities) { activity in
@@ -74,37 +70,37 @@ struct CalmingActivityCard: View {
                 .frame(width: 60, height: 60)
                 .background(
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(.ultraThinMaterial)
+                        .fill(Color.themeCard)
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)
-                                .stroke(.white.opacity(0.2), lineWidth: 1)
+                                .stroke(Color.themeDivider, lineWidth: 1)
                         )
                 )
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(activity.title)
                     .font(.headline)
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                 Text(activity.description)
                     .font(.subheadline)
-                    .foregroundColor(.white.opacity(0.8))
+                    .foregroundColor(.themeText.opacity(0.7))
                     .lineLimit(2)
             }
 
             Spacer()
 
             Image(systemName: "chevron.right")
-                .foregroundColor(.white.opacity(0.6))
+                .foregroundColor(.themeText.opacity(0.5))
                 .font(.system(size: 16, weight: .medium))
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 16)
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .fill(.ultraThinMaterial)
+                .fill(Color.themeCard)
                 .overlay(
                     RoundedRectangle(cornerRadius: 16)
-                        .stroke(.white.opacity(0.2), lineWidth: 1)
+                        .stroke(Color.themeDivider, lineWidth: 1)
                 )
         )
         .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)

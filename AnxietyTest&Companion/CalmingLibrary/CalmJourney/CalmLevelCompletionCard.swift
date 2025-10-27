@@ -49,7 +49,7 @@ struct CalmLevelCompletionCard: View {
             VStack(spacing: 24) {
                 Text("You've completed this calm step 🌿")
                     .font(.title2.bold())
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                     .multilineTextAlignment(.center)
 
                 CompanionFaceView(expression: .happy)
@@ -57,7 +57,7 @@ struct CalmLevelCompletionCard: View {
 
                 Text("Take a deep breath.\nYou're doing great.")
                     .font(.body)
-                    .foregroundColor(.white.opacity(0.9))
+                    .foregroundColor(.themeText.opacity(0.8))
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 24)
             }
@@ -77,12 +77,12 @@ struct CalmLevelCompletionCard: View {
                             .font(.system(.body, design: .rounded))
                             .fontWeight(.semibold)
                     }
-                    .foregroundColor(Color(hex: "#6E63A4"))
+                    .foregroundColor(.themeText)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 16)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.white)
+                            .fill(Color.themeCard)
                             .shadow(radius: 3)
                     )
                 }
@@ -99,12 +99,12 @@ struct CalmLevelCompletionCard: View {
                             .font(.system(.body, design: .rounded))
                             .fontWeight(.semibold)
                     }
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 16)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
-                            .stroke(.white.opacity(0.3), lineWidth: 1)
+                            .stroke(Color.themeDivider, lineWidth: 1)
                     )
                 }
                 .buttonStyle(ScaleButtonStyle())
@@ -119,12 +119,8 @@ struct CalmLevelCompletionCard: View {
 
 #Preview {
     ZStack {
-        LinearGradient(
-            colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-        .ignoresSafeArea()
+        Color.themeBackground
+            .ignoresSafeArea()
 
         CalmLevelCompletionCard(
             level: CalmJourneyDataStore.shared.levels[0],

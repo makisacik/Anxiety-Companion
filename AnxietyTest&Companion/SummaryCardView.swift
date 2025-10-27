@@ -18,7 +18,7 @@ struct SummaryCardView: View {
                 Text("Your Recent Check-In")
                     .font(.system(.title2, design: .serif))
                     .fontWeight(.semibold)
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                 
                 Spacer()
                 
@@ -35,20 +35,20 @@ struct SummaryCardView: View {
                 
                 Text("Last test: \(daysAgo == 0 ? "Today" : "\(daysAgo) days ago") • Score: \(category) (\(latestEntry.score)/21)")
                     .font(.system(.caption, design: .rounded))
-                    .foregroundColor(.white.opacity(0.8))
+                    .foregroundColor(.themeText.opacity(0.7))
             } else {
                 Text("You haven't done a check-in yet.")
                     .font(.system(.caption, design: .rounded))
-                    .foregroundColor(.white.opacity(0.8))
+                    .foregroundColor(.themeText.opacity(0.7))
             }
         }
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: 20)
-                .fill(.ultraThinMaterial)
+                .fill(Color.themeCard)
                 .overlay(
                     RoundedRectangle(cornerRadius: 20)
-                        .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                        .stroke(Color.themeDivider, lineWidth: 1)
                 )
         )
         .onAppear {
@@ -80,11 +80,5 @@ struct SummaryCardView: View {
         Spacer()
     }
     .padding()
-    .background(
-        LinearGradient(
-            colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    )
+    .background(Color.themeBackground)
 }

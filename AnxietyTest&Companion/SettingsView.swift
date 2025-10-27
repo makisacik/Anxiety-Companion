@@ -17,13 +17,9 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                // Background gradient
-                LinearGradient(
-                    colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-                .ignoresSafeArea(.all)
+                // Background
+                Color.themeBackground
+                    .ignoresSafeArea(.all)
                 
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 24) {
@@ -32,11 +28,11 @@ struct SettingsView: View {
                             Text("Settings")
                                 .font(.system(.largeTitle, design: .serif))
                                 .fontWeight(.bold)
-                                .foregroundColor(.white)
+                                .foregroundColor(.themeText)
                             
                             Text("Customize your experience")
                                 .font(.system(.body, design: .rounded))
-                                .foregroundColor(.white.opacity(0.8))
+                                .foregroundColor(.themeText.opacity(0.7))
                         }
                         .padding(.top, 20)
                         .padding(.bottom, 20)
@@ -46,13 +42,13 @@ struct SettingsView: View {
                             // Section Header
                             HStack {
                                 Image(systemName: "bell.fill")
-                                    .foregroundColor(Color(hex: "#B5A7E0"))
+                                    .foregroundColor(.themeText)
                                     .font(.system(size: 20))
                                 
                                 Text("Reminders")
                                     .font(.system(.title2, design: .serif))
                                     .fontWeight(.semibold)
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.themeText)
                                 
                                 Spacer()
                             }
@@ -63,18 +59,18 @@ struct SettingsView: View {
                                     VStack(alignment: .leading, spacing: 4) {
                                         Text("Gentle Check-ins")
                                             .font(.system(.headline, design: .rounded))
-                                            .foregroundColor(.white)
+                                            .foregroundColor(.themeText)
                                         
                                         Text("Get gentle reminders to check in on your wellbeing every few days")
                                             .font(.system(.caption, design: .rounded))
-                                            .foregroundColor(.white.opacity(0.7))
+                                            .foregroundColor(.themeText.opacity(0.7))
                                             .multilineTextAlignment(.leading)
                                     }
                                     
                                     Spacer()
                                     
                                     Toggle("", isOn: $notificationsEnabled)
-                                        .toggleStyle(SwitchToggleStyle(tint: Color(hex: "#B5A7E0")))
+                                        .toggleStyle(SwitchToggleStyle(tint: Color.themeText))
                                         .onChange(of: notificationsEnabled) { newValue in
                                             handleToggleChange(newValue)
                                         }
@@ -88,7 +84,7 @@ struct SettingsView: View {
                                         
                                         Text(statusText)
                                             .font(.system(.caption, design: .rounded))
-                                            .foregroundColor(.white.opacity(0.8))
+                                            .foregroundColor(.themeText.opacity(0.7))
                                         
                                         Spacer()
                                     }
@@ -97,10 +93,10 @@ struct SettingsView: View {
                             .padding(20)
                             .background(
                                 RoundedRectangle(cornerRadius: 16)
-                                    .fill(.ultraThinMaterial)
+                                    .fill(Color.themeCard)
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 16)
-                                            .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                                            .stroke(Color.themeDivider, lineWidth: 1)
                                     )
                             )
                         }
@@ -110,13 +106,13 @@ struct SettingsView: View {
                         VStack(spacing: 20) {
                             HStack {
                                 Image(systemName: "gearshape.fill")
-                                    .foregroundColor(Color(hex: "#B5A7E0"))
+                                    .foregroundColor(.themeText)
                                     .font(.system(size: 20))
                                 
                                 Text("Development")
                                     .font(.system(.title2, design: .serif))
                                     .fontWeight(.semibold)
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.themeText)
                                 
                                 Spacer()
                             }
@@ -128,27 +124,27 @@ struct SettingsView: View {
                                         VStack(alignment: .leading, spacing: 4) {
                                             Text("Premium Access")
                                                 .font(.system(.headline, design: .rounded))
-                                                .foregroundColor(.white)
+                                                .foregroundColor(.themeText)
 
                                             Text("Unlock all Calm Journey levels for testing")
                                                 .font(.system(.caption, design: .rounded))
-                                                .foregroundColor(.white.opacity(0.7))
+                                                .foregroundColor(.themeText.opacity(0.7))
                                                 .multilineTextAlignment(.leading)
                                         }
 
                                         Spacer()
 
                                         Toggle("", isOn: $isPremiumUser)
-                                            .toggleStyle(SwitchToggleStyle(tint: Color(hex: "#B5A7E0")))
+                                            .toggleStyle(SwitchToggleStyle(tint: Color.themeText))
                                     }
                                 }
                                 .padding(20)
                                 .background(
                                     RoundedRectangle(cornerRadius: 16)
-                                        .fill(.ultraThinMaterial)
+                                        .fill(Color.themeCard)
                                         .overlay(
                                             RoundedRectangle(cornerRadius: 16)
-                                                .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                                                .stroke(Color.themeDivider, lineWidth: 1)
                                         )
                                 )
 
@@ -172,7 +168,7 @@ struct SettingsView: View {
                                 }) {
                                     HStack(spacing: 16) {
                                         Image(systemName: "arrow.counterclockwise.circle.fill")
-                                            .foregroundColor(Color(hex: "#B5A7E0"))
+                                            .foregroundColor(.themeText)
                                             .font(.system(size: 18))
                                             .frame(width: 24)
                                         
@@ -180,26 +176,26 @@ struct SettingsView: View {
                                             Text("Reset Today's Mood")
                                                 .font(.system(.body, design: .rounded))
                                                 .fontWeight(.medium)
-                                                .foregroundColor(.white)
+                                                .foregroundColor(.themeText)
                                             
                                             Text("Clear today's mood selection for testing")
                                                 .font(.system(.caption, design: .rounded))
-                                                .foregroundColor(.white.opacity(0.7))
+                                                .foregroundColor(.themeText.opacity(0.7))
                                         }
                                         
                                         Spacer()
                                         
                                         Image(systemName: "chevron.right")
-                                            .foregroundColor(.white.opacity(0.4))
+                                            .foregroundColor(.themeText.opacity(0.4))
                                             .font(.system(size: 12))
                                     }
                                     .padding(16)
                                     .background(
                                         RoundedRectangle(cornerRadius: 12)
-                                            .fill(.ultraThinMaterial)
+                                            .fill(Color.themeCard)
                                             .overlay(
                                                 RoundedRectangle(cornerRadius: 12)
-                                                    .stroke(Color.white.opacity(0.1), lineWidth: 1)
+                                                    .stroke(Color.themeDivider, lineWidth: 1)
                                             )
                                     )
                                 }
@@ -211,7 +207,7 @@ struct SettingsView: View {
                                 }) {
                                     HStack(spacing: 16) {
                                         Image(systemName: "wand.and.stars")
-                                            .foregroundColor(Color(hex: "#B5A7E0"))
+                                            .foregroundColor(.themeText)
                                             .font(.system(size: 18))
                                             .frame(width: 24)
                                         
@@ -219,26 +215,26 @@ struct SettingsView: View {
                                             Text("Fill Debug Data")
                                                 .font(.system(.body, design: .rounded))
                                                 .fontWeight(.medium)
-                                                .foregroundColor(.white)
+                                                .foregroundColor(.themeText)
                                             
                                             Text("Fill user data with realistic anxious responses for testing")
                                                 .font(.system(.caption, design: .rounded))
-                                                .foregroundColor(.white.opacity(0.7))
+                                                .foregroundColor(.themeText.opacity(0.7))
                                         }
                                         
                                         Spacer()
                                         
                                         Image(systemName: "chevron.right")
-                                            .foregroundColor(.white.opacity(0.4))
+                                            .foregroundColor(.themeText.opacity(0.4))
                                             .font(.system(size: 12))
                                     }
                                     .padding(16)
                                     .background(
                                         RoundedRectangle(cornerRadius: 12)
-                                            .fill(.ultraThinMaterial)
+                                            .fill(Color.themeCard)
                                             .overlay(
                                                 RoundedRectangle(cornerRadius: 12)
-                                                    .stroke(Color.white.opacity(0.1), lineWidth: 1)
+                                                    .stroke(Color.themeDivider, lineWidth: 1)
                                             )
                                     )
                                 }
@@ -404,7 +400,7 @@ struct SettingsRow: View {
     var body: some View {
         HStack(spacing: 16) {
             Image(systemName: icon)
-                .foregroundColor(isEnabled ? Color(hex: "#B5A7E0") : Color.white.opacity(0.4))
+                .foregroundColor(isEnabled ? .themeText : Color.themeText.opacity(0.4))
                 .font(.system(size: 18))
                 .frame(width: 24)
             
@@ -412,11 +408,11 @@ struct SettingsRow: View {
                 Text(title)
                     .font(.system(.body, design: .rounded))
                     .fontWeight(.medium)
-                    .foregroundColor(isEnabled ? .white : .white.opacity(0.6))
+                    .foregroundColor(isEnabled ? .themeText : .themeText.opacity(0.6))
                 
                 Text(subtitle)
                     .font(.system(.caption, design: .rounded))
-                    .foregroundColor(.white.opacity(0.5))
+                    .foregroundColor(.themeText.opacity(0.5))
             }
             
             Spacer()
@@ -424,22 +420,22 @@ struct SettingsRow: View {
             if !isEnabled {
                 Text("Coming Soon")
                     .font(.system(.caption, design: .rounded))
-                    .foregroundColor(.white.opacity(0.4))
+                    .foregroundColor(.themeText.opacity(0.4))
                     .padding(.horizontal, 8)
                     .padding(.vertical, 4)
                     .background(
                         RoundedRectangle(cornerRadius: 8)
-                            .fill(Color.white.opacity(0.1))
+                            .fill(Color.themeDivider.opacity(0.3))
                     )
             }
         }
         .padding(16)
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(.ultraThinMaterial)
+                .fill(Color.themeCard)
                 .overlay(
                     RoundedRectangle(cornerRadius: 12)
-                        .stroke(Color.white.opacity(0.1), lineWidth: 1)
+                        .stroke(Color.themeDivider, lineWidth: 1)
                 )
         )
     }

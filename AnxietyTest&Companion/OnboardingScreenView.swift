@@ -53,7 +53,7 @@ struct OnboardingScreenView: View {
             Text(title)
                 .font(.system(.title, design: .serif))
                 .fontWeight(.semibold)
-                .foregroundColor(.white)
+                .foregroundColor(.themeText)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 40)
                 .padding(.bottom, 20)
@@ -82,12 +82,12 @@ struct OnboardingScreenView: View {
                     Text(buttonText)
                         .font(.system(.body, design: .rounded))
                         .fontWeight(.medium)
-                        .foregroundColor(.white)
+                        .foregroundColor(.themeText)
                         .frame(maxWidth: .infinity)
                         .frame(height: 50)
                         .background(
                             RoundedRectangle(cornerRadius: 25)
-                                .fill(Color(hex: "#B5A7E0"))
+                                .fill(Color.themeCard)
                         )
                         .scaleEffect(1.0)
                         .animation(.spring(response: 0.3, dampingFraction: 0.6), value: showButton)
@@ -129,11 +129,5 @@ struct ScaleButtonStyle: ButtonStyle {
             print("Continue tapped")
         }
     )
-    .background(
-        LinearGradient(
-            colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    )
+    .background(Color.themeBackground)
 }

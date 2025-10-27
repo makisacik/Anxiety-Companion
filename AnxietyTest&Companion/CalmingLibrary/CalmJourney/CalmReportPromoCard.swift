@@ -60,12 +60,12 @@ struct CalmReportPromoCard: View {
                 Text(milestoneText)
                     .font(.system(.headline, design: .rounded))
                     .fontWeight(.bold)
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                     .multilineTextAlignment(.leading)
                 
                 Text(reportDescription)
                     .font(.system(.subheadline, design: .rounded))
-                    .foregroundColor(.white.opacity(0.9))
+                    .foregroundColor(.themeText.opacity(0.8))
                     .multilineTextAlignment(.leading)
                     .lineLimit(2)
             }
@@ -76,11 +76,11 @@ struct CalmReportPromoCard: View {
                 // Companion face with subtle background effect - positioned to overflow
                 ZStack {
                     Circle()
-                        .fill(Color.white.opacity(0.2))
+                        .fill(Color.themeDivider.opacity(0.4))
                         .frame(width: 50, height: 50)
                     
                     Circle()
-                        .fill(Color.white.opacity(0.1))
+                        .fill(Color.themeDivider.opacity(0.2))
                         .frame(width: 70, height: 70)
                     
                     CompanionFaceView(
@@ -99,14 +99,8 @@ struct CalmReportPromoCard: View {
         .padding(.vertical, 16)
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .fill(
-                    LinearGradient(
-                        colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-                        startPoint: .leading,
-                        endPoint: .trailing
-                    )
-                )
-                .shadow(color: Color(hex: "#6E63A4").opacity(0.3), radius: 8, x: 0, y: 4)
+                .fill(Color.themeCard)
+                .shadow(color: Color.themeText.opacity(0.2), radius: 8, x: 0, y: 4)
         )
         .onTapGesture {
             HapticFeedback.light()
@@ -128,12 +122,8 @@ struct CalmReportPromoCard: View {
 
 #Preview {
     ZStack {
-        LinearGradient(
-            colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-        .ignoresSafeArea()
+        Color.themeBackground
+            .ignoresSafeArea()
         
         CalmReportPromoCard(
             level: CalmJourneyDataStore.shared.levels[4], // Level 5

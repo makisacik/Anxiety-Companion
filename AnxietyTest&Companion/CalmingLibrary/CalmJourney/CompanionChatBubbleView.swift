@@ -37,13 +37,13 @@ struct CompanionChatBubbleView: View {
                         }) {
                             Image(systemName: "speaker.wave.2.fill")
                                 .font(.system(size: 16, weight: .medium))
-                                .foregroundColor(.white.opacity(0.8))
+                                .foregroundColor(.themeText.opacity(0.8))
                         }
                     }
                     
                     Text(message)
                         .font(.system(.body, design: .rounded))
-                        .foregroundColor(.white)
+                        .foregroundColor(.themeText)
                         .fixedSize(horizontal: false, vertical: true)
                         .multilineTextAlignment(.leading)
                 }
@@ -51,10 +51,10 @@ struct CompanionChatBubbleView: View {
                 .padding(.vertical, 16)
                 .background(
                     RoundedRectangle(cornerRadius: 20)
-                        .fill(.ultraThinMaterial)
+                        .fill(Color.themeCard)
                         .overlay(
                             RoundedRectangle(cornerRadius: 20)
-                                .stroke(.white.opacity(0.2), lineWidth: 1)
+                                .stroke(Color.themeDivider.opacity(0.5), lineWidth: 1)
                         )
                 )
             }
@@ -74,12 +74,8 @@ struct CompanionChatBubbleView: View {
 
 #Preview {
     ZStack {
-        LinearGradient(
-            colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-        .ignoresSafeArea()
+        Color.themeBackground
+            .ignoresSafeArea()
         
         VStack(spacing: 32) {
             CompanionChatBubbleView(

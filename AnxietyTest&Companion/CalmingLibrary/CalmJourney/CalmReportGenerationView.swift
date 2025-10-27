@@ -34,7 +34,7 @@ struct CalmReportGenerationView: View {
                 } label: {
                     Image(systemName: "chevron.left")
                         .font(.system(size: 17, weight: .semibold))
-                        .foregroundColor(.white)
+                        .foregroundColor(.themeText)
                 }
                 .buttonStyle(.plain)
             }
@@ -42,7 +42,7 @@ struct CalmReportGenerationView: View {
             ToolbarItem(placement: .principal) {
                 Text("Calm Report")
                     .font(.system(.headline, design: .rounded))
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
             }
 
             ToolbarItem(placement: .topBarTrailing) {
@@ -53,7 +53,7 @@ struct CalmReportGenerationView: View {
                     } label: {
                         Image(systemName: "square.and.arrow.up")
                             .font(.system(size: 17, weight: .semibold))
-                            .foregroundColor(.white)
+                            .foregroundColor(.themeText)
                     }
                     .buttonStyle(.plain)
                 }
@@ -69,12 +69,8 @@ struct CalmReportGenerationView: View {
     }
 
     private var themeBackground: some View {
-        LinearGradient(
-            colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-        .ignoresSafeArea()
+        Color.themeBackground
+            .ignoresSafeArea()
     }
 
     @ViewBuilder
@@ -91,22 +87,22 @@ struct CalmReportGenerationView: View {
     private var loadingView: some View {
         VStack(spacing: 16) {
             ProgressView()
-                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                .progressViewStyle(CircularProgressViewStyle(tint: .themeText))
             Text("Gathering your notes...")
                 .font(.system(.body, design: .rounded))
-                .foregroundColor(.white.opacity(0.9))
+                .foregroundColor(.themeText.opacity(0.8))
         }
         .padding()
     }
 
     private func errorView(message: String) -> some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 16) {
             Text("Something went wrong")
                 .font(.system(.title3, design: .rounded).bold())
-                .foregroundColor(.white)
+                .foregroundColor(.themeText)
             Text(message)
                 .font(.system(.body, design: .rounded))
-                .foregroundColor(.white.opacity(0.85))
+                .foregroundColor(.themeText.opacity(0.7))
                 .multilineTextAlignment(.center)
             Button {
                 HapticFeedback.light()
@@ -114,12 +110,12 @@ struct CalmReportGenerationView: View {
             } label: {
                 Text("Try Again")
                     .font(.system(.body, design: .rounded).bold())
-                    .foregroundColor(Color(hex: "#6E63A4"))
+                    .foregroundColor(.themeText)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 14)
                     .background(
                         RoundedRectangle(cornerRadius: 14)
-                            .fill(Color.white)
+                            .fill(Color.themeCard)
                     )
             }
             .buttonStyle(.plain)
@@ -153,14 +149,14 @@ struct CalmReportGenerationView: View {
         VStack(alignment: .leading, spacing: 14) {
             Text("You're building a calmer rhythm")
                 .font(.system(.title2, design: .rounded).bold())
-                .foregroundColor(.white)
+                .foregroundColor(.themeText)
 
             Text("A quick reflection on how you're supporting your nervous system.")
                 .font(.system(.body, design: .rounded))
-                .foregroundColor(.white.opacity(0.9))
+                .foregroundColor(.themeText.opacity(0.8))
 
             Divider()
-                .background(Color.white.opacity(0.2))
+                .background(Color.themeDivider)
 
             HStack(spacing: 16) {
                 InsightChip(icon: "heart.fill", text: "Ground faster")
@@ -173,10 +169,10 @@ struct CalmReportGenerationView: View {
         .frame(maxWidth: .infinity)
         .background(
             RoundedRectangle(cornerRadius: 28)
-                .fill(Color.white.opacity(0.15))
+                .fill(Color.themeCard)
                 .overlay(
                     RoundedRectangle(cornerRadius: 28)
-                        .stroke(Color.white.opacity(0.25), lineWidth: 1)
+                        .stroke(Color.themeDivider, lineWidth: 1)
                 )
         )
     }
@@ -185,34 +181,34 @@ struct CalmReportGenerationView: View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Moments to celebrate")
                 .font(.system(.headline, design: .rounded))
-                .foregroundColor(.white.opacity(0.9))
+                .foregroundColor(.themeText)
 
             LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
                 ForEach(highlights) { highlight in
                     VStack(alignment: .leading, spacing: 12) {
                         Image(systemName: highlight.icon)
                             .font(.system(size: 24, weight: .semibold))
-                            .foregroundColor(Color(hex: "#6E63A4"))
+                            .foregroundColor(.themeText)
                             .padding(10)
-                            .background(Circle().fill(Color.white.opacity(0.85)))
+                            .background(Circle().fill(Color.themeCard))
 
                         Text(highlight.title)
                             .font(.system(.subheadline, design: .rounded).bold())
-                            .foregroundColor(.white)
+                            .foregroundColor(.themeText)
 
                         Text(highlight.detail)
                             .font(.system(.footnote, design: .rounded))
-                            .foregroundColor(.white.opacity(0.85))
+                            .foregroundColor(.themeText.opacity(0.8))
                             .lineLimit(3)
                     }
                     .padding(18)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(
                         RoundedRectangle(cornerRadius: 22)
-                            .fill(.ultraThinMaterial)
+                            .fill(Color.themeCard)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 22)
-                                    .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                                    .stroke(Color.themeDivider, lineWidth: 1)
                             )
                     )
                 }
@@ -224,22 +220,22 @@ struct CalmReportGenerationView: View {
         VStack(spacing: 12) {
             Text("Keep listening to your calm moments")
                 .font(.system(.headline, design: .rounded).bold())
-                .foregroundColor(.white)
+                .foregroundColor(.themeText)
                 .multilineTextAlignment(.center)
 
             Text("Small practices add up. Each return builds more trust in your calm.")
                 .font(.system(.body, design: .rounded))
-                .foregroundColor(.white.opacity(0.85))
+                .foregroundColor(.themeText.opacity(0.8))
                 .multilineTextAlignment(.center)
         }
         .padding(24)
         .frame(maxWidth: .infinity)
         .background(
             RoundedRectangle(cornerRadius: 26)
-                .fill(Color.white.opacity(0.12))
+                .fill(Color.themeCard)
                 .overlay(
                     RoundedRectangle(cornerRadius: 26)
-                        .stroke(Color.white.opacity(0.18), lineWidth: 1)
+                        .stroke(Color.themeDivider, lineWidth: 1)
                 )
         )
     }
@@ -390,12 +386,12 @@ private struct InsightChip: View {
             Text(text)
                 .font(.system(.caption, design: .rounded).bold())
         }
-        .foregroundColor(.white)
+        .foregroundColor(.themeText)
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
         .background(
             Capsule()
-                .fill(Color.white.opacity(0.12))
+                .fill(Color.themeDivider.opacity(0.5))
         )
     }
 }
@@ -408,18 +404,18 @@ private struct ReportSectionView: View {
             HStack(spacing: 12) {
                 Image(systemName: section.icon)
                     .font(.system(size: 22, weight: .semibold))
-                    .foregroundColor(Color(hex: "#6E63A4"))
+                    .foregroundColor(.themeText)
                     .padding(10)
-                    .background(Circle().fill(Color.white.opacity(0.85)))
+                    .background(Circle().fill(Color.themeCard))
 
                 Text(section.title)
                     .font(.system(.title3, design: .rounded).bold())
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
             }
 
             Text(section.content)
                 .font(.system(.body, design: .rounded))
-                .foregroundColor(.white.opacity(0.9))
+                .foregroundColor(.themeText.opacity(0.8))
                 .multilineTextAlignment(.leading)
                 .lineSpacing(4)
         }
@@ -427,10 +423,10 @@ private struct ReportSectionView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
             RoundedRectangle(cornerRadius: 26)
-                .fill(.ultraThinMaterial)
+                .fill(Color.themeCard)
                 .overlay(
                     RoundedRectangle(cornerRadius: 26)
-                        .stroke(Color.white.opacity(0.22), lineWidth: 1)
+                        .stroke(Color.themeDivider, lineWidth: 1)
                 )
         )
     }

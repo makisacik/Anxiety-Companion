@@ -13,13 +13,9 @@ struct MainTabView: View {
     
     var body: some View {
         ZStack {
-            // Background gradient for the entire app
-            LinearGradient(
-                colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea(.all)
+            // Background for the entire app
+            Color.themeBackground
+                .ignoresSafeArea(.all)
             
             TabView {
                 AnxietyTestHomeView()
@@ -61,7 +57,7 @@ struct MainTabView: View {
                     }
                     .tag(4)
             }
-            .accentColor(Color(hex: "#B5A7E0"))
+            .accentColor(Color.themeText)
             .environment(\.managedObjectContext, viewContext)
         }
     }

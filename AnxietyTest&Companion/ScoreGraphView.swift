@@ -18,18 +18,18 @@ struct ScoreGraphView: View {
             Text("Your Calm Trend")
                 .font(.system(.headline, design: .serif))
                 .fontWeight(.semibold)
-                .foregroundColor(.white)
+                .foregroundColor(.themeText)
             
             if gad7Entries.isEmpty {
                 VStack(spacing: 8) {
                     Text("No data yet — take your first check-in to begin.")
                         .font(.system(.subheadline, design: .rounded))
-                        .foregroundColor(.white.opacity(0.8))
+                        .foregroundColor(.themeText.opacity(0.7))
                         .multilineTextAlignment(.center)
                     
                     Text("Your progress will appear here once you start tracking.")
                         .font(.system(.caption, design: .rounded))
-                        .foregroundColor(.white.opacity(0.6))
+                        .foregroundColor(.themeText.opacity(0.5))
                         .multilineTextAlignment(.center)
                 }
                 .frame(height: 160)
@@ -42,7 +42,7 @@ struct ScoreGraphView: View {
                             y: .value("Score", entry.score)
                         )
                         .interpolationMethod(.catmullRom)
-                        .foregroundStyle(Color(hex: "#B5A7E0"))
+                        .foregroundStyle(Color.themeText)
                         .lineStyle(StrokeStyle(lineWidth: 3))
                         
                         AreaMark(
@@ -52,7 +52,7 @@ struct ScoreGraphView: View {
                         .interpolationMethod(.catmullRom)
                         .foregroundStyle(
                             LinearGradient(
-                                colors: [Color(hex: "#B5A7E0").opacity(0.3), Color.clear],
+                                colors: [Color.themeText.opacity(0.3), Color.clear],
                                 startPoint: .top,
                                 endPoint: .bottom
                             )
@@ -62,7 +62,7 @@ struct ScoreGraphView: View {
                             x: .value("Date", entry.date ?? Date()),
                             y: .value("Score", entry.score)
                         )
-                        .foregroundStyle(Color(hex: "#B5A7E0"))
+                        .foregroundStyle(Color.themeText)
                         .symbolSize(50)
                     }
                 }
@@ -70,18 +70,18 @@ struct ScoreGraphView: View {
                 .chartXAxis {
                     AxisMarks(values: .stride(by: .day, count: xAxisStride)) { value in
                         AxisGridLine()
-                            .foregroundStyle(.white.opacity(0.2))
+                            .foregroundStyle(Color.themeDivider.opacity(0.3))
                         AxisValueLabel()
-                            .foregroundStyle(.white.opacity(0.7))
+                            .foregroundStyle(Color.themeText.opacity(0.6))
                             .font(.system(.caption2, design: .rounded))
                     }
                 }
                 .chartYAxis {
                     AxisMarks(position: .leading) { value in
                         AxisGridLine()
-                            .foregroundStyle(.white.opacity(0.2))
+                            .foregroundStyle(Color.themeDivider.opacity(0.3))
                         AxisValueLabel()
-                            .foregroundStyle(.white.opacity(0.7))
+                            .foregroundStyle(Color.themeText.opacity(0.6))
                             .font(.system(.caption2, design: .rounded))
                     }
                 }
@@ -94,10 +94,10 @@ struct ScoreGraphView: View {
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: 20)
-                .fill(.ultraThinMaterial)
+                .fill(Color.themeCard)
                 .overlay(
                     RoundedRectangle(cornerRadius: 20)
-                        .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                        .stroke(Color.themeDivider, lineWidth: 1)
                 )
         )
         .onAppear {
@@ -168,11 +168,5 @@ struct ScoreGraphView: View {
         Spacer()
     }
     .padding()
-    .background(
-        LinearGradient(
-            colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    )
+    .background(Color.themeBackground)
 }

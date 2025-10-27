@@ -84,19 +84,15 @@ struct AnxietyTestHomeView: View {
                 }
             }
             .background(
-                LinearGradient(
-                    colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-                .ignoresSafeArea()
+                Color.themeBackground
+                    .ignoresSafeArea()
             )
             .navigationTitle("")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink(destination: SettingsView()) {
                         Image(systemName: "gearshape.fill")
-                            .foregroundColor(.white)
+                            .foregroundColor(.themeText)
                     }
                 }
             }
@@ -125,7 +121,7 @@ struct AnxietyTestHomeView: View {
             Text("Hi, \(userName) 👋")
                 .font(.system(.title, design: .serif))
                 .fontWeight(.semibold)
-                .foregroundColor(.white)
+                .foregroundColor(.themeText)
                 .opacity(showGreeting ? 1 : 0)
                 .offset(y: showGreeting ? 0 : 10)
                 .animation(.easeInOut(duration: 0.6), value: showGreeting)
@@ -139,7 +135,7 @@ struct AnxietyTestHomeView: View {
     private var companionSection: some View {
         CompanionFaceView(expression: companionExpression)
             .scaleEffect(companionScale)
-            .shadow(color: Color.white.opacity(0.25), radius: 10)
+            .shadow(color: Color.themeText.opacity(0.15), radius: 10)
             .onTapGesture {
                 HapticFeedback.soft()
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) { companionScale = 1.1 }
@@ -156,18 +152,18 @@ struct AnxietyTestHomeView: View {
                     Text("Your Anxiety Check-In")
                         .font(.system(.title2, design: .serif))
                         .fontWeight(.semibold)
-                        .foregroundColor(.white)
+                        .foregroundColor(.themeText)
                     
                     if hasCompletedTest || !gad7Entries.isEmpty {
                         let daysAgo = Calendar.current.dateComponents([.day], from: lastGAD7Date, to: Date()).day ?? 0
                         let category = getScoreCategory(lastGAD7Score)
                         Text("Last test: \(daysAgo == 0 ? "Today" : "\(daysAgo) days ago") • Score: \(category) (\(lastGAD7Score)/21)")
                             .font(.system(.caption, design: .rounded))
-                            .foregroundColor(.white.opacity(0.8))
+                            .foregroundColor(.themeText.opacity(0.7))
                     } else {
                         Text("You haven't done a check-in yet.")
                             .font(.system(.caption, design: .rounded))
-                            .foregroundColor(.white.opacity(0.8))
+                            .foregroundColor(.themeText.opacity(0.7))
                     }
                 }
                 
@@ -181,12 +177,12 @@ struct AnxietyTestHomeView: View {
                 Text(buttonText)
                     .font(.system(.body, design: .rounded))
                     .fontWeight(.medium)
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeBackgroundPure)
                     .frame(maxWidth: .infinity)
                     .frame(height: 50)
                     .background(
                         RoundedRectangle(cornerRadius: 25)
-                            .fill(Color(hex: "#B5A7E0"))
+                            .fill(Color.themeText)
                     )
             }
             .buttonStyle(ScaleButtonStyle())
@@ -195,10 +191,10 @@ struct AnxietyTestHomeView: View {
         .frame(width: cardWidth > 0 ? cardWidth : nil)
         .background(
             RoundedRectangle(cornerRadius: 20)
-                .fill(.ultraThinMaterial)
+                .fill(Color.themeCard)
                 .overlay(
                     RoundedRectangle(cornerRadius: 20)
-                        .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                        .stroke(Color.themeDivider, lineWidth: 1)
                 )
         )
     }
@@ -209,7 +205,7 @@ struct AnxietyTestHomeView: View {
                 VStack(spacing: 20) {
                     Text("How do you feel right now?")
                         .font(.system(.headline, design: .rounded))
-                        .foregroundColor(.white)
+                        .foregroundColor(.themeText)
                     
                     MoodPickerView(selectedMood: $selectedMood) { expression in
                         HapticFeedback.light()
@@ -225,7 +221,7 @@ struct AnxietyTestHomeView: View {
                     if showThankYou {
                         Text("💜 Thank you for sharing how you feel today!")
                             .font(.system(.subheadline, design: .rounded))
-                            .foregroundColor(.white.opacity(0.9))
+                            .foregroundColor(.themeText.opacity(0.8))
                             .multilineTextAlignment(.center)
                             .transition(.opacity.combined(with: .move(edge: .top)))
                     }
@@ -234,10 +230,10 @@ struct AnxietyTestHomeView: View {
                 .frame(width: cardWidth > 0 ? cardWidth : nil)
                 .background(
                     RoundedRectangle(cornerRadius: 20)
-                        .fill(.ultraThinMaterial)
+                        .fill(Color.themeCard)
                         .overlay(
                             RoundedRectangle(cornerRadius: 20)
-                                .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                                .stroke(Color.themeDivider, lineWidth: 1)
                         )
                 )
             }
@@ -326,7 +322,7 @@ struct CircularProgressView: View {
     var body: some View {
         ZStack {
             Circle()
-                .stroke(Color.white.opacity(0.3), lineWidth: 4)
+                .stroke(Color.themeDivider, lineWidth: 4)
                 .frame(width: 50, height: 50)
             
             Circle()
@@ -339,7 +335,7 @@ struct CircularProgressView: View {
             Text("\(score)")
                 .font(.system(.caption, design: .rounded))
                 .fontWeight(.bold)
-                .foregroundColor(.white)
+                .foregroundColor(.themeText)
         }
     }
 }

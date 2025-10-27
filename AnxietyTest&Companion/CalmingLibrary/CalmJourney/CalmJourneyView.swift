@@ -25,12 +25,8 @@ struct CalmJourneyView: View {
     var body: some View {
         NavigationStack(path: $navigationPath) {
             ZStack {
-                LinearGradient(
-                    colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-                .ignoresSafeArea()
+                Color.themeBackground
+                    .ignoresSafeArea()
 
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 0) {
@@ -109,11 +105,11 @@ struct CalmJourneyView: View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Your Calm Journey 🌿")
                 .font(.largeTitle.bold())
-                .foregroundColor(.white)
+                .foregroundColor(.themeText)
 
             Text("Structured exercises to build lasting calm, based on proven therapy techniques.")
                 .font(.system(.body, design: .rounded))
-                .foregroundColor(.white.opacity(0.9))
+                .foregroundColor(.themeText.opacity(0.8))
         }
         .multilineTextAlignment(.leading)
     }
@@ -197,18 +193,18 @@ struct ZigZagLevelRow: View {
                 Text(level.title)
                     .font(.system(.title3, design: .serif))
                     .fontWeight(.semibold)
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
 
                 if !level.free && !isPremiumUser {
                     Image(systemName: "lock.fill")
                         .font(.system(.caption, weight: .medium))
-                        .foregroundColor(.white.opacity(0.7))
+                        .foregroundColor(.themeText.opacity(0.5))
                 }
             }
 
             Text(level.summary)
                 .font(.system(.subheadline, design: .rounded))
-                .foregroundColor(.white.opacity(0.9))
+                .foregroundColor(.themeText.opacity(0.7))
         }
         .frame(height: 120)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -216,10 +212,10 @@ struct ZigZagLevelRow: View {
         .padding(.horizontal, 20)
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .fill(.ultraThinMaterial)
+                .fill(Color.themeCard)
                 .overlay(
                     RoundedRectangle(cornerRadius: 16)
-                        .stroke(.white.opacity(0.2), lineWidth: 1)
+                        .stroke(Color.themeDivider, lineWidth: 1)
                 )
         )
         .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)

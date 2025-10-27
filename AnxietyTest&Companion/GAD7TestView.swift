@@ -53,13 +53,9 @@ struct GAD7TestView: View {
     
     var body: some View {
         ZStack {
-            // Background gradient
-            LinearGradient(
-                colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
+            // Background
+            Color.themeBackground
+                .ignoresSafeArea()
             
             if showResults {
                 resultsView
@@ -81,11 +77,11 @@ struct GAD7TestView: View {
                     }) {
                         Image(systemName: "xmark")
                             .font(.system(size: 18, weight: .medium))
-                            .foregroundColor(.white)
+                            .foregroundColor(.themeText)
                             .frame(width: 32, height: 32)
                             .background(
                                 Circle()
-                                    .fill(Color.white.opacity(0.2))
+                                    .fill(Color.themeCard)
                             )
                     }
                     
@@ -93,14 +89,14 @@ struct GAD7TestView: View {
                     
                     Text("\(currentQuestion + 1) of 7")
                         .font(.system(.caption, design: .rounded))
-                        .foregroundColor(.white.opacity(0.8))
+                        .foregroundColor(.themeText.opacity(0.7))
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 10)
                 
                 // Progress bar
                 ProgressView(value: Double(currentQuestion + 1), total: 7)
-                    .progressViewStyle(LinearProgressViewStyle(tint: Color.white))
+                    .progressViewStyle(LinearProgressViewStyle(tint: Color.themeText))
                     .scaleEffect(x: 1, y: 2, anchor: .center)
                     .padding(.horizontal, 20)
             }
@@ -116,14 +112,14 @@ struct GAD7TestView: View {
             VStack(spacing: 30) {
                 Text("Over the last 2 weeks, how often have you been bothered by:")
                     .font(.system(.body, design: .rounded))
-                    .foregroundColor(.white.opacity(0.9))
+                    .foregroundColor(.themeText.opacity(0.8))
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 40)
                 
                 Text(questions[currentQuestion])
                     .font(.system(.title2, design: .serif))
                     .fontWeight(.medium)
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 40)
             }
@@ -139,16 +135,16 @@ struct GAD7TestView: View {
                         HStack {
                             Text(answerOptions[index])
                                 .font(.system(.body, design: .rounded))
-                                .foregroundColor(.white)
+                                .foregroundColor(.themeText)
                             
                             Spacer()
                             
                             if answers[currentQuestion] == index {
                                 Image(systemName: "checkmark.circle.fill")
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.themeText)
                             } else {
                                 Circle()
-                                    .stroke(Color.white.opacity(0.5), lineWidth: 2)
+                                    .stroke(Color.themeDivider, lineWidth: 2)
                                     .frame(width: 20, height: 20)
                             }
                         }
@@ -156,10 +152,10 @@ struct GAD7TestView: View {
                         .padding(.vertical, 16)
                         .background(
                             RoundedRectangle(cornerRadius: 16)
-                                .fill(answers[currentQuestion] == index ? Color.white.opacity(0.2) : Color.white.opacity(0.1))
+                                .fill(answers[currentQuestion] == index ? Color.themeCard : Color.themeCard.opacity(0.5))
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 16)
-                                        .stroke(answers[currentQuestion] == index ? Color.white.opacity(0.5) : Color.white.opacity(0.2), lineWidth: 1)
+                                        .stroke(answers[currentQuestion] == index ? Color.themeDivider : Color.themeDivider.opacity(0.5), lineWidth: 1)
                                 )
                         )
                     }
@@ -176,12 +172,12 @@ struct GAD7TestView: View {
                     Text(currentQuestion == 6 ? "See Results" : "Continue")
                         .font(.system(.body, design: .rounded))
                         .fontWeight(.medium)
-                        .foregroundColor(.white)
+                        .foregroundColor(.themeText)
                         .frame(maxWidth: .infinity)
                         .frame(height: 50)
                         .background(
                             RoundedRectangle(cornerRadius: 25)
-                                .fill(Color(hex: "#B5A7E0"))
+                                .fill(Color.themeCard)
                         )
                 }
                 .buttonStyle(ScaleButtonStyle())
@@ -208,7 +204,7 @@ struct GAD7TestView: View {
                 Text("Your Results")
                     .font(.system(.title, design: .serif))
                     .fontWeight(.semibold)
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                 
                 let totalScore = answers.reduce(0, +)
                 let category = getCategory(for: totalScore)
@@ -217,7 +213,7 @@ struct GAD7TestView: View {
                     Text("Score: \(totalScore)/21")
                         .font(.system(.title2, design: .rounded))
                         .fontWeight(.medium)
-                        .foregroundColor(.white)
+                        .foregroundColor(.themeText)
                     
                     Text(category.title)
                         .font(.system(.headline, design: .rounded))
@@ -225,7 +221,7 @@ struct GAD7TestView: View {
                     
                     Text(category.description)
                         .font(.system(.body, design: .rounded))
-                        .foregroundColor(.white.opacity(0.9))
+                        .foregroundColor(.themeText.opacity(0.8))
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 40)
                 }
@@ -233,10 +229,10 @@ struct GAD7TestView: View {
                 .padding(.vertical, 24)
                 .background(
                     RoundedRectangle(cornerRadius: 20)
-                        .fill(.ultraThinMaterial)
+                        .fill(Color.themeCard)
                         .overlay(
                             RoundedRectangle(cornerRadius: 20)
-                                .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                                .stroke(Color.themeDivider, lineWidth: 1)
                         )
                 )
             }
@@ -277,12 +273,12 @@ struct GAD7TestView: View {
                 Text("Done")
                     .font(.system(.body, design: .rounded))
                     .fontWeight(.medium)
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                     .frame(maxWidth: .infinity)
                     .frame(height: 50)
                     .background(
                         RoundedRectangle(cornerRadius: 25)
-                            .fill(Color(hex: "#B5A7E0"))
+                            .fill(Color.themeCard)
                     )
             }
             .buttonStyle(ScaleButtonStyle())

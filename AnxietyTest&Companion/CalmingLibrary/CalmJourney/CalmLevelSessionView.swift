@@ -49,20 +49,16 @@ struct CalmLevelSessionView: View {
     
     var body: some View {
         ZStack {
-            // Background gradient
-            LinearGradient(
-                colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
+            // Background
+            Color.themeBackground
+                .ignoresSafeArea()
             
             sessionContent
         }
         .navigationTitle("Level \(level.id)")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.hidden, for: .tabBar)
-        .toolbarBackground(Color(hex: "#6E63A4"), for: .navigationBar)
+        .toolbarBackground(Color.themeText, for: .navigationBar)
         .toolbarColorScheme(.dark, for: .navigationBar)
         .onAppear {
             generateInstructionSteps()
@@ -105,7 +101,7 @@ struct CalmLevelSessionView: View {
             VStack(spacing: 16) {
                 ZStack {
                     Circle()
-                        .fill(Color.white.opacity(0.2))
+                        .fill(Color.themeCard.opacity(0.3))
                         .frame(width: 100, height: 100)
                     
                     Text(levelIcon)
@@ -114,14 +110,14 @@ struct CalmLevelSessionView: View {
                 
                 Text("Today's calm practice: \(level.title) 🌤️")
                     .font(.title2.bold())
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                     .multilineTextAlignment(.center)
             }
             
             // Summary
             Text(level.summary)
                 .font(.body)
-                .foregroundColor(.white.opacity(0.9))
+                .foregroundColor(.themeText.opacity(0.8))
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 24)
             
@@ -139,12 +135,12 @@ struct CalmLevelSessionView: View {
                         .font(.system(.body, design: .rounded))
                         .fontWeight(.semibold)
                 }
-                .foregroundColor(Color(hex: "#6E63A4"))
+                .foregroundColor(.themeText)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 16)
                 .background(
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(Color.white)
+                        .fill(Color.themeCard)
                         .shadow(radius: 3)
                 )
             }
@@ -221,17 +217,17 @@ struct CalmLevelSessionView: View {
             HStack {
                 Text("Progress")
                     .font(.system(.headline, design: .rounded))
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                 
                 Spacer()
                 
                 Text("\(currentStepIndex + 1)/\(totalSteps)")
                     .font(.system(.headline, design: .rounded))
-                    .foregroundColor(.white.opacity(0.8))
+                    .foregroundColor(.themeText.opacity(0.7))
             }
             
             ProgressView(value: Double(currentStepIndex + 1), total: Double(totalSteps))
-                .progressViewStyle(LinearProgressViewStyle(tint: Color.white))
+                .progressViewStyle(LinearProgressViewStyle(tint: Color.themeText))
                 .scaleEffect(x: 1, y: 2, anchor: .center)
         }
         .padding(.horizontal, 24)

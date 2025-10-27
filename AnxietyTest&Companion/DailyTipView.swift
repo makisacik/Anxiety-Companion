@@ -34,16 +34,16 @@ struct DailyTipView: View {
             if !currentTip.isEmpty {
                 Text(currentTip)
                     .font(.system(.body, design: .rounded))
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 20)
                     .padding(.vertical, 16)
                     .background(
                         RoundedRectangle(cornerRadius: 20)
-                            .fill(.ultraThinMaterial)
+                            .fill(Color.themeCard)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 20)
-                                    .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                                    .stroke(Color.themeDivider, lineWidth: 1)
                             )
                     )
                     .opacity(isVisible ? 1 : 0)
@@ -73,11 +73,5 @@ struct DailyTipView: View {
         DailyTipView()
     }
     .padding()
-    .background(
-        LinearGradient(
-            colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    )
+    .background(Color.themeBackground)
 }

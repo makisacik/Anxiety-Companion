@@ -24,7 +24,7 @@ struct CalendarGridView: View {
                 Text("Your Check-ins")
                     .font(.system(.headline, design: .serif))
                     .fontWeight(.semibold)
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                 
                 Spacer()
                 
@@ -32,20 +32,20 @@ struct CalendarGridView: View {
                     Button(action: previousMonth) {
                         Image(systemName: "chevron.left")
                             .font(.system(size: 16, weight: .medium))
-                            .foregroundColor(.white)
+                            .foregroundColor(.themeText)
                     }
                     .buttonStyle(ScaleButtonStyle())
                     
                     Text(monthYearString)
                         .font(.system(.subheadline, design: .rounded))
                         .fontWeight(.medium)
-                        .foregroundColor(.white)
+                        .foregroundColor(.themeText)
                         .frame(minWidth: 100)
                     
                     Button(action: nextMonth) {
                         Image(systemName: "chevron.right")
                             .font(.system(size: 16, weight: .medium))
-                            .foregroundColor(.white)
+                            .foregroundColor(.themeText)
                     }
                     .buttonStyle(ScaleButtonStyle())
                 }
@@ -58,7 +58,7 @@ struct CalendarGridView: View {
                     Text(day)
                         .font(.system(.caption, design: .rounded))
                         .fontWeight(.medium)
-                        .foregroundColor(.white.opacity(0.7))
+                        .foregroundColor(.themeText.opacity(0.7))
                         .frame(height: 20)
                 }
                 
@@ -83,29 +83,29 @@ struct CalendarGridView: View {
             HStack(spacing: 16) {
                 HStack(spacing: 4) {
                     Circle()
-                        .fill(Color(hex: "#B5A7E0").opacity(0.3))
+                        .fill(Color.themeText.opacity(0.3))
                         .frame(width: 8, height: 8)
                     Text("Calm")
                         .font(.system(.caption2, design: .rounded))
-                        .foregroundColor(.white.opacity(0.7))
+                        .foregroundColor(.themeText.opacity(0.7))
                 }
                 
                 HStack(spacing: 4) {
                     Circle()
-                        .fill(Color(hex: "#B5A7E0"))
+                        .fill(Color.themeText)
                         .frame(width: 8, height: 8)
                     Text("Moderate")
                         .font(.system(.caption2, design: .rounded))
-                        .foregroundColor(.white.opacity(0.7))
+                        .foregroundColor(.themeText.opacity(0.7))
                 }
                 
                 HStack(spacing: 4) {
                     Circle()
-                        .fill(Color(hex: "#6E63A4"))
+                        .fill(Color.themeCompanionOutline)
                         .frame(width: 8, height: 8)
                     Text("High")
                         .font(.system(.caption2, design: .rounded))
-                        .foregroundColor(.white.opacity(0.7))
+                        .foregroundColor(.themeText.opacity(0.7))
                 }
                 
                 Spacer()
@@ -114,10 +114,10 @@ struct CalendarGridView: View {
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: 20)
-                .fill(.ultraThinMaterial)
+                .fill(Color.themeCard)
                 .overlay(
                     RoundedRectangle(cornerRadius: 20)
-                        .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                        .stroke(Color.themeDivider, lineWidth: 1)
                 )
         )
         .sheet(isPresented: $showDayDetail) {
@@ -211,7 +211,7 @@ struct CalendarDayView: View {
                     .frame(width: 6, height: 6)
             } else if moodEntry != nil {
                 Circle()
-                    .fill(Color(hex: "#B5A7E0").opacity(0.5))
+                    .fill(Color.themeText.opacity(0.5))
                     .frame(width: 4, height: 4)
             }
         }
@@ -219,30 +219,30 @@ struct CalendarDayView: View {
         .frame(maxWidth: .infinity)
         .background(
             RoundedRectangle(cornerRadius: 8)
-                .fill(isToday ? Color.white.opacity(0.2) : Color.clear)
+                .fill(isToday ? Color.themeDivider.opacity(0.5) : Color.clear)
         )
     }
     
     private var textColor: Color {
         if isToday {
-            return .white
+            return .themeText
         } else if isCurrentMonth {
-            return .white.opacity(0.9)
+            return .themeText.opacity(0.8)
         } else {
-            return .white.opacity(0.4)
+            return .themeText.opacity(0.4)
         }
     }
     
     private func dotColor(for score: Int) -> Color {
         switch score {
         case 0...4:
-            return Color(hex: "#B5A7E0").opacity(0.3)
+            return Color.themeText.opacity(0.3)
         case 5...9:
-            return Color(hex: "#B5A7E0").opacity(0.6)
+            return Color.themeText.opacity(0.6)
         case 10...14:
-            return Color(hex: "#B5A7E0")
+            return Color.themeText
         default:
-            return Color(hex: "#6E63A4")
+            return Color.themeCompanionOutline
         }
     }
 }
@@ -263,42 +263,38 @@ struct DayDetailView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                // Background gradient
-                LinearGradient(
-                    colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-                .ignoresSafeArea(.all)
-                .onAppear {
-                    // Ensure background renders immediately
-                }
+                // Background
+                Color.themeBackground
+                    .ignoresSafeArea(.all)
+                    .onAppear {
+                        // Ensure background renders immediately
+                    }
 
                 VStack(spacing: 24) {
                     Text(dateFormatter.string(from: date))
                         .font(.system(.title2, design: .serif))
                         .fontWeight(.semibold)
-                        .foregroundColor(.white)
+                        .foregroundColor(.themeText)
 
                     if let gad7Entry = gad7Entry {
                         VStack(spacing: 12) {
                             Text("GAD-7 Score")
                                 .font(.system(.headline, design: .rounded))
-                                .foregroundColor(.white)
+                                .foregroundColor(.themeText)
 
                             Text("\(gad7Entry.score)/21")
                                 .font(.system(.title, design: .rounded))
                                 .fontWeight(.bold)
-                                .foregroundColor(.white)
+                                .foregroundColor(.themeText)
 
                             Text(getScoreCategory(Int(gad7Entry.score)))
                                 .font(.system(.subheadline, design: .rounded))
-                                .foregroundColor(.white.opacity(0.8))
+                                .foregroundColor(.themeText.opacity(0.7))
                         }
                         .padding()
                         .background(
                             RoundedRectangle(cornerRadius: 16)
-                                .fill(.ultraThinMaterial)
+                                .fill(Color.themeCard)
                         )
                     }
 
@@ -306,7 +302,7 @@ struct DayDetailView: View {
                         VStack(spacing: 12) {
                             Text("Mood")
                                 .font(.system(.headline, design: .rounded))
-                                .foregroundColor(.white)
+                                .foregroundColor(.themeText)
 
                             Text(moodEmoji(for: Int(moodEntry.moodValue)))
                                 .font(.system(size: 48))
@@ -314,14 +310,14 @@ struct DayDetailView: View {
                         .padding()
                         .background(
                             RoundedRectangle(cornerRadius: 16)
-                                .fill(.ultraThinMaterial)
+                                .fill(Color.themeCard)
                         )
                     }
 
                     if gad7Entry == nil && moodEntry == nil {
                         Text("No data for this day")
                             .font(.system(.body, design: .rounded))
-                            .foregroundColor(.white.opacity(0.7))
+                            .foregroundColor(.themeText.opacity(0.6))
                     }
 
                     Spacer()
@@ -334,7 +330,7 @@ struct DayDetailView: View {
                     Button("Done") {
                         dismiss()
                     }
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                 }
             }
         }
@@ -372,13 +368,7 @@ extension Array {
                 Spacer()
             }
             .padding()
-            .background(
-                LinearGradient(
-                    colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-            )
+            .background(Color.themeBackground)
         }
     }
 

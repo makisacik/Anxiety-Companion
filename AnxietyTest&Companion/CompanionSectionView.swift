@@ -18,7 +18,7 @@ struct CompanionSectionView: View {
             CompanionFaceView(expression: currentExpression)
                 .frame(width: 120, height: 120)
                 .scaleEffect(companionScale)
-                .shadow(color: Color.white.opacity(0.25), radius: 10, x: 0, y: 5)
+                .shadow(color: Color.themeText.opacity(0.15), radius: 10, x: 0, y: 5)
                 .onTapGesture {
                     HapticFeedback.soft()
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
@@ -33,7 +33,7 @@ struct CompanionSectionView: View {
             
             Text(companionMessage)
                 .font(.system(size: 18, weight: .medium, design: .rounded))
-                .foregroundColor(.white)
+                .foregroundColor(.themeText)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 16)
                 .animation(.easeInOut(duration: 0.6), value: companionMessage)
@@ -87,11 +87,5 @@ struct CompanionSectionView: View {
         Spacer()
     }
     .padding()
-    .background(
-        LinearGradient(
-            colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    )
+    .background(Color.themeBackground)
 }

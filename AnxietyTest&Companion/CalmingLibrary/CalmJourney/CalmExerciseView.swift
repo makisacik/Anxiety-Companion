@@ -18,13 +18,9 @@ struct CalmExerciseView: View {
     
     var body: some View {
         ZStack {
-            // Background gradient
-            LinearGradient(
-                colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
+            // Background
+            Color.themeBackground
+                .ignoresSafeArea()
             
             ScrollView {
                 VStack(spacing: 24) {
@@ -65,11 +61,11 @@ struct CalmExerciseView: View {
             HStack {
                 Image(systemName: exercise.icon)
                     .font(.system(size: 24))
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                 
                 Text(exercise.displayType)
                     .font(.system(.headline, design: .rounded))
-                    .foregroundColor(.white.opacity(0.8))
+                    .foregroundColor(.themeText.opacity(0.8))
                 
                 Spacer()
             }
@@ -78,7 +74,7 @@ struct CalmExerciseView: View {
             Text(exercise.title)
                 .font(.system(.largeTitle, design: .serif))
                 .fontWeight(.bold)
-                .foregroundColor(.white)
+                .foregroundColor(.themeText)
                 .multilineTextAlignment(.center)
         }
     }
@@ -104,16 +100,16 @@ struct CalmExerciseView: View {
                         Text("\(index + 1)")
                             .font(.system(.body, design: .rounded))
                             .fontWeight(.semibold)
-                            .foregroundColor(.white)
+                            .foregroundColor(.themeText)
                             .frame(width: 24, height: 24)
                             .background(
                                 Circle()
-                                    .fill(Color.white.opacity(0.2))
+                                    .fill(Color.themeCard)
                             )
                         
                         Text(instruction)
                             .font(.system(.body, design: .rounded))
-                            .foregroundColor(.white.opacity(0.9))
+                            .foregroundColor(.themeText.opacity(0.8))
                             .fixedSize(horizontal: false, vertical: true)
                         
                         Spacer()
@@ -123,10 +119,10 @@ struct CalmExerciseView: View {
             .padding(20)
             .background(
                 RoundedRectangle(cornerRadius: 16)
-                    .fill(.ultraThinMaterial)
+                    .fill(Color.themeCard)
                     .overlay(
                         RoundedRectangle(cornerRadius: 16)
-                            .stroke(.white.opacity(0.2), lineWidth: 1)
+                            .stroke(Color.themeDivider, lineWidth: 1)
                     )
             )
             
@@ -134,16 +130,16 @@ struct CalmExerciseView: View {
             VStack(spacing: 16) {
                 Image(systemName: "lungs.fill")
                     .font(.system(size: 60))
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                     .padding(30)
                     .background(
                         Circle()
-                            .fill(Color.white.opacity(0.2))
+                            .fill(Color.themeCard)
                     )
                 
                 Text("Ready to start breathing?")
                     .font(.system(.headline, design: .rounded))
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
             }
         }
     }
@@ -157,16 +153,16 @@ struct CalmExerciseView: View {
                         Text("\(index + 1)")
                             .font(.system(.body, design: .rounded))
                             .fontWeight(.semibold)
-                            .foregroundColor(.white)
+                            .foregroundColor(.themeText)
                             .frame(width: 24, height: 24)
                             .background(
                                 Circle()
-                                    .fill(Color.white.opacity(0.2))
+                                    .fill(Color.themeCard)
                             )
                         
                         Text(instruction)
                             .font(.system(.body, design: .rounded))
-                            .foregroundColor(.white.opacity(0.9))
+                            .foregroundColor(.themeText.opacity(0.8))
                             .fixedSize(horizontal: false, vertical: true)
                         
                         Spacer()
@@ -176,10 +172,10 @@ struct CalmExerciseView: View {
             .padding(20)
             .background(
                 RoundedRectangle(cornerRadius: 16)
-                    .fill(.ultraThinMaterial)
+                    .fill(Color.themeCard)
                     .overlay(
                         RoundedRectangle(cornerRadius: 16)
-                            .stroke(.white.opacity(0.2), lineWidth: 1)
+                            .stroke(Color.themeDivider, lineWidth: 1)
                     )
             )
             
@@ -187,18 +183,18 @@ struct CalmExerciseView: View {
             VStack(alignment: .leading, spacing: 12) {
                 Text("Your reflection:")
                     .font(.system(.headline, design: .rounded))
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                 
                 TextEditor(text: $userResponse)
                     .font(.system(.body, design: .rounded))
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                     .padding(16)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(.ultraThinMaterial)
+                            .fill(Color.themeCard)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 12)
-                                    .stroke(.white.opacity(0.2), lineWidth: 1)
+                                    .stroke(Color.themeDivider, lineWidth: 1)
                             )
                     )
                     .frame(minHeight: 120)
@@ -214,12 +210,12 @@ struct CalmExerciseView: View {
                     HStack(alignment: .top, spacing: 12) {
                         Image(systemName: "lightbulb.fill")
                             .font(.system(size: 20))
-                            .foregroundColor(Color(hex: "#B5A7E0"))
+                            .foregroundColor(.themeText)
                             .frame(width: 24)
                         
                         Text(instruction)
                             .font(.system(.body, design: .rounded))
-                            .foregroundColor(.white.opacity(0.9))
+                            .foregroundColor(.themeText.opacity(0.8))
                             .fixedSize(horizontal: false, vertical: true)
                         
                         Spacer()
@@ -227,10 +223,10 @@ struct CalmExerciseView: View {
                     .padding(16)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(.ultraThinMaterial)
+                            .fill(Color.themeCard)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 12)
-                                    .stroke(.white.opacity(0.2), lineWidth: 1)
+                                    .stroke(Color.themeDivider, lineWidth: 1)
                             )
                     )
                 }
@@ -243,27 +239,27 @@ struct CalmExerciseView: View {
             HStack {
                 Image(systemName: "brain.head.profile")
                     .font(.system(size: 20))
-                    .foregroundColor(Color(hex: "#B5A7E0"))
+                    .foregroundColor(.themeText)
                 
                 Text("The Science")
                     .font(.system(.headline, design: .rounded))
-                    .foregroundColor(.white)
+                    .foregroundColor(.themeText)
                 
                 Spacer()
             }
             
             Text(exercise.scienceNote)
                 .font(.system(.body, design: .rounded))
-                .foregroundColor(.white.opacity(0.9))
+                .foregroundColor(.themeText.opacity(0.8))
                 .fixedSize(horizontal: false, vertical: true)
         }
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .fill(.ultraThinMaterial)
+                .fill(Color.themeCard)
                 .overlay(
                     RoundedRectangle(cornerRadius: 16)
-                        .stroke(Color(hex: "#B5A7E0").opacity(0.3), lineWidth: 1)
+                        .stroke(Color.themeDivider, lineWidth: 1)
                 )
         )
     }
@@ -284,12 +280,12 @@ struct CalmExerciseView: View {
                             .font(.system(.body, design: .rounded))
                             .fontWeight(.semibold)
                     }
-                    .foregroundColor(Color(hex: "#6E63A4"))
+                    .foregroundColor(.themeText)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 16)
                     .background(
                         RoundedRectangle(cornerRadius: 25)
-                            .fill(Color.white)
+                            .fill(Color.themeCard)
                     )
                 }
                 .buttonStyle(ScaleButtonStyle())
@@ -307,12 +303,12 @@ struct CalmExerciseView: View {
                             .font(.system(.body, design: .rounded))
                             .fontWeight(.semibold)
                     }
-                    .foregroundColor(Color(hex: "#6E63A4"))
+                    .foregroundColor(.themeText)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 16)
                     .background(
                         RoundedRectangle(cornerRadius: 25)
-                            .fill(Color.white)
+                            .fill(Color.themeCard)
                     )
                 }
                 .buttonStyle(ScaleButtonStyle())
