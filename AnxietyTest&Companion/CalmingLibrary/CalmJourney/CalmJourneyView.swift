@@ -2,85 +2,117 @@
 //  CalmJourneyView.swift
 //  AnxietyTest&Companion
 //
-//  Final clean version — header outside, spacing 50
-//
+
 
 import SwiftUI
+import CoreData
 
 struct CalmJourneyView: View {
     @StateObject private var dataStore = CalmJourneyDataStore.shared
     @AppStorage("isPremiumUser") private var isPremiumUser = false
+
     @State private var completedLevels: [Int] = []
+    @State private var dismissedPromoCards: Set<Int> = []
     @State private var showPaywall = false
-    @State private var pendingLevel: CalmLevel?
     @State private var selectedLevel: CalmLevel?
+    @State private var showReportGeneration = false
 
     private let levelSpacing: CGFloat = 50
 
     var body: some View {
-        ZStack {
-            LinearGradient(
-                colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
-
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: 0) {
-                    // Header
-                    headerSection
-                        .padding(.horizontal, 24)
-                        .padding(.top, 40)
-                        .padding(.bottom, 30)
-
-                    // Levels
-                    VStack(spacing: levelSpacing) {
-                        ForEach(Array(dataStore.levels.enumerated()), id: \.element.id) { index, level in
-                            ZigZagLevelRow(
-                                level: level,
-                                index: index,
-                                isCompleted: completedLevels.contains(level.id),
-                                isPremiumUser: isPremiumUser
-                            ) {
-                                handleLevelTap(level)
-                            }
-                        }
-                    }
-                    .padding(.horizontal, 24)
-                    .padding(.bottom, 60)
-                }
-            }
-        }
-        .navigationBarHidden(true)
-        .sheet(isPresented: $showPaywall) {
-            PaywallView()
-        }
-        .background(
-            NavigationLink(
-                destination: selectedLevel.map { level in
-                    CalmLevelSessionView(
-                        level: level,
-                        onLevelCompleted: { levelId in
-                            if !completedLevels.contains(levelId) {
-                                completedLevels.append(levelId)
-                                saveCompletedLevels()
-                            }
-                        }
-                    )
-                },
-                isActive: Binding(
-                    get: { selectedLevel != nil },
-                    set: { if !$0 { selectedLevel = nil } }
+        NavigationStack {
+            ZStack {
+                LinearGradient(
+                    colors: [Color(hex: "#6E63A4"), Color(hex: "#B5A7E0")],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
                 )
-            ) { EmptyView() }
-        )
-        .onAppear { loadCompletedLevels() }
+                .ignoresSafeArea()
+
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 0) {
+                        header
+                            .padding(.horizontal, 24)
+                            .padding(.top, 40)
+                            .padding(.bottom, 30)
+
+                        VStack(spacing: levelSpacing) {
+                            ForEach(Array(dataStore.levels.enumerated()), id: \.element.id) { index, level in
+                                VStack(spacing: levelSpacing) {
+                                    ZigZagLevelRow(
+                                        level: level,
+                                        index: index,
+                                        isCompleted: completedLevels.contains(level.id),
+                                        isPremiumUser: isPremiumUser,
+                                        isMilestoneLevel: level.id == 5 || level.id == 10
+                                    ) {
+                                        handleTap(level)
+                                    }
+
+                                    // milestone report cards
+                                    if (level.id == 5 || level.id == 10),
+                                       !dismissedPromoCards.contains(level.id) {
+                                        CalmReportPromoCard(
+                                            level: level,
+                                            isPremiumUser: isPremiumUser,
+                                            isCompleted: checkCompletion(for: level.id),
+                                            onViewReport: {
+                                                if isPremiumUser {
+                                                    showReportGeneration = true
+                                                } else {
+                                                    showPaywall = true
+                                                }
+                                            },
+                                            onShowPaywall: { showPaywall = true },
+                                            onClose: { dismissedPromoCards.insert(level.id) }
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                        .padding(.horizontal, 24)
+                        .padding(.bottom, 60)
+                    }
+                }
+
+                // Hidden navigation link for level view
+                NavigationLink(
+                    destination: Group {
+                        if let level = selectedLevel {
+                            CalmLevelSessionView(
+                                level: level,
+                                isPremiumUser: isPremiumUser,
+                                onLevelCompleted: { id in
+                                    if !completedLevels.contains(id) {
+                                        completedLevels.append(id)
+                                        saveCompletedLevels()
+                                    }
+                                },
+                                onViewReport: { showReportGeneration = true },
+                                onShowPaywall: { showPaywall = true }
+                            )
+                        }
+                    },
+                    isActive: Binding(
+                        get: { selectedLevel != nil },
+                        set: { if !$0 { selectedLevel = nil } }
+                    )
+                ) { EmptyView() }
+
+            }
+            .navigationBarHidden(true)
+            .sheet(isPresented: $showPaywall) {
+                PaywallView()
+            }
+            .sheet(isPresented: $showReportGeneration) {
+                CalmReportGenerationView() // self-contained
+            }
+            .onAppear(perform: loadCompletedLevels)
+        }
     }
 
     // MARK: - Header
-
-    private var headerSection: some View {
+    private var header: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Your Calm Journey 🌿")
                 .font(.largeTitle.bold())
@@ -93,16 +125,20 @@ struct CalmJourneyView: View {
         .multilineTextAlignment(.leading)
     }
 
-    // MARK: - Logic
-
-    private func handleLevelTap(_ level: CalmLevel) {
+    // MARK: - Helpers
+    private func handleTap(_ level: CalmLevel) {
         HapticFeedback.light()
         if level.isLocked && !isPremiumUser {
-            pendingLevel = level
             showPaywall = true
         } else {
             selectedLevel = level
         }
+    }
+
+    private func checkCompletion(for id: Int) -> Bool {
+        if id == 5 { return (1...5).allSatisfy { completedLevels.contains($0) } }
+        if id == 10 { return (1...10).allSatisfy { completedLevels.contains($0) } }
+        return false
     }
 
     private func loadCompletedLevels() {
@@ -119,6 +155,8 @@ struct CalmJourneyView: View {
     }
 }
 
+
+
 // MARK: - ZigZag Level Row
 
 struct ZigZagLevelRow: View {
@@ -126,6 +164,7 @@ struct ZigZagLevelRow: View {
     let index: Int
     let isCompleted: Bool
     let isPremiumUser: Bool
+    let isMilestoneLevel: Bool
     let action: () -> Void
 
     private var isLeft: Bool { index % 2 == 0 }

@@ -9,34 +9,61 @@ import SwiftUI
 
 struct CalmLevelCompletionCard: View {
     let level: CalmLevel
+    let isPremiumUser: Bool
     let onRepeatSession: () -> Void
     let onBackToJourney: () -> Void
-    
+    let onViewReport: (() -> Void)?
+    let onShowPaywall: (() -> Void)?
+
     @State private var isVisible = false
-    
+
+    private var isMilestoneLevel: Bool {
+        return level.id == 5 || level.id == 10
+    }
+
+    init(level: CalmLevel, isPremiumUser: Bool, onRepeatSession: @escaping () -> Void, onBackToJourney: @escaping () -> Void, onViewReport: (() -> Void)? = nil, onShowPaywall: (() -> Void)? = nil) {
+        self.level = level
+        self.isPremiumUser = isPremiumUser
+        self.onRepeatSession = onRepeatSession
+        self.onBackToJourney = onBackToJourney
+        self.onViewReport = onViewReport
+        self.onShowPaywall = onShowPaywall
+    }
+
     var body: some View {
+        regularCompletionView
+            .onAppear {
+                // Show regular completion for all levels
+                HapticFeedback.success()
+                withAnimation(.easeInOut(duration: 0.6)) {
+                    isVisible = true
+                }
+            }
+    }
+
+    private var regularCompletionView: some View {
         VStack(spacing: 32) {
             Spacer()
-            
+
             // Celebration content
             VStack(spacing: 24) {
                 Text("You've completed this calm step 🌿")
                     .font(.title2.bold())
                     .foregroundColor(.white)
                     .multilineTextAlignment(.center)
-                
+
                 CompanionFaceView(expression: .happy)
                     .frame(width: 120, height: 120)
-                
+
                 Text("Take a deep breath.\nYou're doing great.")
                     .font(.body)
                     .foregroundColor(.white.opacity(0.9))
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 24)
             }
-            
+
             Spacer()
-            
+
             // Action buttons
             VStack(spacing: 16) {
                 Button(action: {
@@ -60,7 +87,7 @@ struct CalmLevelCompletionCard: View {
                     )
                 }
                 .buttonStyle(ScaleButtonStyle())
-                
+
                 Button(action: {
                     HapticFeedback.light()
                     onRepeatSession()
@@ -87,12 +114,6 @@ struct CalmLevelCompletionCard: View {
         }
         .opacity(isVisible ? 1 : 0)
         .offset(y: isVisible ? 0 : 20)
-        .onAppear {
-            HapticFeedback.success()
-            withAnimation(.easeInOut(duration: 0.6)) {
-                isVisible = true
-            }
-        }
     }
 }
 
@@ -104,9 +125,10 @@ struct CalmLevelCompletionCard: View {
             endPoint: .bottomTrailing
         )
         .ignoresSafeArea()
-        
+
         CalmLevelCompletionCard(
             level: CalmJourneyDataStore.shared.levels[0],
+            isPremiumUser: true,
             onRepeatSession: {},
             onBackToJourney: {}
         )

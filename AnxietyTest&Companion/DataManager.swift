@@ -254,6 +254,63 @@ class DataManager {
         }
     }
     
+    // MARK: - Exercise Response Operations
+
+    func saveExerciseResponse(levelId: Int, exerciseId: Int, exerciseTitle: String, instructionText: String, userResponse: String, includeInReport: Bool, completedAt: Date = Date()) {
+        let context = viewContext
+        let response = ExerciseResponse(context: context)
+        response.id = UUID()
+        response.levelId = Int16(levelId)
+        response.exerciseId = Int16(exerciseId)
+        response.exerciseTitle = exerciseTitle
+        response.instructionText = instructionText
+        response.userResponse = userResponse
+        response.includeInReport = includeInReport
+        response.completedAt = completedAt
+
+        do {
+            try context.save()
+            print("Debug: Saved exercise response - Level: \(levelId), Exercise: \(exerciseId), IncludeInReport: \(includeInReport)")
+        } catch {
+            print("Failed to save exercise response: \(error)")
+        }
+    }
+
+    func fetchExerciseResponses(includeInReport: Bool? = nil) -> [ExerciseResponse] {
+        let request: NSFetchRequest<ExerciseResponse> = ExerciseResponse.fetchRequest()
+
+        if let includeInReport = includeInReport {
+            request.predicate = NSPredicate(format: "includeInReport == %@", NSNumber(value: includeInReport))
+        }
+
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \ExerciseResponse.completedAt, ascending: false)]
+
+        do {
+            let results = try viewContext.fetch(request)
+            print("Debug: Fetched \(results.count) exercise responses (includeInReport: \(includeInReport?.description ?? "nil"))")
+            return results
+        } catch {
+            print("Failed to fetch exercise responses: \(error)")
+            return []
+        }
+    }
+
+    func fetchExerciseResponses(forLevels: [Int]) -> [ExerciseResponse] {
+        let request: NSFetchRequest<ExerciseResponse> = ExerciseResponse.fetchRequest()
+        request.predicate = NSPredicate(format: "levelId IN %@", forLevels.map { NSNumber(value: $0) })
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \ExerciseResponse.completedAt, ascending: true)]
+
+        do {
+            return try viewContext.fetch(request)
+        } catch {
+            print("Failed to fetch exercise responses for levels: \(error)")
+            return []
+        }
+    }
+
+    func fetchExerciseResponsesForReport() -> [ExerciseResponse] {
+        return fetchExerciseResponses(includeInReport: true)
+    }
     // MARK: - Delete Operations
     
     func deleteEntry(_ entry: NSManagedObject) {

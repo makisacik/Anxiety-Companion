@@ -229,7 +229,8 @@ struct CalmJourneyBreathingView: View {
                 .action,
                 .action
             ],
-            scienceNote: "Box breathing lowers heart rate and activates the parasympathetic nervous system."
+            scienceNote: "Box breathing lowers heart rate and activates the parasympathetic nervous system.",
+            reportValue: .exclude
         ),
         onComplete: {}
     )

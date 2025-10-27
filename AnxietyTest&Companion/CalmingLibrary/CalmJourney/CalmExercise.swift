@@ -13,6 +13,11 @@ enum ExerciseType: String, CaseIterable, Codable {
     case education = "education"
 }
 
+enum ReportValue: String, CaseIterable, Codable {
+    case include = "include"
+    case exclude = "exclude"
+}
+
 struct CalmExercise: Identifiable, Codable, Hashable {
     let id: Int
     let type: ExerciseType
@@ -20,6 +25,7 @@ struct CalmExercise: Identifiable, Codable, Hashable {
     let instructions: [String]
     let instructionPromptTypes: [InstructionPromptType]
     let scienceNote: String
+    let reportValue: ReportValue
     
     var displayType: String {
         switch type {

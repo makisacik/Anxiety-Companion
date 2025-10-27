@@ -140,3 +140,6 @@ Temporary Items
 
 # Trunk (if you're using Trunk for app store deployment)
 .trunk/
+
+# Config files with sensitive data
+Config.swift

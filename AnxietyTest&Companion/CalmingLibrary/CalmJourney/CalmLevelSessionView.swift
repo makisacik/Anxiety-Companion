@@ -15,9 +15,19 @@ enum SessionPhase {
 
 struct CalmLevelSessionView: View {
     let level: CalmLevel
+    let isPremiumUser: Bool
     let onLevelCompleted: (Int) -> Void
+    let onViewReport: (() -> Void)?
+    let onShowPaywall: (() -> Void)?
     @Environment(\.dismiss) private var dismiss
     
+    init(level: CalmLevel, isPremiumUser: Bool, onLevelCompleted: @escaping (Int) -> Void, onViewReport: (() -> Void)? = nil, onShowPaywall: (() -> Void)? = nil) {
+        self.level = level
+        self.isPremiumUser = isPremiumUser
+        self.onLevelCompleted = onLevelCompleted
+        self.onViewReport = onViewReport
+        self.onShowPaywall = onShowPaywall
+    }
     @State private var currentPhase: SessionPhase = .intro
     @State private var currentStepIndex = 0
     @State private var instructionSteps: [InstructionStep] = []
@@ -73,12 +83,15 @@ struct CalmLevelSessionView: View {
         case .completion:
             CalmLevelCompletionCard(
                 level: level,
+                isPremiumUser: isPremiumUser,
                 onRepeatSession: {
                     repeatSession()
                 },
                 onBackToJourney: {
                     backToJourney()
-                }
+                },
+                onViewReport: onViewReport,
+                onShowPaywall: onShowPaywall
             )
             .transition(.opacity.combined(with: .offset(y: 20)))
         }
@@ -167,7 +180,8 @@ struct CalmLevelSessionView: View {
                         title: step.exerciseTitle,
                         instructions: [step.instruction],
                         instructionPromptTypes: [step.promptType],
-                        scienceNote: ""
+                        scienceNote: "",
+                        reportValue: .exclude
                     ),
                     onComplete: {
                         handleBreathingCompletion()
@@ -288,10 +302,24 @@ struct CalmLevelSessionView: View {
         // Save user response if provided
         if let response = response, let step = currentStep {
             userResponses[step.id] = response
+
+            // Find the original exercise to get reportValue
+            let originalExercise = level.exercises.first { $0.id == step.exerciseId }
+            let includeInReport = originalExercise?.reportValue == .include
+
+            // Save to CoreData
+            DataManager.shared.saveExerciseResponse(
+                levelId: level.id,
+                exerciseId: step.exerciseId,
+                exerciseTitle: step.exerciseTitle,
+                instructionText: step.instruction,
+                userResponse: response,
+                includeInReport: includeInReport
+            )
         }
-        
+
         HapticFeedback.light()
-        
+
         // Check if this is a breathing exercise instruction
         if let step = currentStep, step.exerciseType == .breathing {
             // For breathing exercises, show the breathing view after the instruction
@@ -398,6 +426,6 @@ struct CalmLevelSessionView: View {
 
 #Preview {
     NavigationStack {
-        CalmLevelSessionView(level: CalmJourneyDataStore.shared.levels[0], onLevelCompleted: { _ in })
+        CalmLevelSessionView(level: CalmJourneyDataStore.shared.levels[0], isPremiumUser: true, onLevelCompleted: { _ in })
     }
 }
