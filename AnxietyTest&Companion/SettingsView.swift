@@ -239,6 +239,45 @@ struct SettingsView: View {
                                     )
                                 }
                                 .buttonStyle(PlainButtonStyle())
+                                
+                                // Reset Debug Data Button
+                                Button(action: {
+                                    resetDebugData()
+                                }) {
+                                    HStack(spacing: 16) {
+                                        Image(systemName: "trash.fill")
+                                            .foregroundColor(.red)
+                                            .font(.system(size: 18))
+                                            .frame(width: 24)
+                                        
+                                        VStack(alignment: .leading, spacing: 2) {
+                                            Text("Reset Debug Data")
+                                                .font(.system(.body, design: .rounded))
+                                                .fontWeight(.medium)
+                                                .foregroundColor(.themeText)
+                                            
+                                            Text("Clear all exercise responses and reset completed levels")
+                                                .font(.system(.caption, design: .rounded))
+                                                .foregroundColor(.themeText.opacity(0.7))
+                                        }
+                                        
+                                        Spacer()
+                                        
+                                        Image(systemName: "chevron.right")
+                                            .foregroundColor(.themeText.opacity(0.4))
+                                            .font(.system(size: 12))
+                                    }
+                                    .padding(16)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .fill(Color.themeCard)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 12)
+                                                    .stroke(Color.themeDivider, lineWidth: 1)
+                                            )
+                                    )
+                                }
+                                .buttonStyle(PlainButtonStyle())
                             }
                         }
                         .padding(.horizontal, 20)
@@ -383,6 +422,30 @@ struct SettingsView: View {
         } else {
             print("Debug: Failed to encode completed levels")
         }
+        
+        // Post notification to refresh views
+        NotificationCenter.default.post(name: NSNotification.Name("DebugDataFilled"), object: nil)
+        
+        HapticFeedback.success()
+    }
+    
+    private func resetDebugData() {
+        HapticFeedback.light()
+        
+        // Clear all exercise responses
+        let context = DataManager.shared.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ExerciseResponse")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            try context.execute(deleteRequest)
+            try context.save()
+        } catch {
+            print("Error clearing exercise responses: \(error)")
+        }
+        
+        // Reset completed levels
+        UserDefaults.standard.removeObject(forKey: "completedLevels")
         
         // Post notification to refresh views
         NotificationCenter.default.post(name: NSNotification.Name("DebugDataFilled"), object: nil)

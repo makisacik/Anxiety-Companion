@@ -28,19 +28,16 @@ struct CalmJourneyNodeView: View {
                     .resizable()
                     .interpolation(.none)
                     .scaledToFit()
-                    .frame(width: 70, height: 70)
+                    .frame(width: 100, height: 100)
             } else {
-                Image("journey-level-number")
+                // Use individual level images for each level
+                Image("journey-level-\(index)")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 70, height: 70)
+                    .frame(width: 100, height: 100)
                 
-                // Overlay content for non-completed states
-                if state == .active {
-                    Text("\(index)")
-                        .font(.system(size: 24, weight: .bold, design: .rounded))
-                        .foregroundColor(.themeText)
-                } else {
+                // Overlay content for locked state
+                if state == .locked {
                     Image(systemName: "lock.fill")
                         .font(.system(size: 22, weight: .semibold))
                         .foregroundColor(.themeText.opacity(0.4))

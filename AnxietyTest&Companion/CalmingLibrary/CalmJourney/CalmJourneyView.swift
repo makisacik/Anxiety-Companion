@@ -78,6 +78,9 @@ struct CalmJourneyView: View {
                 PaywallView()
             }
             .onAppear(perform: loadCompletedLevels)
+            .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("DebugDataFilled"))) { _ in
+                loadCompletedLevels()
+            }
             .navigationDestination(for: CalmJourneyDestination.self) { destination in
                 switch destination {
                 case .level(let level):
