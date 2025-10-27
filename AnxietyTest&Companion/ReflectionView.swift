@@ -33,6 +33,9 @@ struct ReflectionView: View {
         ZStack {
             LinearGradient(colors: [Color.themeBackgroundPure, Color.themeBackground], startPoint: .top, endPoint: .bottom)
                 .ignoresSafeArea()
+                .onTapGesture {
+                    hideKeyboard()
+                }
 
             VStack(spacing: 16) {
                 // Header
@@ -82,7 +85,7 @@ struct ReflectionView: View {
                 // Yesterday preview
                 if !yesterdayPreview.isEmpty {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Yesterday you said…")
+                        Text("Your last reflection…")
                             .font(.system(.caption, design: .rounded))
                             .foregroundColor(.themeText.opacity(0.6))
                         Text(yesterdayPreview)
@@ -90,6 +93,7 @@ struct ReflectionView: View {
                             .foregroundColor(.themeText.opacity(0.8))
                             .lineLimit(2)
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(12)
                     .background(
                         RoundedRectangle(cornerRadius: 14)
@@ -137,6 +141,19 @@ struct ReflectionView: View {
                 .transition(.scale.combined(with: .opacity))
             }
         }
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    dismiss()
+                }) {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(.themeText)
+                        .font(.system(size: 18, weight: .medium))
+                }
+            }
+        }
+        .toolbar(.hidden, for: .tabBar)
         .onAppear {
             rotatePromptIfNeeded()
             currentPrompt = prompts[safe: promptIndex] ?? prompts[0]
@@ -181,14 +198,12 @@ struct ReflectionView: View {
     }
 
     private func fetchYesterdayPreview() -> String {
-        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())?.startOfDay() ?? Date().startOfDay()
-        let today = Date().startOfDay()
-        // Fetch reflections from yesterday only
+        // Fetch the most recent reflection entry
         let entries = DataManager.shared.fetchJournalEntries(by: "reflection")
-        if let entry = entries.first(where: { ($0.date ?? Date()).startOfDay() == yesterday }) {
-            return entry.content ?? ""
-        }
-        // Or last reflection if yesterday empty
         return entries.first?.content ?? ""
+    }
+    
+    private func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }

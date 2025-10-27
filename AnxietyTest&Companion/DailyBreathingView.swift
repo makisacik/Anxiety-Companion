@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct DailyBreathingView: View {
+    var onComplete: (() -> Void)? = nil
+    
     @Environment(\.dismiss) private var dismiss
     @State private var selectedExercise: BreathingExerciseType? = nil
     @State private var showExerciseSelection = false
@@ -285,5 +287,6 @@ struct DailyBreathingView: View {
         withAnimation(.spring()) {
             isFinished = true
         }
+        onComplete?()
     }
 }

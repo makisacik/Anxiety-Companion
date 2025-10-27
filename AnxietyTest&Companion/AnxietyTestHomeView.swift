@@ -17,6 +17,7 @@ struct AnxietyTestHomeView: View {
     @AppStorage("lastGAD7DateTimestamp") private var lastGAD7DateTimestamp: Double = 0
     @AppStorage("lastMood") private var lastMood = -1 // default none
     @AppStorage("lastMoodDate") private var lastMoodDateTimestamp: Double = 0 // store mood date
+    @AppStorage("lastBreathingDate") private var lastBreathingDateTimestamp: Double = 0 // track breathing date
     
     private var lastGAD7Date: Date {
         get { lastGAD7DateTimestamp == 0 ? Date() : Date(timeIntervalSince1970: lastGAD7DateTimestamp) }
@@ -26,6 +27,11 @@ struct AnxietyTestHomeView: View {
     private var lastMoodDate: Date {
         get { lastMoodDateTimestamp == 0 ? Date(timeIntervalSince1970: 0) : Date(timeIntervalSince1970: lastMoodDateTimestamp) }
         set { lastMoodDateTimestamp = newValue.timeIntervalSince1970 }
+    }
+    
+    private var lastBreathingDate: Date {
+        get { lastBreathingDateTimestamp == 0 ? Date(timeIntervalSince1970: 0) : Date(timeIntervalSince1970: lastBreathingDateTimestamp) }
+        set { lastBreathingDateTimestamp = newValue.timeIntervalSince1970 }
     }
 
     @FetchRequest(
@@ -62,6 +68,10 @@ struct AnxietyTestHomeView: View {
         Calendar.current.isDateInToday(lastMoodDate)
     }
     
+    private var isBreathingForToday: Bool {
+        Calendar.current.isDateInToday(lastBreathingDate)
+    }
+    
     var body: some View {
         NavigationStack {
             GeometryReader { geometry in
@@ -70,6 +80,8 @@ struct AnxietyTestHomeView: View {
                         headerView
                         
                         dailyBreathingCardSection
+                        
+                        dailyReflectionCardSection
                         
                         gad7CardSection
                         
@@ -124,12 +136,14 @@ struct AnxietyTestHomeView: View {
     // MARK: - Sections
     
     private var dailyBreathingCardSection: some View {
-        NavigationLink(destination: DailyBreathingView()) {
+        NavigationLink(destination: DailyBreathingView(onComplete: {
+            lastBreathingDateTimestamp = Date().timeIntervalSince1970
+        })) {
             HStack(spacing: 16) {
                 // Icon
-                Image(systemName: "wind")
+                Image(systemName: isBreathingForToday ? "checkmark.circle.fill" : "wind")
                     .font(.system(size: 32))
-                    .foregroundColor(.themeText)
+                    .foregroundColor(isBreathingForToday ? .green : .themeText)
                     .frame(width: 60, height: 60)
                     .background(
                         Circle()
@@ -143,7 +157,54 @@ struct AnxietyTestHomeView: View {
                         .fontWeight(.semibold)
                         .foregroundColor(.themeText)
                     
-                    Text("Take a moment to breathe and center yourself")
+                    Text(isBreathingForToday ? "You've breathed mindfully today 🌿" : "Take a moment to breathe and center yourself")
+                        .font(.system(.caption, design: .rounded))
+                        .foregroundColor(.themeText.opacity(0.7))
+                        .multilineTextAlignment(.leading)
+                }
+                
+                Spacer()
+                
+                // Arrow
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(.themeText.opacity(0.5))
+            }
+            .padding(20)
+            .frame(width: cardWidth > 0 ? cardWidth : nil)
+            .background(
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(Color.themeCard)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color.themeDivider, lineWidth: 1)
+                    )
+            )
+        }
+        .buttonStyle(ScaleButtonStyle())
+    }
+    
+    private var dailyReflectionCardSection: some View {
+        NavigationLink(destination: ReflectionView { _ in }) {
+            HStack(spacing: 16) {
+                // Icon
+                Image(systemName: "pencil.line")
+                    .font(.system(size: 32))
+                    .foregroundColor(.themeText)
+                    .frame(width: 60, height: 60)
+                    .background(
+                        Circle()
+                            .fill(Color.themeBackground)
+                    )
+                
+                // Content
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Reflect for a moment ✍️")
+                        .font(.system(.headline, design: .rounded))
+                        .fontWeight(.semibold)
+                        .foregroundColor(.themeText)
+                    
+                    Text("Share your thoughts and feelings")
                         .font(.system(.caption, design: .rounded))
                         .foregroundColor(.themeText.opacity(0.7))
                         .multilineTextAlignment(.leading)
