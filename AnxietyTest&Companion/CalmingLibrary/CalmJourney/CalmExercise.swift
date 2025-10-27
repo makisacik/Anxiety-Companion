@@ -26,6 +26,7 @@ struct CalmExercise: Identifiable, Codable, Hashable {
     let instructionPromptTypes: [InstructionPromptType]
     let scienceNote: String
     let reportValue: ReportValue
+    let imageName: String?
     
     var displayType: String {
         switch type {
@@ -65,18 +66,20 @@ struct InstructionStep: Identifiable {
     let exerciseTitle: String
     let exerciseId: Int
     let promptType: InstructionPromptType
+    let imageName: String?
 
     // Computed property for backward compatibility
     var isQuestion: Bool {
         return promptType == .question
     }
 
-    init(id: Int, instruction: String, exerciseType: ExerciseType, exerciseTitle: String, exerciseId: Int, promptType: InstructionPromptType) {
+    init(id: Int, instruction: String, exerciseType: ExerciseType, exerciseTitle: String, exerciseId: Int, promptType: InstructionPromptType, imageName: String? = nil) {
         self.id = id
         self.instruction = instruction
         self.exerciseType = exerciseType
         self.exerciseTitle = exerciseTitle
         self.exerciseId = exerciseId
         self.promptType = promptType
+        self.imageName = imageName
     }
 }

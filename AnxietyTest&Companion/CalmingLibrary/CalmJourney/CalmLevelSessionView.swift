@@ -164,6 +164,16 @@ struct CalmLevelSessionView: View {
                 )
                 .padding(.horizontal, 24)
                 .padding(.top, 20)
+                
+                // Show image below companion for education steps
+                if currentStep.exerciseType == .education, let imageName = currentStep.imageName {
+                    Image(imageName)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: 250)
+                        .padding(.horizontal, 24)
+                        .padding(.top, 16)
+                }
             }
 
             if showBreathingView, let step = currentStep, step.exerciseType == .breathing {
@@ -177,7 +187,8 @@ struct CalmLevelSessionView: View {
                         instructions: [step.instruction],
                         instructionPromptTypes: [step.promptType],
                         scienceNote: "",
-                        reportValue: .exclude
+                        reportValue: .exclude,
+                        imageName: nil
                     ),
                     onComplete: {
                         handleBreathingCompletion()
@@ -252,7 +263,8 @@ struct CalmLevelSessionView: View {
                     exerciseType: exercise.type,
                     exerciseTitle: exercise.title,
                     exerciseId: exercise.id,
-                    promptType: .statement
+                    promptType: .statement,
+                    imageName: exercise.imageName
                 )
                 steps.append(step)
                 print("🔍 Added breathing explanation step: \(explanation)")
@@ -270,7 +282,8 @@ struct CalmLevelSessionView: View {
                         exerciseType: exercise.type,
                         exerciseTitle: exercise.title,
                         exerciseId: exercise.id,
-                        promptType: promptType
+                        promptType: promptType,
+                        imageName: exercise.imageName
                     )
                     steps.append(step)
                     print("🔍 Added step \(stepId): \(instruction) (promptType: \(promptType))")
