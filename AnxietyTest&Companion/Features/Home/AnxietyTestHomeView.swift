@@ -83,6 +83,8 @@ struct AnxietyTestHomeView: View {
                         
                         dailyReflectionCardSection
                         
+                        worryTrackerCardSection
+                        
                         gad7CardSection
                         
                         moodSection
@@ -211,6 +213,53 @@ struct AnxietyTestHomeView: View {
                         .foregroundColor(.themeText)
                     
                     Text("Share your thoughts and feelings")
+                        .font(.system(.caption, design: .rounded))
+                        .foregroundColor(.themeText.opacity(0.7))
+                        .multilineTextAlignment(.leading)
+                }
+                
+                Spacer()
+                
+                // Arrow
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(.themeText.opacity(0.5))
+            }
+            .padding(20)
+            .frame(width: cardWidth > 0 ? cardWidth : nil)
+            .background(
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(Color.themeCard)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color.themeDivider, lineWidth: 1)
+                    )
+            )
+        }
+        .buttonStyle(ScaleButtonStyle())
+    }
+    
+    private var worryTrackerCardSection: some View {
+        NavigationLink(destination: WorryTrackerListView(context: viewContext)) {
+            HStack(spacing: 16) {
+                // Icon
+                Image(systemName: "bubble.left.and.exclamationmark.bubble.right.fill")
+                    .font(.system(size: 32))
+                    .foregroundColor(.themeText)
+                    .frame(width: 60, height: 60)
+                    .background(
+                        Circle()
+                            .fill(Color.themeBackground)
+                    )
+                
+                // Content
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Worry Tracker 💭")
+                        .font(.system(.headline, design: .rounded))
+                        .fontWeight(.semibold)
+                        .foregroundColor(.themeText)
+                    
+                    Text("Notice how worries change over time")
                         .font(.system(.caption, design: .rounded))
                         .foregroundColor(.themeText.opacity(0.7))
                         .multilineTextAlignment(.leading)
