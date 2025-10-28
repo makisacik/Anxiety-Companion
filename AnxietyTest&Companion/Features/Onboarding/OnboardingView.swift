@@ -13,7 +13,7 @@ struct OnboardingView: View {
     @State private var currentPage = 0
     @State private var nameInput = ""
     
-    private let totalPages = 6
+    private let totalPages = 9
     
     var body: some View {
         ZStack {
@@ -22,16 +22,17 @@ struct OnboardingView: View {
                 .ignoresSafeArea()
             
             TabView(selection: $currentPage) {
-                // Screen 1 - Welcome
+                // Page 0 - Welcome / Disarm
                 OnboardingScreenView(
                     title: "Hey there.",
-                    message: "I'm here to help you understand how you've been feeling.",
+                    message: "I'm your companion. You don't have to face anxious thoughts alone.\n\nLet's take a moment together to slow down.",
                     companionExpression: .neutral,
-                    onContinue: nextPage
+                    onContinue: nextPage,
+                    imageName: "onboarding-image"
                 )
                 .tag(0)
                 
-                // Screen 2 - Name Input
+                // Page 1 - Personalization
                 OnboardingScreenView(
                     title: "What should I call you?",
                     message: "",
@@ -40,7 +41,7 @@ struct OnboardingView: View {
                     onContinue: saveNameAndContinue,
                     customContent: AnyView(
                         VStack(spacing: 30) {
-                            TypingTextView(text: "I'd love to know your name so I can greet you properly.") {
+                            TypingTextView(text: "Names make things feel a little more human, don't they?\n\nI'd love to know yours.") {
                                 // Text typing complete
                             }
                             
@@ -83,47 +84,76 @@ struct OnboardingView: View {
                             // Dismiss keyboard when tapping outside the TextField
                             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                         }
-                    )
+                    ),
+                    imageName: "confused-1"
                 )
                 .tag(1)
                 
-                // Screen 3 - Purpose
+                // Page 2 - App Purpose (Honesty)
                 OnboardingScreenView(
-                    title: "A Safe Space",
-                    message: "This isn't a therapy app. It's a gentle space for self-check and reflection.",
+                    title: "A gentle space",
+                    message: "This isn't therapy. Think of it as your daily pause —\na space to understand, track, and calm what you're feeling.",
                     companionExpression: .neutral,
-                    onContinue: nextPage
+                    onContinue: nextPage,
+                    imageName: "meditate-1"
                 )
                 .tag(2)
                 
-                // Screen 4 - Meet Companion
+                // Page 3 - Meet Your Companion
                 OnboardingScreenView(
-                    title: "Your Companion",
-                    message: "This is your companion. You'll take small steps together.",
+                    title: "This is me.",
+                    message: "I'll check in with you, guide short exercises, and remind you to breathe when things feel heavy.\n\nReady to meet the calm version of your day?",
                     companionExpression: .mouthRight,
-                    onContinue: nextPage
+                    onContinue: nextPage,
+                    imageName: "onboarding-image"
                 )
                 .tag(3)
                 
-                // Screen 5 - Empowerment
+                // Page 4 - Track Your Feelings (NEW)
                 OnboardingScreenView(
-                    title: "Understanding",
-                    message: "Understanding your anxiety is the first step toward feeling better.",
+                    title: "Understand your patterns",
+                    message: "Each day, you can note how you feel — calm, tense, or anxious.\n\nYou'll also take a short GAD-7 test sometimes.\nIt helps you measure anxiety levels and see real progress.\n\nThe more you track, the more control you gain.",
                     companionExpression: .neutral,
-                    onContinue: nextPage
+                    onContinue: nextPage,
+                    imageName: "tracking-header"
                 )
                 .tag(4)
                 
-                // Screen 6 - Ready
+                // Page 5 - Mind State Preview (Interactive)
+                MindStatePreviewView(onContinue: nextPage)
+                    .tag(5)
+                
+                // Page 6 - What You'll Do Together
+                OnboardingScreenView(
+                    title: "Tiny steps every day.",
+                    message: "You'll answer a few gentle questions, track your feelings,\nand explore calming journeys designed to bring balance.\n\nOver time, you'll see how far you've come.",
+                    companionExpression: .neutral,
+                    onContinue: nextPage,
+                    imageName: "walking-up"
+                )
+                .tag(6)
+                
+                // Page 7 - Free Trial / Transparency Screen
+                OnboardingScreenView(
+                    title: "Here's how your free trial works",
+                    message: "You can start exploring all Calm Journeys and reflections for free for 7 days.\nAfter that, you can stay with the free plan or unlock everything for less than a coffee a month.\n\nNo pressure — this is your pace.",
+                    companionExpression: .mouthRight,
+                    onContinue: nextPage,
+                    imageName: "onboarding-image"
+                )
+                .tag(7)
+                
+                // Page 8 - Ready to Begin
                 OnboardingScreenView(
                     title: "You're doing great.",
-                    message: "Let's begin with a short check-in.",
+                    message: "Let's start with a quick check-in — it only takes a minute.\n\nRemember, this is your safe space. I'm right here.",
                     companionExpression: .happy,
                     showGlow: true,
                     buttonText: "Let's Begin",
-                    onContinue: completeOnboarding
+                    onContinue: completeOnboarding,
+                    imageName: "onboarding-image"
                 )
-                .tag(5)
+                .tag(8)
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
             .animation(.easeOut(duration: 0.8), value: currentPage)

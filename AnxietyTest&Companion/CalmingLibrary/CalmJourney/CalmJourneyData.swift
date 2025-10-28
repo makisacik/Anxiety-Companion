@@ -166,7 +166,7 @@ class CalmJourneyDataStore: ObservableObject {
                             "Try small changes: breathing, staying present, or acting despite fear."
                         ],
                         instructionPromptTypes: [
-                            .question,
+                            .statement,
                             .question,
                             .statement
                         ],

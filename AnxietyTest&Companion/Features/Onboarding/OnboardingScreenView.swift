@@ -15,6 +15,7 @@ struct OnboardingScreenView: View {
     let buttonText: String
     let onContinue: () -> Void
     let customContent: AnyView?
+    let imageName: String?
     
     @State private var showButton = false
     @State private var companionExpressionState: CompanionFaceView.Expression
@@ -26,7 +27,8 @@ struct OnboardingScreenView: View {
         showGlow: Bool = false,
         buttonText: String = "Continue",
         onContinue: @escaping () -> Void,
-        customContent: AnyView? = nil
+        customContent: AnyView? = nil,
+        imageName: String? = nil
     ) {
         self.title = title
         self.message = message
@@ -35,12 +37,22 @@ struct OnboardingScreenView: View {
         self.buttonText = buttonText
         self.onContinue = onContinue
         self.customContent = customContent
+        self.imageName = imageName
         self._companionExpressionState = State(initialValue: companionExpression)
     }
     
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
+            
+            // Image (if provided)
+            if let imageName = imageName {
+                Image(imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: 280, maxHeight: 280)
+                    .padding(.bottom, 30)
+            }
             
             // Companion
             CompanionFaceView(

@@ -11,6 +11,7 @@ import CoreData
 struct SettingsView: View {
     @AppStorage("notificationsEnabled") private var notificationsEnabled = false
     @AppStorage("isPremiumUser") private var isPremiumUser = false
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
     @State private var actualNotificationStatus: Bool = false
     @State private var isLoading = true
     
@@ -278,6 +279,45 @@ struct SettingsView: View {
                                     )
                                 }
                                 .buttonStyle(PlainButtonStyle())
+                                
+                                // Reset Onboarding Button
+                                Button(action: {
+                                    resetOnboarding()
+                                }) {
+                                    HStack(spacing: 16) {
+                                        Image(systemName: "arrow.uturn.backward.circle.fill")
+                                            .foregroundColor(.orange)
+                                            .font(.system(size: 18))
+                                            .frame(width: 24)
+                                        
+                                        VStack(alignment: .leading, spacing: 2) {
+                                            Text("Reset Onboarding")
+                                                .font(.system(.body, design: .rounded))
+                                                .fontWeight(.medium)
+                                                .foregroundColor(.themeText)
+                                            
+                                            Text("Return to the onboarding experience")
+                                                .font(.system(.caption, design: .rounded))
+                                                .foregroundColor(.themeText.opacity(0.7))
+                                        }
+                                        
+                                        Spacer()
+                                        
+                                        Image(systemName: "chevron.right")
+                                            .foregroundColor(.themeText.opacity(0.4))
+                                            .font(.system(size: 12))
+                                    }
+                                    .padding(16)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .fill(Color.themeCard)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 12)
+                                                    .stroke(Color.themeDivider, lineWidth: 1)
+                                            )
+                                    )
+                                }
+                                .buttonStyle(PlainButtonStyle())
                             }
                         }
                         .padding(.horizontal, 20)
@@ -449,6 +489,15 @@ struct SettingsView: View {
         
         // Post notification to refresh views
         NotificationCenter.default.post(name: NSNotification.Name("DebugDataFilled"), object: nil)
+        
+        HapticFeedback.success()
+    }
+    
+    private func resetOnboarding() {
+        HapticFeedback.light()
+        
+        // Reset the onboarding flag
+        hasCompletedOnboarding = false
         
         HapticFeedback.success()
     }
