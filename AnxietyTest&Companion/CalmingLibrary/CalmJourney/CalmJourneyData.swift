@@ -92,23 +92,15 @@ class CalmJourneyDataStore: ObservableObject {
                     ),
                     CalmExercise(
                         id: 4,
-                        type: .prompt,
-                        title: "Body Scan",
+                        type: .relaxBody,
+                        title: "Relax the Body 🌿",
                         instructions: [
-                            "Take a deep breath.",
-                            "Focus on your toes. Notice any tension.",
-                            "Move your attention slowly up your legs.",
-                            "Continue to your stomach, chest, shoulders, and face.",
-                            "Release any tightness as you go."
+                            "Let's progressively relax each part of your body. This interactive exercise will guide you through releasing tension from your toes to your face."
                         ],
                         instructionPromptTypes: [
-                            .action,
-                            .statement,
-                            .statement,
-                            .statement,
                             .statement
                         ],
-                        scienceNote: "Body scans increase interoceptive awareness and reduce muscle tension.",
+                        scienceNote: "Progressive relaxation reduces muscle tension and activates calm-body awareness.",
                         reportValue: .exclude,
                         imageNames: []
                     )

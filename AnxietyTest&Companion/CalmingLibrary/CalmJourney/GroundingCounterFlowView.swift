@@ -16,6 +16,12 @@ struct GroundingCounterStep {
 
 struct GroundingCounterFlowView: View {
     let onComplete: () -> Void
+    let onStepProgress: (() -> Void)?
+    
+    init(onComplete: @escaping () -> Void, onStepProgress: (() -> Void)? = nil) {
+        self.onComplete = onComplete
+        self.onStepProgress = onStepProgress
+    }
     
     @Environment(\.dismiss) private var dismiss
     @State private var currentStepIndex: Int = 0
@@ -81,16 +87,6 @@ struct GroundingCounterFlowView: View {
         }
         .navigationTitle("Grounding 5-4-3-2-1")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("Skip") {
-                    HapticFeedback.light()
-                    onComplete()
-                }
-                .font(.system(.body, design: .rounded))
-                .foregroundColor(.themeText.opacity(0.7))
-            }
-        }
     }
     
     private var completionScreen: some View {
@@ -148,6 +144,9 @@ struct GroundingCounterFlowView: View {
     
     private func advanceToNextStep() {
         let nextIndex = currentStepIndex + 1
+        
+        // Notify progress
+        onStepProgress?()
         
         if nextIndex < steps.count {
             // Move to next step

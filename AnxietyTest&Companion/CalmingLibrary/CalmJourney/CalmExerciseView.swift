@@ -95,6 +95,13 @@ struct CalmExerciseView: View {
                 .font(.system(.body, design: .rounded))
                 .foregroundColor(.themeText.opacity(0.7))
                 .padding()
+        case .relaxBody:
+            // Relax body exercises are handled separately in CalmLevelSessionView
+            // This should not be reached, but provide a fallback
+            Text("Body relaxation exercises are interactive and handled separately.")
+                .font(.system(.body, design: .rounded))
+                .foregroundColor(.themeText.opacity(0.7))
+                .padding()
         }
     }
     

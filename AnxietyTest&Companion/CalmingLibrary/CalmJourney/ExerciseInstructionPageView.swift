@@ -40,6 +40,8 @@ struct ExerciseInstructionPageView: View {
             return promptType == .question ? .happy : .neutral
         case .grounding:
             return .calm
+        case .relaxBody:
+            return .calm
         }
     }
     
