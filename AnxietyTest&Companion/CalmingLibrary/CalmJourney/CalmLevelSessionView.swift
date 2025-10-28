@@ -33,6 +33,7 @@ struct CalmLevelSessionView: View {
     @State private var instructionSteps: [InstructionStep] = []
     @State private var userResponses: [Int: String] = [:] // stepId: response
     @State private var showBreathingView = false
+    @State private var showGroundingView = false
     
     private var currentStep: InstructionStep? {
         guard currentStepIndex < instructionSteps.count else { return nil }
@@ -155,8 +156,8 @@ struct CalmLevelSessionView: View {
             // Header with progress
             headerSection
             
-            // Companion with chat bubble - only show when NOT in breathing view
-            if !showBreathingView, let currentStep = currentStep {
+            // Companion with chat bubble - only show when NOT in breathing/grounding view
+            if !showBreathingView && !showGroundingView, let currentStep = currentStep {
                 CompanionChatBubbleView(
                     message: currentStep.instruction,
                     showSpeakerIcon: false,
@@ -192,6 +193,13 @@ struct CalmLevelSessionView: View {
                     ),
                     onComplete: {
                         handleBreathingCompletion()
+                    }
+                )
+            } else if showGroundingView, let step = currentStep, step.exerciseType == .grounding {
+                // Show the interactive grounding counter flow
+                GroundingCounterFlowView(
+                    onComplete: {
+                        handleGroundingCompletion()
                     }
                 )
             } else {
@@ -271,6 +279,21 @@ struct CalmLevelSessionView: View {
                 steps.append(step)
                 print("🔍 Added breathing explanation step: \(explanation)")
                 stepId += 1
+            } else if exercise.type == .grounding {
+                // For grounding exercises, show a single intro step that launches the interactive flow
+                let explanation = "Let's ground yourself in the present moment using the 5-4-3-2-1 technique. This interactive exercise will guide you through each sense, one at a time."
+                let step = InstructionStep(
+                    id: stepId,
+                    instruction: explanation,
+                    exerciseType: exercise.type,
+                    exerciseTitle: exercise.title,
+                    exerciseId: exercise.id,
+                    promptType: .statement,
+                    imageName: nil
+                )
+                steps.append(step)
+                print("🔍 Added grounding explanation step: \(explanation)")
+                stepId += 1
             } else {
                 // For other exercise types, show all instructions as separate steps
                 for (index, instruction) in exercise.instructions.enumerated() {
@@ -338,6 +361,9 @@ struct CalmLevelSessionView: View {
         if let step = currentStep, step.exerciseType == .breathing {
             // For breathing exercises, show the breathing view after the instruction
             startBreathingExercise()
+        } else if let step = currentStep, step.exerciseType == .grounding {
+            // For grounding exercises, show the interactive counter flow
+            startGroundingExercise()
         } else {
             moveToNextStep()
         }
@@ -346,6 +372,12 @@ struct CalmLevelSessionView: View {
     private func startBreathingExercise() {
         withAnimation(.easeInOut(duration: 0.6)) {
             showBreathingView = true
+        }
+    }
+    
+    private func startGroundingExercise() {
+        withAnimation(.easeInOut(duration: 0.6)) {
+            showGroundingView = true
         }
     }
     
@@ -365,6 +397,26 @@ struct CalmLevelSessionView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             withAnimation(.easeInOut(duration: 0.3)) {
                 showBreathingView = false
+            }
+        }
+    }
+    
+    private func handleGroundingCompletion() {
+        print("✋ Grounding exercise completed, moving to next step")
+        print("✋ Current step index: \(currentStepIndex), Total steps: \(totalSteps)")
+        if let nextStep = currentStepIndex + 1 < instructionSteps.count ? instructionSteps[currentStepIndex + 1] : nil {
+            print("✋ Next step will be: \(nextStep.instruction) (type: \(nextStep.exerciseType))")
+        }
+        
+        HapticFeedback.success()
+        
+        // Move to next step first, then hide grounding view
+        moveToNextStep()
+        
+        // Hide grounding view after moving to next step
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            withAnimation(.easeInOut(duration: 0.3)) {
+                showGroundingView = false
             }
         }
     }
@@ -427,6 +479,8 @@ struct CalmLevelSessionView: View {
             return .neutral
         case .prompt:
             return step.promptType == .question ? .happy : .neutral
+        case .grounding:
+            return .calm
         }
     }
     

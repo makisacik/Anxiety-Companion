@@ -70,7 +70,7 @@ class CalmJourneyDataStore: ObservableObject {
                     ),
                     CalmExercise(
                         id: 3,
-                        type: .prompt,
+                        type: .grounding,
                         title: "Grounding 5-4-3-2-1",
                         instructions: [
                             "Name 5 things you can see.",

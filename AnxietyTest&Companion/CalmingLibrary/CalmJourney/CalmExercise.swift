@@ -11,6 +11,7 @@ enum ExerciseType: String, CaseIterable, Codable {
     case breathing = "breathing"
     case prompt = "prompt"
     case education = "education"
+    case grounding = "grounding"
 }
 
 enum ReportValue: String, CaseIterable, Codable {
@@ -36,6 +37,8 @@ struct CalmExercise: Identifiable, Codable, Hashable {
             return "Reflection Prompt"
         case .education:
             return "Learn"
+        case .grounding:
+            return "Grounding Exercise"
         }
     }
     
@@ -47,6 +50,8 @@ struct CalmExercise: Identifiable, Codable, Hashable {
             return "pencil.and.outline"
         case .education:
             return "brain.head.profile"
+        case .grounding:
+            return "hand.raised.fill"
         }
     }
 }

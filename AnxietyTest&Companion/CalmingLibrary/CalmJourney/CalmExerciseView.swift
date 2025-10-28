@@ -88,6 +88,13 @@ struct CalmExerciseView: View {
             promptExerciseContent
         case .education:
             educationExerciseContent
+        case .grounding:
+            // Grounding exercises are handled separately in CalmLevelSessionView
+            // This should not be reached, but provide a fallback
+            Text("Grounding exercises are interactive and handled separately.")
+                .font(.system(.body, design: .rounded))
+                .foregroundColor(.themeText.opacity(0.7))
+                .padding()
         }
     }
     
