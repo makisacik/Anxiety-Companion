@@ -13,22 +13,14 @@ struct PaywallView: View {
 
     @Environment(\.dismiss) private var dismiss
     @State private var selectedPlan: PlanOption = .weeklyTrial
+    @AppStorage("isPremiumUser") private var isPremiumUser = false
+    @State private var showCloseButton = false
 
     // Note: This view is design-only. Button actions are placeholders.
     var body: some View {
         ZStack(alignment: .topTrailing) {
             Color.themeBackground
                 .ignoresSafeArea()
-
-            // Close button
-            Button(action: { HapticFeedback.light(); dismiss() }) {
-                Image(systemName: "xmark")
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundColor(.themeText.opacity(0.7))
-                    .padding(12)
-            }
-            .padding(.trailing, 8)
-            .padding(.top, 8)
 
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 24) {
@@ -104,7 +96,11 @@ struct PaywallView: View {
                     .padding(.horizontal, 20)
 
                     // CTA
-                    Button(action: { HapticFeedback.soft() /* no StoreKit yet */ }) {
+                    Button(action: {
+                        HapticFeedback.soft()
+                        isPremiumUser = true
+                        dismiss()
+                    }) {
                         HStack(spacing: 8) {
                             Text("Try for Free")
                                 .font(.system(.headline, design: .rounded))
@@ -156,6 +152,30 @@ struct PaywallView: View {
                             .foregroundColor(.themeText.opacity(0.7))
                     }
                     .padding(.bottom, 28)
+                }
+            }
+
+            // Close button (appears after 2.5 seconds)
+            if showCloseButton {
+                Button(action: {
+                    HapticFeedback.light()
+                    dismiss()
+                }) {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(.themeText.opacity(0.7))
+                        .padding(12)
+                }
+                .padding(.trailing, 8)
+                .padding(.top, 8)
+                .transition(.opacity)
+                .zIndex(1)
+            }
+        }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                withAnimation(.easeIn(duration: 0.3)) {
+                    showCloseButton = true
                 }
             }
         }
