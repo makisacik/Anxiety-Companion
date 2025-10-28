@@ -16,10 +16,11 @@ struct OnboardingScreenView: View {
     let onContinue: () -> Void
     let customContent: AnyView?
     let imageName: String?
+    let useScrollView: Bool
     
     @State private var showButton = false
     @State private var companionExpressionState: CompanionFaceView.Expression
-    
+
     init(
         title: String,
         message: String,
@@ -28,7 +29,8 @@ struct OnboardingScreenView: View {
         buttonText: String = "Continue",
         onContinue: @escaping () -> Void,
         customContent: AnyView? = nil,
-        imageName: String? = nil
+        imageName: String? = nil,
+        useScrollView: Bool = false
     ) {
         self.title = title
         self.message = message
@@ -38,10 +40,34 @@ struct OnboardingScreenView: View {
         self.onContinue = onContinue
         self.customContent = customContent
         self.imageName = imageName
+        self.useScrollView = useScrollView
         self._companionExpressionState = State(initialValue: companionExpression)
     }
     
     var body: some View {
+        Group {
+            if useScrollView {
+                ScrollView {
+                    contentView
+                }
+                .scrollDismissesKeyboard(.interactively)
+            } else {
+                contentView
+            }
+        }
+        .onAppear {
+            // Trigger companion expression change after a delay for Screen 1
+            if companionExpression == .happy && companionExpressionState == .neutral {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    withAnimation(.easeInOut(duration: 0.8)) {
+                        companionExpressionState = .happy
+                    }
+                }
+            }
+        }
+    }
+    
+    private var contentView: some View {
         VStack(spacing: 0) {
             Spacer()
             
@@ -51,7 +77,7 @@ struct OnboardingScreenView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(maxWidth: 280, maxHeight: 280)
-                    .padding(.bottom, 30)
+                    .padding(.bottom, 20)
             }
             
             // Companion
@@ -108,16 +134,6 @@ struct OnboardingScreenView: View {
                 .padding(.horizontal, 40)
                 .padding(.bottom, 60)
                 .transition(.opacity.combined(with: .move(edge: .bottom)))
-            }
-        }
-        .onAppear {
-            // Trigger companion expression change after a delay for Screen 1
-            if companionExpression == .happy && companionExpressionState == .neutral {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    withAnimation(.easeInOut(duration: 0.8)) {
-                        companionExpressionState = .happy
-                    }
-                }
             }
         }
     }
