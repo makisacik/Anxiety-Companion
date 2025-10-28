@@ -47,11 +47,30 @@ struct TrackingView: View {
 
                 ScrollView(showsIndicators: false) {
                 VStack(spacing: 24) {
-                    // Companion Section
-                    CompanionSectionView(
-                        gad7Entries: Array(gad7Entries),
-                        moodEntries: Array(moodEntries)
-                    )
+                    // Header with decorative background image (does not affect layout height)
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text("Your Progress 📊")
+                            .font(.largeTitle.bold())
+                            .foregroundColor(.themeText)
+
+                        Text("Track your anxiety patterns and see how you're improving over time.")
+                            .font(.system(.body, design: .rounded))
+                            .foregroundColor(.themeText.opacity(0.8))
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .multilineTextAlignment(.leading)
+                    .padding(.horizontal, 24)
+                    .padding(.top, 40)
+                    .padding(.bottom, 30)
+                    .overlay(alignment: .trailing) {
+                        Image("tracking-header")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 120)
+                            .opacity(0.3)
+                            .offset(y: -30)
+                            .allowsHitTesting(false)
+                    }
                     
                     // Summary Card
                     SummaryCardView(gad7Entries: Array(gad7Entries))
@@ -66,10 +85,10 @@ struct TrackingView: View {
                         selectedDay: $selectedDay
                     )
                 }
-                .padding(.horizontal, 20)
-                .padding(.top, 30)
+                .padding(.horizontal, 24)
                 .padding(.bottom, 60)
                 }
+                .navigationBarHidden(true)
                 .onAppear {
                     checkForIntroOverlay()
                     DataManager.shared.migrateFromAppStorage()
