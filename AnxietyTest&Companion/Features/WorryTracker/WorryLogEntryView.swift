@@ -15,11 +15,13 @@ struct WorryLogEntryView: View {
     @State private var controlThought = ""
     @State private var intensity = 5.0
     @State private var reminderHours = 3
+    @State private var showCustomTimePicker = false
+    @State private var customReminderDate = Date()
+    @State private var isCustomTime = false
     
     private let reminderOptions = [
         (hours: 3, label: "In 3 hours"),
         (hours: 6, label: "In 6 hours"),
-        (hours: 12, label: "In 12 hours"),
         (hours: 24, label: "Tomorrow")
     ]
     
@@ -173,6 +175,7 @@ struct WorryLogEntryView: View {
                             Button {
                                 withAnimation(.spring(response: 0.3)) {
                                     reminderHours = option.hours
+                                    isCustomTime = false
                                 }
                                 HapticFeedback.light()
                             } label: {
@@ -183,7 +186,7 @@ struct WorryLogEntryView: View {
                                     
                                     Spacer()
                                     
-                                    if reminderHours == option.hours {
+                                    if reminderHours == option.hours && !isCustomTime {
                                         Image(systemName: "checkmark.circle.fill")
                                             .foregroundColor(.green)
                                     } else {
@@ -194,15 +197,71 @@ struct WorryLogEntryView: View {
                                 .padding(16)
                                 .background(
                                     RoundedRectangle(cornerRadius: 12)
-                                        .fill(reminderHours == option.hours ? Color.green.opacity(0.1) : Color.themeBackgroundPure)
+                                        .fill(reminderHours == option.hours && !isCustomTime ? Color.green.opacity(0.1) : Color.themeBackgroundPure)
                                         .overlay(
                                             RoundedRectangle(cornerRadius: 12)
-                                                .stroke(reminderHours == option.hours ? Color.green.opacity(0.5) : Color.themeDivider, lineWidth: reminderHours == option.hours ? 2 : 1)
+                                                .stroke(reminderHours == option.hours && !isCustomTime ? Color.green.opacity(0.5) : Color.themeDivider, lineWidth: reminderHours == option.hours && !isCustomTime ? 2 : 1)
                                         )
                                 )
                             }
                             .buttonStyle(PlainButtonStyle())
                         }
+                        
+                        // Custom time option
+                        Button {
+                            withAnimation(.spring(response: 0.3)) {
+                                isCustomTime = true
+                                showCustomTimePicker.toggle()
+                            }
+                            HapticFeedback.light()
+                        } label: {
+                            VStack(spacing: 0) {
+                                HStack {
+                                    Text("Choose specific time")
+                                        .font(.system(.body, design: .rounded))
+                                        .foregroundColor(.themeText)
+                                    
+                                    Spacer()
+                                    
+                                    if isCustomTime {
+                                        Image(systemName: "checkmark.circle.fill")
+                                            .foregroundColor(.green)
+                                    } else {
+                                        Image(systemName: "circle")
+                                            .foregroundColor(.themeDivider)
+                                    }
+                                }
+                                .padding(16)
+                                
+                                if showCustomTimePicker {
+                                    VStack(spacing: 12) {
+                                        Divider()
+                                            .background(Color.themeDivider)
+                                        
+                                        DatePicker(
+                                            "Select date and time",
+                                            selection: $customReminderDate,
+                                            in: Date()...,
+                                            displayedComponents: [.date, .hourAndMinute]
+                                        )
+                                        .datePickerStyle(.graphical)
+                                        .labelsHidden()
+                                        .tint(.green)
+                                        .padding(.horizontal, 8)
+                                        .padding(.bottom, 8)
+                                    }
+                                }
+                            }
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(isCustomTime ? Color.green.opacity(0.1) : Color.themeBackgroundPure)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .stroke(isCustomTime ? Color.green.opacity(0.5) : Color.themeDivider, lineWidth: isCustomTime ? 2 : 1)
+                                    )
+                            )
+                        }
+                        .buttonStyle(PlainButtonStyle())
                     }
                 }
                 .padding(.horizontal, 20)
@@ -269,7 +328,12 @@ struct WorryLogEntryView: View {
     private func saveWorry() {
         guard !worryText.isEmpty else { return }
         
-        let reminderDate = Calendar.current.date(byAdding: .hour, value: reminderHours, to: Date()) ?? Date()
+        let reminderDate: Date
+        if isCustomTime {
+            reminderDate = customReminderDate
+        } else {
+            reminderDate = Calendar.current.date(byAdding: .hour, value: reminderHours, to: Date()) ?? Date()
+        }
         
         viewModel.addWorry(
             text: worryText,
