@@ -93,8 +93,14 @@ struct AnxietyTestHomeView: View {
                     .padding(.bottom, 60)
                     .padding(.horizontal, 20)
                 }
-                .onAppear {
-                    cardWidth = geometry.size.width - 40 // screen width minus padding
+                .onChange(of: geometry.size.width) { newWidth in
+                    cardWidth = newWidth - 40 // accounts for .horizontal padding
+                }
+                .task {
+                    // fallback in case width is available after async layout
+                    if cardWidth == 0 {
+                        cardWidth = geometry.size.width - 40
+                    }
                 }
             }
             .background(
