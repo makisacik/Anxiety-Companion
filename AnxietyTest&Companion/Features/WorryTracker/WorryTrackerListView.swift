@@ -12,6 +12,8 @@ struct WorryTrackerListView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var viewModel: WorryTrackerViewModel
     @State private var showingAddWorry = false
+    @State private var showingWorryIntro = false
+    @State private var hasCheckedIntro = false
     
     init(context: NSManagedObjectContext) {
         _viewModel = StateObject(wrappedValue: WorryTrackerViewModel(context: context))
@@ -87,8 +89,19 @@ struct WorryTrackerListView: View {
                 WorryLogEntryView(viewModel: viewModel)
             }
         }
+        .fullScreenCover(isPresented: $showingWorryIntro) {
+            WorryIntroView(isPresented: $showingWorryIntro)
+        }
         .onAppear {
             viewModel.refresh()
+            // Only check intro once per view lifecycle
+            if !hasCheckedIntro {
+                hasCheckedIntro = true
+                let hasSeenIntro = UserDefaults.standard.bool(forKey: "hasSeenWorryIntro")
+                if !hasSeenIntro {
+                    showingWorryIntro = true
+                }
+            }
         }
         .navigationBarTitleDisplayMode(.inline)
     }

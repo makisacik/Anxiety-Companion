@@ -318,6 +318,45 @@ struct SettingsView: View {
                                     )
                                 }
                                 .buttonStyle(PlainButtonStyle())
+                                
+                                // Reset Worry Intro Button
+                                Button(action: {
+                                    resetWorryIntro()
+                                }) {
+                                    HStack(spacing: 16) {
+                                        Image(systemName: "bubble.left.and.exclamationmark.bubble.right.fill")
+                                            .foregroundColor(.purple)
+                                            .font(.system(size: 18))
+                                            .frame(width: 24)
+                                        
+                                        VStack(alignment: .leading, spacing: 2) {
+                                            Text("Reset Worry Tracker Intro")
+                                                .font(.system(.body, design: .rounded))
+                                                .fontWeight(.medium)
+                                                .foregroundColor(.themeText)
+                                            
+                                            Text("See the worry tracker introduction again")
+                                                .font(.system(.caption, design: .rounded))
+                                                .foregroundColor(.themeText.opacity(0.7))
+                                        }
+                                        
+                                        Spacer()
+                                        
+                                        Image(systemName: "chevron.right")
+                                            .foregroundColor(.themeText.opacity(0.4))
+                                            .font(.system(size: 12))
+                                    }
+                                    .padding(16)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .fill(Color.themeCard)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 12)
+                                                    .stroke(Color.themeDivider, lineWidth: 1)
+                                            )
+                                    )
+                                }
+                                .buttonStyle(PlainButtonStyle())
                             }
                         }
                         .padding(.horizontal, 20)
@@ -498,6 +537,15 @@ struct SettingsView: View {
         
         // Reset the onboarding flag
         hasCompletedOnboarding = false
+        
+        HapticFeedback.success()
+    }
+    
+    private func resetWorryIntro() {
+        HapticFeedback.light()
+        
+        // Reset the worry intro flag
+        UserDefaults.standard.removeObject(forKey: "hasSeenWorryIntro")
         
         HapticFeedback.success()
     }
