@@ -16,18 +16,34 @@ struct ReflectionView: View {
     @State private var currentPrompt: String = ""
     @State private var yesterdayPreview: String = ""
 
-    // Prompt rotation persistence
+    // Prompt rotation persistence (deterministic: advances one per day, wraps around)
     @AppStorage("reflectionPromptIndex") private var promptIndex: Int = 0
-    @AppStorage("reflectionPromptChangeTimestamp") private var promptChangeTimestamp: Double = 0
-    @AppStorage("reflectionPromptDurationDays") private var promptDurationDays: Int = 2 // 1–3
+    // Base date to compute day offset from (start from first prompt on first launch)
+    @AppStorage("reflectionPromptBaseDate") private var promptBaseDateTimestamp: Double = 0
 
-    private let prompts = [
-        "What helped you stay calm today?",
-        "What's something small you're grateful for?",
-        "What anxious thought did you handle better today?",
-        "What felt lighter than yesterday?",
-        "Who or what brought you a moment of peace?"
-    ]
+private let prompts = [
+    "What tiny victory can you appreciate right now?",    
+    "When did you feel most like yourself today?",
+    "What moment made you feel safe or grounded today?",
+    "What’s one thing that brought you a quiet smile?",
+    "If your mind could rest on one thought tonight, what would it be?",
+    "What helped you breathe easier today?",
+    "What felt a little lighter than yesterday?",
+    "What kindness — big or small — did you show yourself today?",
+    "Was there a moment you handled something better than before?",
+    "Who or what helped you feel supported today?",
+    "What’s something you’re learning to let go of?",
+    "When did you feel calm, even for a short moment?",
+    "What do you wish to thank yourself for today?",
+    "What made today feel a little more manageable?",
+    "What’s one thing you want to carry into tomorrow?",
+    "What thought or worry lost a bit of its power today?",
+    "What helped you reconnect with the present moment?",
+    "What do you appreciate about who you are becoming?",
+    "What small act of care did you give your body or mind?",
+    "What gave you a sense of peace, even briefly?"
+]
+
 
     var body: some View {
         ZStack {
@@ -39,11 +55,24 @@ struct ReflectionView: View {
 
             VStack(spacing: 16) {
                 // Header
-                HStack {
+                HStack(spacing: 12) {
                     Text("Reflect for a moment ✍️")
                         .font(.system(.title3, design: .serif)).fontWeight(.semibold)
                         .foregroundColor(.themeText)
                     Spacer()
+                    Button(action: { randomizePrompt() }) {
+                        Image(systemName: "shuffle")
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundColor(.themeText.opacity(0.9))
+                            .padding(8)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color.themeBackgroundPure)
+                                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.themeDivider, lineWidth: 1))
+                            )
+                            .accessibilityLabel("Randomize prompt")
+                    }
+                    .buttonStyle(PlainButtonStyle())
                 }
 
                 // Prompt
@@ -155,8 +184,7 @@ struct ReflectionView: View {
         }
         .toolbar(.hidden, for: .tabBar)
         .onAppear {
-            rotatePromptIfNeeded()
-            currentPrompt = prompts[safe: promptIndex] ?? prompts[0]
+            updateDailyPrompt()
             yesterdayPreview = fetchYesterdayPreview()
             HapticFeedback.soft()
         }
@@ -182,25 +210,50 @@ struct ReflectionView: View {
         }
     }
 
-    // MARK: - Prompt Rotation
-    private func rotatePromptIfNeeded() {
+    // MARK: - Prompt Rotation (deterministic daily)
+    private func updateDailyPrompt() {
+        guard !prompts.isEmpty else { currentPrompt = ""; return }
         let now = Date()
-        if promptChangeTimestamp == 0 { setNewPrompt(at: now); return }
-        let last = Date(timeIntervalSince1970: promptChangeTimestamp)
-        let days = Calendar.current.dateComponents([.day], from: last.startOfDay(), to: now.startOfDay()).day ?? 0
-        if days >= promptDurationDays { setNewPrompt(at: now) }
-    }
+        let startOfToday = now.startOfDay()
 
-    private func setNewPrompt(at date: Date) {
-        promptIndex = Int.random(in: 0..<max(1, prompts.count))
-        promptDurationDays = Int.random(in: 1...3)
-        promptChangeTimestamp = date.timeIntervalSince1970
+        // Initialize base date on first run to start with the first prompt
+        if promptBaseDateTimestamp == 0 {
+            promptBaseDateTimestamp = startOfToday.timeIntervalSince1970
+            promptIndex = 0
+        }
+
+        let baseDate = Date(timeIntervalSince1970: promptBaseDateTimestamp)
+        let days = Calendar.current.dateComponents([.day], from: baseDate.startOfDay(), to: startOfToday).day ?? 0
+        let count = max(1, prompts.count)
+        let idx = ((days % count) + count) % count // safe wrap for any sign
+        promptIndex = idx
+        currentPrompt = prompts[safe: promptIndex] ?? prompts.first ?? ""
     }
 
     private func fetchYesterdayPreview() -> String {
         // Fetch the most recent reflection entry
         let entries = DataManager.shared.fetchJournalEntries(by: "reflection")
         return entries.first?.content ?? ""
+    }
+    
+    // MARK: - Randomize prompt action
+    private func randomizePrompt() {
+        guard !prompts.isEmpty else { return }
+        let count = prompts.count
+        var newIndex = Int.random(in: 0..<count)
+        if count > 1 {
+            // Try to avoid picking the same prompt
+            var attempts = 0
+            while newIndex == promptIndex && attempts < 5 {
+                newIndex = Int.random(in: 0..<count)
+                attempts += 1
+            }
+        }
+        promptIndex = newIndex
+        withAnimation(.easeInOut(duration: 0.25)) {
+            currentPrompt = prompts[safe: newIndex] ?? currentPrompt
+        }
+        HapticFeedback.light()
     }
     
     private func hideKeyboard() {

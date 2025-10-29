@@ -334,6 +334,9 @@ struct GAD7TestView: View {
 
         // Save to Core Data
         DataManager.shared.saveGAD7Entry(score: totalScore, answers: answers, date: Date())
+
+        // Re-evaluate notifications (may schedule weekly reminder when due, respecting cooldown)
+        ReminderScheduler.shared.evaluateAndScheduleIfNeeded()
     }
     
     private func getCategory(for score: Int) -> (title: String, description: String, color: Color) {

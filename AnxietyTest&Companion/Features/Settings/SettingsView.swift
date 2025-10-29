@@ -10,6 +10,9 @@ import CoreData
 
 struct SettingsView: View {
     @AppStorage("notificationsEnabled") private var notificationsEnabled = false
+    @AppStorage("quietHoursEnabled") private var quietHoursEnabled = true
+    @AppStorage("quietStartHour") private var quietStartHour: Int = 21
+    @AppStorage("quietEndHour") private var quietEndHour: Int = 8
     @AppStorage("isPremiumUser") private var isPremiumUser = false
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
     @State private var actualNotificationStatus: Bool = false
@@ -88,6 +91,67 @@ struct SettingsView: View {
                                             .foregroundColor(.themeText.opacity(0.7))
                                         
                                         Spacer()
+                                    }
+                                }
+                            }
+                            .padding(20)
+                            .background(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(Color.themeCard)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 16)
+                                            .stroke(Color.themeDivider, lineWidth: 1)
+                                    )
+                            )
+
+                            // Quiet Hours Card
+                            VStack(spacing: 16) {
+                                HStack(alignment: .top) {
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text("Quiet Hours")
+                                            .font(.system(.headline, design: .rounded))
+                                            .foregroundColor(.themeText)
+
+                                        Text("Mute non‑urgent reminders between your preferred hours")
+                                            .font(.system(.caption, design: .rounded))
+                                            .foregroundColor(.themeText.opacity(0.7))
+                                            .multilineTextAlignment(.leading)
+                                    }
+
+                                    Spacer()
+
+                                    Toggle("", isOn: $quietHoursEnabled)
+                                        .toggleStyle(SwitchToggleStyle(tint: Color.themeText))
+                                        .onChange(of: quietHoursEnabled) { _ in
+                                            HapticFeedback.light()
+                                            ReminderScheduler.shared.evaluateAndScheduleIfNeeded()
+                                        }
+                                }
+
+                                if quietHoursEnabled {
+                                    VStack(spacing: 12) {
+                                        HStack(spacing: 12) {
+                                            hourPicker(title: "From", selection: $quietStartHour)
+                                            hourPicker(title: "To", selection: $quietEndHour)
+                                        }
+                                        .accessibilityElement(children: .contain)
+                                        
+                                        HStack(spacing: 8) {
+                                            Image(systemName: "moon.stars.fill").foregroundColor(.themeText)
+                                            Text("Notifications will be postponed to the next safe time outside quiet hours.")
+                                                .font(.system(.caption, design: .rounded))
+                                                .foregroundColor(.themeText.opacity(0.7))
+                                            Spacer()
+                                        }
+                                    }
+                                    .transition(.opacity.combined(with: .move(edge: .top)))
+                                    .onChange(of: quietStartHour) { _ in
+                                        HapticFeedback.light()
+                                        ReminderScheduler.shared.evaluateAndScheduleIfNeeded()
+                                    }
+                                    .onChange(of: quietEndHour) { _ in
+                                        HapticFeedback.light()
+                                        ReminderScheduler.shared.evaluateAndScheduleIfNeeded()
                                     }
                                 }
                             }
@@ -598,6 +662,47 @@ struct SettingsRow: View {
                         .stroke(Color.themeDivider, lineWidth: 1)
                 )
         )
+    }
+}
+
+// MARK: - Private UI helpers
+private extension SettingsView {
+    func hourString(_ h: Int) -> String {
+        let clamped = max(0, min(23, h))
+        let formatter = DateFormatter()
+        formatter.locale = Locale.current
+        formatter.dateFormat = "HH:mm" // 24-hour concise
+        let date = Calendar.current.date(bySettingHour: clamped, minute: 0, second: 0, of: Date()) ?? Date()
+        return formatter.string(from: date)
+    }
+
+    @ViewBuilder
+    func hourPicker(title: String, selection: Binding<Int>) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(title)
+                .font(.system(.caption, design: .rounded))
+                .foregroundColor(.themeText.opacity(0.7))
+            HStack {
+                Image(systemName: title == "From" ? "clock" : "alarm")
+                    .foregroundColor(.themeText.opacity(0.9))
+                Picker(hourString(selection.wrappedValue), selection: selection) {
+                    ForEach(0..<24, id: \.self) { hour in
+                        Text(hourString(hour)).tag(hour)
+                    }
+                }
+                .pickerStyle(MenuPickerStyle())
+                .tint(.themeText)
+            }
+            .padding(12)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(Color.themeBackgroundPure)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(Color.themeDivider, lineWidth: 1)
+                    )
+            )
+        }
     }
 }
 

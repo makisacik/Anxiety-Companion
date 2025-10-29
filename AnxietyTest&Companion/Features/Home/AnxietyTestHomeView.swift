@@ -18,6 +18,7 @@ struct AnxietyTestHomeView: View {
     @AppStorage("lastMood") private var lastMood = -1 // default none
     @AppStorage("lastMoodDate") private var lastMoodDateTimestamp: Double = 0 // store mood date
     @AppStorage("lastBreathingDate") private var lastBreathingDateTimestamp: Double = 0 // track breathing date
+    @AppStorage("lastReflectionDateTimestamp") private var lastReflectionDateTimestamp: Double = 0 // track reflection date
     
     private var lastGAD7Date: Date {
         get { lastGAD7DateTimestamp == 0 ? Date() : Date(timeIntervalSince1970: lastGAD7DateTimestamp) }
@@ -50,10 +51,28 @@ struct AnxietyTestHomeView: View {
     @State private var cardWidth: CGFloat = 0
     
     private let greetingMessages = [
-        "You're stronger than you know", "Your feelings are valid and important", "Take a deep breath, you've got this",
-        "It's okay to feel however you're feeling", "You're not alone in this journey", "Every small step counts",
-        "Be gentle with yourself today", "You're worthy of peace and calm", "You're doing better than you think"
+        "You don’t have to be perfect to be enough",
+        "It's okay to feel however you're feeling",
+        "You're stronger than you know",
+        "You're not alone in this journey",
+        "Your feelings are valid and important",
+        "Take a deep breath, you've got this",
+        "Every small step counts",
+        "Be gentle with yourself today",
+        "You're worthy of peace and calm",
+        "You're doing better than you think",
+        "You deserve to rest and recharge",
+        "Your emotions don’t define your worth",
+        "You’ve handled hard days before — you can handle today too",
+        "It’s okay to slow down and just be",
+        "You are growing, even if it doesn’t feel like it",
+        "You bring light to more people than you realize",
+        "Peace begins with one gentle breath",
+        "You are allowed to start over at any moment",
+        "Healing takes time — and you’re already on your way",
+        "Progress is still progress, no matter how small",
     ]
+
     
     private var buttonText: String {
         if hasCompletedTest || !gad7Entries.isEmpty {
@@ -70,6 +89,20 @@ struct AnxietyTestHomeView: View {
     
     private var isBreathingForToday: Bool {
         Calendar.current.isDateInToday(lastBreathingDate)
+    }
+    
+    private var timeBasedGreeting: String {
+        let hour = Calendar.current.component(.hour, from: Date())
+        switch hour {
+        case 5..<12:
+            return "Good morning"
+        case 12..<17:
+            return "Hi"
+        case 17..<21:
+            return "Good evening"
+        default:
+            return "Good night"
+        }
     }
     
     var body: some View {
@@ -127,6 +160,8 @@ struct AnxietyTestHomeView: View {
             loadLastMood()
             startGreetingAnimation()
             checkForNotificationPermission()
+            // Evaluate notification scheduling (reflection, weekly test) under 72h cooldown
+            ReminderScheduler.shared.evaluateAndScheduleIfNeeded()
         }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("ShowNotificationPermission"))) { _ in
             checkForNotificationPermission()
@@ -191,7 +226,12 @@ struct AnxietyTestHomeView: View {
     }
     
     private var dailyReflectionCardSection: some View {
-        NavigationLink(destination: ReflectionView { _ in }) {
+        NavigationLink(destination: ReflectionView { savedDate in
+            // Persist last reflection completion date for notification planning
+            lastReflectionDateTimestamp = savedDate.timeIntervalSince1970
+            // Re-evaluate scheduling with the new state
+            ReminderScheduler.shared.evaluateAndScheduleIfNeeded()
+        }) {
             HStack(spacing: 16) {
                 // Icon
                 Image(systemName: "pencil.line")
@@ -301,7 +341,7 @@ struct AnxietyTestHomeView: View {
             
             // Text on the right
             VStack(alignment: .leading, spacing: 6) {
-                Text("Hi, \(userName) 👋")
+                Text("\(timeBasedGreeting), \(userName) 👋")
                     .font(.system(.title2, design: .serif))
                     .fontWeight(.semibold)
                     .foregroundColor(.themeText)
@@ -323,7 +363,7 @@ struct AnxietyTestHomeView: View {
     
     private var greetingSection: some View {
         VStack(spacing: 8) {
-            Text("Hi, \(userName) 👋")
+            Text("\(timeBasedGreeting), \(userName) 👋")
                 .font(.system(.title, design: .serif))
                 .fontWeight(.semibold)
                 .foregroundColor(.themeText)
