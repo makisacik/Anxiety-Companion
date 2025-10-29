@@ -88,8 +88,6 @@ struct AnxietyTestHomeView: View {
                         gad7CardSection
                         
                         moodSection
-                        
-                        DailyTipView()
                     }
                     .padding(.top, 40)
                     .padding(.bottom, 60)
@@ -408,29 +406,35 @@ struct AnxietyTestHomeView: View {
 
     private var moodSection: some View {
         Group {
-            if !isMoodForToday {
+            if !isMoodForToday || showThankYou {
                 VStack(spacing: 20) {
-                    Text("How do you feel right now?")
-                        .font(.system(.headline, design: .rounded))
-                        .foregroundColor(.themeText)
-                    
-                    MoodPickerView(selectedMood: $selectedMood) { expression in
-                        HapticFeedback.light()
-                        withAnimation(.easeInOut(duration: 0.5)) {
-                            companionExpression = expression
+                    if !showThankYou {
+                        Text("How do you feel right now?")
+                            .font(.system(.headline, design: .rounded))
+                            .foregroundColor(.themeText)
+                        
+                        MoodPickerView(selectedMood: $selectedMood) { expression in
+                            HapticFeedback.light()
+                            withAnimation(.easeInOut(duration: 0.5)) {
+                                companionExpression = expression
+                            }
+                            withAnimation(.spring()) {
+                                showThankYou = true
+                            }
+                            // After 1.5s, first persist mood (which sets isMoodForToday=true),
+                            // then animate the card out so the picker doesn't briefly reappear.
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                saveMood()
+                                withAnimation(.easeInOut(duration: 0.3)) {
+                                    showThankYou = false
+                                }
+                            }
                         }
-                        saveMood()
-                        withAnimation(.spring()) {
-                            showThankYou = true
-                        }
-                    }
-                    
-                    if showThankYou {
-                        Text("💜 Thank you for sharing how you feel today!")
-                            .font(.system(.subheadline, design: .rounded))
-                            .foregroundColor(.themeText.opacity(0.8))
-                            .multilineTextAlignment(.center)
-                            .transition(.opacity.combined(with: .move(edge: .top)))
+                    } else {
+                        Text("Thanks for sharing")
+                            .font(.system(.headline, design: .rounded))
+                            .foregroundColor(.themeText)
+                            .transition(.opacity.combined(with: .scale))
                     }
                 }
                 .padding(20)
@@ -443,6 +447,7 @@ struct AnxietyTestHomeView: View {
                                 .stroke(Color.themeDivider, lineWidth: 1)
                         )
                 )
+                .transition(.opacity.combined(with: .scale))
             }
         }
     }
@@ -465,7 +470,8 @@ struct AnxietyTestHomeView: View {
             if lastMood >= 0, lastMood < MoodPickerView.Mood.allCases.count {
                 selectedMood = MoodPickerView.Mood.allCases[lastMood]
                 companionExpression = selectedMood?.companionExpression ?? .neutral
-                showThankYou = true
+                // Don't show thank you on load - card should just be hidden
+                showThankYou = false
             }
         } else {
             selectedMood = nil

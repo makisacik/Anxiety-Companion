@@ -19,6 +19,8 @@ struct CalmJourneyView: View {
     @State private var completedLevels: [Int] = []
     @State private var showPaywall = false
     @State private var navigationPath: [CalmJourneyDestination] = []
+    @State private var showIncompleteAlert = false
+    @State private var incompleteLevelsMessage = ""
 
     private let levelSpacing: CGFloat = 50
 
@@ -55,11 +57,7 @@ struct CalmJourneyView: View {
                                             isPremiumUser: isPremiumUser,
                                             isCompleted: checkCompletion(for: level.id),
                                             onViewReport: {
-                                                if isPremiumUser {
-                                                    navigateToReport()
-                                                } else {
-                                                    showPaywall = true
-                                                }
+                                                handleReportCardTap(for: level.id)
                                             },
                                             onShowPaywall: { showPaywall = true }
                                         )
@@ -83,6 +81,11 @@ struct CalmJourneyView: View {
             .navigationBarHidden(true)
             .sheet(isPresented: $showPaywall) {
                 PaywallView()
+            }
+            .alert("Complete Required Levels", isPresented: $showIncompleteAlert) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text(incompleteLevelsMessage)
             }
             .onAppear(perform: loadCompletedLevels)
             .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("DebugDataFilled"))) { _ in
@@ -134,6 +137,28 @@ struct CalmJourneyView: View {
         }
     }
 
+    private func handleReportCardTap(for levelId: Int) {
+        HapticFeedback.light()
+        
+        // Check if user is premium
+        if !isPremiumUser {
+            showPaywall = true
+            return
+        }
+        
+        // Check if required levels are completed
+        let isCompleted = checkCompletion(for: levelId)
+        if !isCompleted {
+            let missingLevels = getMissingLevels(for: levelId)
+            incompleteLevelsMessage = "Please complete \(missingLevels) to unlock your personalized report."
+            showIncompleteAlert = true
+            return
+        }
+        
+        // All good - navigate to report
+        navigateToReport()
+    }
+
     private func navigateToReport() {
         if let last = navigationPath.last, case .report = last {
             return
@@ -145,6 +170,28 @@ struct CalmJourneyView: View {
         if id == 5 { return (1...5).allSatisfy { completedLevels.contains($0) } }
         if id == 10 { return (1...10).allSatisfy { completedLevels.contains($0) } }
         return false
+    }
+    
+    private func getMissingLevels(for levelId: Int) -> String {
+        let requiredLevels: [Int]
+        if levelId == 5 {
+            requiredLevels = Array(1...5)
+        } else {
+            requiredLevels = Array(1...10)
+        }
+        
+        let missing = requiredLevels.filter { !completedLevels.contains($0) }
+        
+        if missing.isEmpty {
+            return "all levels"
+        } else if missing.count == 1 {
+            return "Level \(missing[0])"
+        } else if missing.count == 2 {
+            return "Levels \(missing[0]) and \(missing[1])"
+        } else {
+            let allButLast = missing.dropLast().map { "Level \($0)" }.joined(separator: ", ")
+            return "\(allButLast), and Level \(missing.last!)"
+        }
     }
 
     private func loadCompletedLevels() {

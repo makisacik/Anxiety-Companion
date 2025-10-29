@@ -105,16 +105,14 @@ struct CalmReportPromoCard: View {
         .onTapGesture {
             HapticFeedback.light()
             print("CalmReportPromoCard tapped. isCompleted: \(isCompleted), isPremiumUser: \(isPremiumUser)")
-            if isCompleted {
-                if isPremiumUser {
-                    print("Calling onViewReport")
-                    onViewReport()
-                } else {
-                    print("Calling onShowPaywall")
-                    onShowPaywall()
-                }
+            
+            // Always handle tap in parent view
+            if !isPremiumUser {
+                print("Calling onShowPaywall")
+                onShowPaywall()
             } else {
-                print("Level not completed yet")
+                print("Calling onViewReport")
+                onViewReport()
             }
         }
     }
