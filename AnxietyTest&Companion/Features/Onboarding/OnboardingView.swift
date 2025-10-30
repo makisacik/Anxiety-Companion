@@ -28,7 +28,7 @@ struct OnboardingView: View {
                     message: "I'm your companion, here to help you face anxious thoughts with calm and care.",
                     companionExpression: .neutral,
                     onContinue: nextPage,
-                    imageName: "onboarding-image"
+                    imageName: "question-hand"
                 )
                 .tag(0)
                 .id(0)

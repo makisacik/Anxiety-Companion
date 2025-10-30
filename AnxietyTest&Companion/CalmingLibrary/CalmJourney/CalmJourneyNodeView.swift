@@ -35,13 +35,6 @@ struct CalmJourneyNodeView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 100, height: 100)
-                
-                // Overlay content for locked state
-                if state == .locked {
-                    Image(systemName: "lock.fill")
-                        .font(.system(size: 22, weight: .semibold))
-                        .foregroundColor(.themeText.opacity(0.4))
-                }
             }
         }
         .scaleEffect(animateIn ? 1.0 : 0.8)

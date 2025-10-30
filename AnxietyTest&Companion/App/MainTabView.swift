@@ -40,13 +40,6 @@ struct MainTabView: View {
                     Text("Journey")
                 }
                 .tag(2)
-
-                SettingsView()
-                    .tabItem {
-                        Image(systemName: "gearshape.fill")
-                        Text("Settings")
-                    }
-                    .tag(3)
             }
             .accentColor(Color.themeText)
             .environment(\.managedObjectContext, viewContext)

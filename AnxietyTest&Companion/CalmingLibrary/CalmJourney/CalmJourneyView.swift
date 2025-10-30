@@ -21,6 +21,7 @@ struct CalmJourneyView: View {
     @State private var navigationPath: [CalmJourneyDestination] = []
     @State private var showIncompleteAlert = false
     @State private var incompleteLevelsMessage = ""
+    @State private var showSettings = false
 
     private let levelSpacing: CGFloat = 50
 
@@ -32,10 +33,22 @@ struct CalmJourneyView: View {
 
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 0) {
-                        header
-                            .padding(.horizontal, 24)
-                            .padding(.top, 40)
-                            .padding(.bottom, 30)
+                        ZStack(alignment: .topTrailing) {
+                            header
+                                .padding(.horizontal, 24)
+                                .padding(.top, 40)
+                                .padding(.bottom, 30)
+                            
+                            Button(action: {
+                                showSettings = true
+                            }) {
+                                Image(systemName: "gearshape.fill")
+                                    .font(.system(size: 22))
+                                    .foregroundColor(.themeText)
+                            }
+                            .padding(.trailing, 24)
+                            .padding(.top, 10)
+                        }
 
                         VStack(spacing: levelSpacing) {
                             ForEach(Array(dataStore.levels.enumerated()), id: \.element.id) { index, level in
@@ -81,6 +94,9 @@ struct CalmJourneyView: View {
             .navigationBarHidden(true)
             .sheet(isPresented: $showPaywall) {
                 PaywallView()
+            }
+            .sheet(isPresented: $showSettings) {
+                SettingsView()
             }
             .alert("Complete Required Levels", isPresented: $showIncompleteAlert) {
                 Button("OK", role: .cancel) { }
@@ -245,37 +261,38 @@ struct ZigZagLevelRow: View {
     }
 
     private var levelInfo: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack {
+        ZStack(alignment: .topTrailing) {
+            VStack(alignment: .leading, spacing: 6) {
                 Text(level.title)
                     .font(.system(.title3, design: .serif))
                     .fontWeight(.semibold)
                     .foregroundColor(.themeText)
 
-                if !level.free && !isPremiumUser {
-                    Image(systemName: "lock.fill")
-                        .font(.system(.caption, weight: .medium))
-                        .foregroundColor(.themeText.opacity(0.5))
-                }
+                Text(level.summary)
+                    .font(.system(.subheadline, design: .rounded))
+                    .foregroundColor(.themeText.opacity(0.7))
             }
-
-            Text(level.summary)
-                .font(.system(.subheadline, design: .rounded))
-                .foregroundColor(.themeText.opacity(0.7))
+            .frame(height: 120)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.vertical, 16)
+            .padding(.horizontal, 20)
+            .background( 
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(Color.themeCard)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(Color.themeDivider, lineWidth: 1)
+                    )
+            )
+            .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)
+            
+            if !level.free && !isPremiumUser {
+                Image(systemName: "lock.fill")
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundColor(.themeText.opacity(0.5))
+                    .padding(12)
+            }
         }
-        .frame(height: 120)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.vertical, 16)
-        .padding(.horizontal, 20)
-        .background(
-            RoundedRectangle(cornerRadius: 16)
-                .fill(Color.themeCard)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 16)
-                        .stroke(Color.themeDivider, lineWidth: 1)
-                )
-        )
-        .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)
         .onTapGesture(perform: action)
     }
 
