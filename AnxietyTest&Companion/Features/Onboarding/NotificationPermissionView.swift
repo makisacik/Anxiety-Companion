@@ -8,49 +8,36 @@
 import SwiftUI
 
 struct NotificationPermissionView: View {
-    @Environment(\.dismiss) private var dismiss
-    @State private var isVisible = false
-    @State private var companionOffsetX: CGFloat = -400 // Start off-screen to the left
-    @State private var companionRotation: Double = 0 // Track rotation for continuous rolling
-
+    @Binding var isVisible: Bool
     let onPermissionGranted: () -> Void
     let onDismiss: () -> Void
 
     var body: some View {
         ZStack {
-            // Background
-            Color.themeBackground
+            // Dimmed background
+            Color.black.opacity(isVisible ? 0.4 : 0)
                 .ignoresSafeArea()
+                .animation(.easeInOut(duration: 0.3), value: isVisible)
+                .onTapGesture { dismissPopup() }
 
-            VStack(spacing: 0) {
-                Spacer()
-
-                // Companion outside the card, above it
-                CompanionFaceView(expression: .happy)
-                    .scaleEffect(isVisible ? 1.2 : 0.8)
-                    .rotationEffect(.degrees(companionRotation)) // Continuous rolling rotation
-                    .offset(x: companionOffsetX, y: -80)
-                    .opacity(isVisible ? 1.0 : 0.0)
-
-                // Main content card
-                VStack(spacing: 24) {
-                    // Title
+            // Popup card (slightly lower)
+            VStack(spacing: 20) {
+                VStack(spacing: 16) {
                     Text("🌿 Stay mindful of your calm.")
-                        .font(.system(.title2, design: .serif))
+                        .font(.system(.title3, design: .serif))
                         .fontWeight(.bold)
-                        .foregroundColor(.themeText)
                         .multilineTextAlignment(.center)
+                        .foregroundColor(.themeText)
 
-                    // Body text
-                    Text("Would you like gentle reminders to check in on how you're feeling? You'll only get them every few days — no spam, just care.")
+                    Text("Would you like gentle reminders to check in on how you're feeling?")
                         .font(.system(.body, design: .rounded))
                         .foregroundColor(.themeText.opacity(0.8))
                         .multilineTextAlignment(.center)
                         .lineSpacing(4)
+                        .padding(.horizontal)
 
-                    // Buttons
-                    VStack(spacing: 16) {
-                        // Primary button - Yes, remind me
+                    VStack(spacing: 12) {
+                        // Primary: outlined "Yes"
                         Button(action: {
                             HapticFeedback.success()
                             handlePermissionRequest()
@@ -60,33 +47,27 @@ struct NotificationPermissionView: View {
                                 .fontWeight(.medium)
                                 .foregroundColor(.themeText)
                                 .frame(maxWidth: .infinity)
-                                .frame(height: 50)
+                                .frame(height: 48)
                                 .background(
-                                    RoundedRectangle(cornerRadius: 25)
-                                        .fill(Color.themeCard)
-                                )
-                        }
-                        .buttonStyle(ScaleButtonStyle())
-                        .accessibilityLabel("Enable gentle reminders")
-
-                        // Secondary button - Not now
-                        Button(action: {
-                            HapticFeedback.soft()
-                            handleDismiss()
-                        }) {
-                            Text("Not now")
-                                .font(.system(.body, design: .rounded))
-                                .fontWeight(.medium)
-                                .foregroundColor(.themeText)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 50)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 25)
+                                    RoundedRectangle(cornerRadius: 24)
                                         .stroke(Color.themeDivider, lineWidth: 1)
                                 )
                         }
                         .buttonStyle(ScaleButtonStyle())
-                        .accessibilityLabel("Skip reminders for now")
+
+                        // Secondary: plain "Not now"
+                        Button(action: {
+                            HapticFeedback.soft()
+                            dismissPopup()
+                        }) {
+                            Text("Not now")
+                                .font(.system(.body, design: .rounded))
+                                .fontWeight(.medium)
+                                .foregroundColor(.themeText.opacity(0.8))
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 48)
+                        }
+                        .buttonStyle(ScaleButtonStyle())
                     }
                 }
                 .padding(24)
@@ -98,62 +79,35 @@ struct NotificationPermissionView: View {
                                 .stroke(Color.themeDivider, lineWidth: 1)
                         )
                 )
-                .padding(.horizontal, 20)
-                .padding(.top, 60) // Add top padding to make room for companion
-                .scaleEffect(isVisible ? 1.0 : 0.8)
-                .opacity(isVisible ? 1.0 : 0.0)
-                .animation(.easeInOut(duration: 0.6).delay(0.3), value: isVisible)
-
-                Spacer()
             }
-        }
-        .onAppear {
-            withAnimation {
-                isVisible = true
-            }
-
-            // Start rolling animation - roll in from left and stop in center
-            startRollingAnimation()
-        }
-    }
-
-    private func startRollingAnimation() {
-        // Roll in from left at a slower speed, stop at center (0)
-        withAnimation(.easeOut(duration: 3.5)) {
-            companionOffsetX = 0 // Stop in the center
-            companionRotation = 360 // Full rotation
+            .padding(.horizontal, 40)
+            .offset(y: 60)
+            .scaleEffect(isVisible ? 1.0 : 0.8)
+            .opacity(isVisible ? 1.0 : 0.0)
+            .animation(.spring(response: 0.4, dampingFraction: 0.7), value: isVisible)
         }
     }
 
     private func handlePermissionRequest() {
-        // Mark that we've shown the prompt
         UserDefaults.standard.set(true, forKey: "reminderPromptShown")
         UserDefaults.standard.set(true, forKey: "hasShownNotificationPrompt")
 
-        // Request authorization
         ReminderScheduler.shared.requestAuthorization { granted in
             DispatchQueue.main.async {
                 if granted {
                     onPermissionGranted()
                 }
-                dismiss()
+                dismissPopup()
             }
         }
     }
 
-    private func handleDismiss() {
-        // Mark that we've shown the prompt
-        UserDefaults.standard.set(true, forKey: "reminderPromptShown")
-        UserDefaults.standard.set(true, forKey: "hasShownNotificationPrompt")
-        onDismiss()
-        dismiss()
+    private func dismissPopup() {
+        withAnimation(.easeInOut(duration: 0.3)) {
+            isVisible = false
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            onDismiss()
+        }
     }
-}
-
-
-#Preview {
-    NotificationPermissionView(
-        onPermissionGranted: {},
-        onDismiss: {}
-    )
 }

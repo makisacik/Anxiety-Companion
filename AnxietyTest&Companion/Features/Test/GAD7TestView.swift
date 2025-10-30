@@ -109,11 +109,13 @@ struct GAD7TestView: View {
                 .padding(.bottom, 40)
             
             // Question
-            VStack(spacing: 30) {
+            VStack(spacing: 12) {
                 Text("Over the last 2 weeks, how often have you been bothered by:")
                     .font(.system(.body, design: .rounded))
                     .foregroundColor(.themeText.opacity(0.8))
                     .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.horizontal, 40)
                 
                 Text(questions[currentQuestion])
@@ -121,6 +123,8 @@ struct GAD7TestView: View {
                     .fontWeight(.medium)
                     .foregroundColor(.themeText)
                     .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.horizontal, 40)
             }
             
@@ -132,10 +136,13 @@ struct GAD7TestView: View {
                     Button(action: {
                         selectAnswer(index)
                     }) {
-                        HStack {
+                        HStack(alignment: .top, spacing: 12) {
                             Text(answerOptions[index])
                                 .font(.system(.body, design: .rounded))
                                 .foregroundColor(.themeText)
+                                .lineLimit(nil)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .multilineTextAlignment(.leading)
                             
                             Spacer()
                             

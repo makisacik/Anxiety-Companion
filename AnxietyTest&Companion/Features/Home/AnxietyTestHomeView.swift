@@ -45,7 +45,7 @@ struct AnxietyTestHomeView: View {
     @State private var showGreeting = false
     @State private var showTyping = false
     @State private var companionScale: CGFloat = 1.0
-    @State private var showNotificationPermission = false
+    @State private var showNotificationPermission = true
     @State private var currentGreeting = ""
     @State private var showThankYou = false
     @State private var cardWidth: CGFloat = 0
@@ -166,12 +166,13 @@ struct AnxietyTestHomeView: View {
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("ShowNotificationPermission"))) { _ in
             checkForNotificationPermission()
         }
-        .sheet(isPresented: $showNotificationPermission) {
+        .overlay(
             NotificationPermissionView(
+                isVisible: $showNotificationPermission,
                 onPermissionGranted: { print("✅ Granted") },
                 onDismiss: { print("❌ Dismissed") }
             )
-        }
+        )
     }
 
     // MARK: - Sections

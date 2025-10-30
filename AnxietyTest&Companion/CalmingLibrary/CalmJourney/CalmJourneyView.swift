@@ -276,7 +276,7 @@ struct ZigZagLevelRow: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.vertical, 16)
             .padding(.horizontal, 20)
-            .background( 
+            .background(
                 RoundedRectangle(cornerRadius: 16)
                     .fill(Color.themeCard)
                     .overlay(
