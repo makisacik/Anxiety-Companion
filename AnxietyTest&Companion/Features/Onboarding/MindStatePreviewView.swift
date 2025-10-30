@@ -16,7 +16,7 @@ struct MindStatePreviewView: View {
     @State private var isCompleted = false
     
     // Animated stat values
-    @State private var anxiousThoughtsValue: Int = 68
+    @State private var anxiousThoughtsValue: Int = 81
     @State private var mindClarityValue: Int = 32
     @State private var calmMomentsValue: Int = 41
     @State private var selfCompassionValue: Int = 38
@@ -30,13 +30,13 @@ struct MindStatePreviewView: View {
                 .ignoresSafeArea()
             
             ScrollView {
-                VStack(spacing: 24) {
+                VStack(spacing: 10) {
                     // Title
                     Text("Your Current Mind State")
                         .font(.system(.title, design: .serif))
                         .fontWeight(.semibold)
                         .foregroundColor(.themeText)
-                        .padding(.top, 60)
+                        .padding(.top, 40)
                     
                     // Subtitle
                     Text("See how tracking can transform your inner world")
@@ -44,7 +44,7 @@ struct MindStatePreviewView: View {
                         .foregroundColor(.themeText.opacity(0.7))
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 40)
-                        .padding(.bottom, 10)
+                        .padding(.bottom, 5)
                     
                     // MARK: - Chart (Emotional Balance)
                     ChartSection(
@@ -64,11 +64,17 @@ struct MindStatePreviewView: View {
                         StatCard(icon: "💗", title: "Self-Compassion", value: selfCompassionValue)
                     }
                     .padding(.horizontal, 20)
-                    .padding(.top, 12)
+                    .padding(.top, 4)
                     
                     // MARK: - Fingerprint Interaction or Continue Button
                     if !isCompleted {
                         VStack(spacing: 12) {
+                            Text(pressInProgress ? "Keep holding..." : "Tap and hold to see your potential")
+                                .font(.system(.subheadline, design: .rounded))
+                                .foregroundColor(.themeText.opacity(0.7))
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal, 40)
+                            
                             ZStack {
                                 // Progress ring
                                 Circle()
@@ -80,7 +86,6 @@ struct MindStatePreviewView: View {
                                     .stroke(Color.themeText, style: StrokeStyle(lineWidth: 4, lineCap: .round))
                                     .frame(width: 80, height: 80)
                                     .rotationEffect(.degrees(-90))
-                                    .animation(.linear(duration: 0.1), value: holdProgress)
                                 
                                 Image(systemName: "touchid")
                                     .resizable()
@@ -90,20 +95,14 @@ struct MindStatePreviewView: View {
                                     .scaleEffect(pressInProgress ? 1.1 : 1.0)
                                     .animation(.easeInOut(duration: 0.3), value: pressInProgress)
                             }
-                            .onLongPressGesture(minimumDuration: 3.0, pressing: { pressing in
+                            .onLongPressGesture(minimumDuration: 2.0, pressing: { pressing in
                                 handlePressChange(pressing: pressing)
                             }, perform: {
                                 // Gesture completed - mark as finished
                                 completeHold()
                             })
-                            
-                            Text(pressInProgress ? "Keep holding..." : "Tap and hold to see your potential")
-                                .font(.system(.subheadline, design: .rounded))
-                                .foregroundColor(.themeText.opacity(0.7))
-                                .multilineTextAlignment(.center)
-                                .padding(.horizontal, 40)
                         }
-                        .padding(.vertical, 24)
+                        .padding(.vertical, 16)
                     } else {
                         // MARK: - Continue Button (shown after completion)
                         Button(action: {
@@ -123,12 +122,12 @@ struct MindStatePreviewView: View {
                         }
                         .buttonStyle(ScaleButtonStyle())
                         .padding(.horizontal, 40)
-                        .padding(.vertical, 24)
+                        .padding(.vertical, 16)
                         .transition(.opacity.combined(with: .move(edge: .bottom)))
                     }
                     
                     Spacer()
-                        .frame(height: 40)
+                        .frame(height: 80)
                 }
             }
         }
@@ -140,7 +139,7 @@ struct MindStatePreviewView: View {
         
         if pressing {
             // Start the transformation
-            HapticFeedback.light()
+            HapticFeedback.rigid()
             startProgressiveTransformation()
         } else {
             // User released early - reset everything
@@ -171,34 +170,28 @@ struct MindStatePreviewView: View {
         holdProgress = 0.0
         
         // Animate chart
-        withAnimation(.easeInOut(duration: 3.0)) {
+        withAnimation(.easeInOut(duration: 2.0)) {
             showImprovedState = true
         }
         
         // Start haptic feedback timer (every 0.5 seconds)
         hapticTimer?.invalidate()
         hapticTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
-            HapticFeedback.light()
+            HapticFeedback.rigid()
         }
         
-        // Animate progress ring
-        animateProgressRing()
+        // Animate progress ring smoothly
+        withAnimation(.linear(duration: 2.0)) {
+            holdProgress = 1.0
+        }
         
-        // Animate stat values progressively over 3 seconds
+        // Animate stat values progressively over 2 seconds
         animateStatValues()
-    }
-    
-    private func animateProgressRing() {
-        let steps = 30
-        let interval = 3.0 / Double(steps)
         
-        for step in 0...steps {
-            let delay = interval * Double(step)
-            let progress = Double(step) / Double(steps)
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [self] in
-                guard pressInProgress else { return }
-                holdProgress = progress
+        // Auto-complete after 2 seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [self] in
+            if pressInProgress && !isCompleted {
+                completeHold()
             }
         }
     }
@@ -210,44 +203,26 @@ struct MindStatePreviewView: View {
     }
     
     private func animateStatValues() {
-        // Initial values
-        let startValues = (anxious: 68, clarity: 32, calm: 41, compassion: 38)
-        let endValues = (anxious: 42, clarity: 71, calm: 79, compassion: 82)
-        
-        // Animate over 3 seconds with steps
-        let steps = 30
-        let interval = 3.0 / Double(steps)
-        
-        for step in 0...steps {
-            let delay = interval * Double(step)
-            let progress = Double(step) / Double(steps)
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [self] in
-                guard pressInProgress else { return }
-                
-                withAnimation(.easeOut(duration: interval)) {
-                    anxiousThoughtsValue = Int(Double(startValues.anxious) + (Double(endValues.anxious - startValues.anxious) * progress))
-                    mindClarityValue = Int(Double(startValues.clarity) + (Double(endValues.clarity - startValues.clarity) * progress))
-                    calmMomentsValue = Int(Double(startValues.calm) + (Double(endValues.calm - startValues.calm) * progress))
-                    selfCompassionValue = Int(Double(startValues.compassion) + (Double(endValues.compassion - startValues.compassion) * progress))
-                }
-            }
+        // Use a single animation instead of multiple delayed animations
+        withAnimation(.easeInOut(duration: 2.0)) {
+            anxiousThoughtsValue = 20
+            mindClarityValue = 85
+            calmMomentsValue = 79
+            selfCompassionValue = 81
         }
     }
     
     private func resetStatValues() {
-        anxiousThoughtsValue = 68
+        anxiousThoughtsValue = 81
         mindClarityValue = 32
         calmMomentsValue = 41
         selfCompassionValue = 38
     }
     
     // MARK: - Example Data
-    private var baseAnxietyData: [Double] { [40, 60, 80, 65, 75, 70, 68] }
-    private var improvedAnxietyData: [Double] { [68, 58, 50, 45, 42, 40, 38] }
     
     private var baseBalanceData: [Double] { [20, 35, 48, 25, 40, 30, 42] }
-    private var improvedBalanceData: [Double] { [60, 65, 70, 75, 78, 82, 85] }
+    private var improvedBalanceData: [Double] { [20, 45, 80, 70, 78, 82, 90] }
 }
 
 // MARK: - Chart Section Component
@@ -278,6 +253,7 @@ struct ChartSection: View {
             .frame(height: 140)
             .chartXAxis(.hidden)
             .chartYAxis(.hidden)
+            .chartYScale(domain: 0...100)
             .animation(.easeInOut(duration: 1.0), value: data)
             
             Text(subtitle)

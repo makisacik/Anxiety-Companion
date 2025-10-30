@@ -25,12 +25,13 @@ struct OnboardingView: View {
                 // Page 0 - Welcome / Disarm
                 OnboardingScreenView(
                     title: "Hey there.",
-                    message: "I'm your companion. You don’t have to face anxious thoughts alone.\n\nLet’s take a slow breath together, just you and me.",
+                    message: "I'm your companion, here to help you face anxious thoughts with calm and care.",
                     companionExpression: .neutral,
                     onContinue: nextPage,
                     imageName: "onboarding-image"
                 )
                 .tag(0)
+                .id(0)
 
                 // Page 1 - Personalization
                 OnboardingScreenView(
@@ -41,7 +42,7 @@ struct OnboardingView: View {
                     onContinue: saveNameAndContinue,
                     customContent: AnyView(
                         VStack(spacing: 30) {
-                            TypingTextView(text: "Names make things feel warmer, don't they?\n\nI'd love to know yours.") {
+                            TypingTextView(text: "Names make things feel warmer, don't they? I'd love to know yours.") {
                                 // Typing complete
                             }
 
@@ -84,43 +85,48 @@ struct OnboardingView: View {
                             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                         }
                     ),
-                    imageName: "hands-open-smile",
+                    imageName: "",
                     useScrollView: true
                 )
                 .tag(1)
+                .id(1)
 
                 // Page 2 - App Purpose (Honesty)
                 OnboardingScreenView(
                     title: "A gentle space",
-                    message: "This is your space.\nA space to breathe, track, and gently understand your mind.",
+                    message: "This is your space to track and gently understand your mind.",
                     companionExpression: .neutral,
                     onContinue: nextPage,
                     imageName: "meditate-1"
                 )
                 .tag(2)
+                .id(2)
 
                 // Page 3 - Track Your Feelings
                 OnboardingScreenView(
                     title: "Notice your patterns",
-                    message: "Each day, you can note how you feel — calm, tense, or anxious.\n\nWith short GAD-7 checks, you'll start to see your own progress unfold.",
+                    message: "Track your worries and use brief GAD-7 checks to notice your improvement..",
                     companionExpression: .neutral,
                     onContinue: nextPage,
                     imageName: "brain-handshake"
                 )
                 .tag(3)
+                .id(3)
 
                 // Page 4 - Mind State Preview (Interactive)
                 MindStatePreviewView(onContinue: nextPage)
                     .tag(4)
+                    .id(4)
 
                 // Page 5 - Free Trial / Transparency Screen
                 FreeTrialView(onContinue: nextPage)
                     .tag(5)
+                    .id(5)
 
                 // Page 6 - Ready to Begin
                 OnboardingScreenView(
                     title: "You're doing great.",
-                    message: "Let's dive in.\n\nI'll be right here with you.",
+                    message: "Let's dive in. I'll be right here with you.",
                     companionExpression: .happy,
                     showGlow: true,
                     buttonText: "Let's Begin",
@@ -128,20 +134,17 @@ struct OnboardingView: View {
                     imageName: "shadow-hero"
                 )
                 .tag(6)
+                .id(6)
 
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-            .animation(.easeOut(duration: 0.8), value: currentPage)
-            .highPriorityGesture(
-                DragGesture()
-                    .onChanged { _ in }
-            )
+            .animation(.easeInOut(duration: 0.4), value: currentPage)
         }
     }
     
     private func nextPage() {
         HapticFeedback.rigid()
-        withAnimation(.easeOut(duration: 0.8)) {
+        withAnimation(.easeInOut(duration: 0.4)) {
             if currentPage < totalPages - 1 {
                 currentPage += 1
             }
@@ -159,12 +162,20 @@ struct OnboardingView: View {
             userName = "Friend" // Fallback name
         }
         HapticFeedback.light()
-        nextPage()
+        
+        // Add a small delay to allow keyboard to dismiss smoothly
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            withAnimation(.easeInOut(duration: 0.4)) {
+                if currentPage < totalPages - 1 {
+                    currentPage += 1
+                }
+            }
+        }
     }
     
     private func completeOnboarding() {
         HapticFeedback.success()
-        withAnimation(.easeOut(duration: 0.8)) {
+        withAnimation(.easeInOut(duration: 0.4)) {
             hasCompletedOnboarding = true
         }
     }

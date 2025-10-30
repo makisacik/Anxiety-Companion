@@ -20,6 +20,7 @@ struct OnboardingScreenView: View {
     
     @State private var showButton = false
     @State private var companionExpressionState: CompanionFaceView.Expression
+    @State private var hasAppeared = false
 
     init(
         title: String,
@@ -56,6 +57,10 @@ struct OnboardingScreenView: View {
             }
         }
         .onAppear {
+            // Only trigger animations if this is the first appearance
+            guard !hasAppeared else { return }
+            hasAppeared = true
+            
             // Trigger companion expression change after a delay for Screen 1
             if companionExpression == .happy && companionExpressionState == .neutral {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -127,8 +132,6 @@ struct OnboardingScreenView: View {
                             RoundedRectangle(cornerRadius: 25)
                                 .fill(Color.themeCard)
                         )
-                        .scaleEffect(1.0)
-                        .animation(.spring(response: 0.3, dampingFraction: 0.6), value: showButton)
                 }
                 .buttonStyle(ScaleButtonStyle())
                 .padding(.horizontal, 40)
@@ -143,8 +146,8 @@ struct OnboardingScreenView: View {
 struct ScaleButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .scaleEffect(configuration.isPressed ? 1.05 : 1.0)
-            .animation(.spring(response: 0.3, dampingFraction: 0.6), value: configuration.isPressed)
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+            .animation(.easeInOut(duration: 0.15), value: configuration.isPressed)
     }
 }
 
