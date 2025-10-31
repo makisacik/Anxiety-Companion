@@ -50,7 +50,7 @@ struct GroundingCounterStepView: View {
             
             // Progress text
             if !showCompletion {
-                Text("\(currentCount)/\(totalCount) noticed")
+                Text(String.localizedStringWithFormat(String(localized: "grounding_counter_noticed"), currentCount, totalCount))
                     .font(.system(.subheadline, design: .rounded))
                     .foregroundColor(.themeText.opacity(0.6))
             }
@@ -83,7 +83,7 @@ struct GroundingCounterStepView: View {
     
     private var tapButton: some View {
         Button(action: handleTap) {
-            Text("Tap When You Name One")
+            Text(String(localized: "grounding_counter_tap_when"))
                 .font(.system(.body, design: .rounded))
                 .fontWeight(.semibold)
                 .foregroundColor(.themeBackgroundPure)
@@ -107,7 +107,7 @@ struct GroundingCounterStepView: View {
                 .foregroundColor(.green)
                 .scaleEffect(pulseScale)
             
-            Text("You did it — you're here now 🌿")
+            Text(String(localized: "grounding_step_complete"))
                 .font(.system(.headline, design: .rounded))
                 .foregroundColor(.themeText)
                 .multilineTextAlignment(.center)

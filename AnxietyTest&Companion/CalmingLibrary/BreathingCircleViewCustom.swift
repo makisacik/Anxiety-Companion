@@ -50,7 +50,7 @@ struct BreathingCircleViewCustom: View {
                     .font(.title3.weight(.semibold))
                     .foregroundColor(.themeText)
                     .padding(.top, 10)
-                Text("Cycle \(cycleCount)/5")
+                Text(String.localizedStringWithFormat(String(localized: "breathing_circle_cycle"), cycleCount))
                     .font(.footnote)
                     .foregroundColor(.themeText.opacity(0.7))
             }
@@ -62,10 +62,10 @@ struct BreathingCircleViewCustom: View {
 
     private var phaseLabel: String {
         switch phase {
-        case .inhale: return "Inhale..."
-        case .hold: return "Hold..."
-        case .exhale: return "Exhale..."
-        case .end: return "Finished 🌿"
+        case .inhale: return String(localized: "breathing_phase_inhale")
+        case .hold: return String(localized: "breathing_phase_hold")
+        case .exhale: return String(localized: "breathing_phase_exhale")
+        case .end: return String(localized: "breathing_phase_finished")
         }
     }
 

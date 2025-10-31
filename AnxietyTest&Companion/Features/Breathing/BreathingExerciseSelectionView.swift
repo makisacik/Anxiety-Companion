@@ -26,12 +26,12 @@ struct BreathingExerciseSelectionView: View {
                                     .fill(Color.themeCard)
                             )
                         
-                        Text("Choose Your Breathing")
+                        Text(String(localized: "breathing_selection_title"))
                             .font(.system(.title2, design: .serif))
                             .fontWeight(.semibold)
                             .foregroundColor(.themeText)
                         
-                        Text("Select a breathing pattern that feels right for you")
+                        Text(String(localized: "breathing_selection_subtitle"))
                             .font(.system(.subheadline, design: .rounded))
                             .foregroundColor(.themeText.opacity(0.7))
                             .multilineTextAlignment(.center)
@@ -81,7 +81,7 @@ struct BreathingExerciseSelectionView: View {
                 
                 // Content
                 VStack(alignment: .leading, spacing: 6) {
-                    Text(type.rawValue)
+                    Text(type.displayName)
                         .font(.system(.headline, design: .rounded))
                         .fontWeight(.semibold)
                         .foregroundColor(.themeText)

@@ -230,23 +230,23 @@ enum OpenAIError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .noReflections:
-            return "No reflections available to generate report"
+            return String(localized: "error_no_reflections")
         case .invalidURL:
-            return "Invalid API URL"
+            return String(localized: "error_invalid_url")
         case .encodingError:
-            return "Failed to encode request"
+            return String(localized: "error_encoding")
         case .invalidResponse:
-            return "Invalid response from server"
+            return String(localized: "error_invalid_response")
         case .invalidAPIKey:
-            return "Invalid API key"
+            return String(localized: "error_invalid_api_key")
         case .rateLimited:
-            return "Rate limit exceeded. Please try again later."
+            return String(localized: "error_rate_limited")
         case .serverError(let code):
-            return "Server error: \(code)"
+            return String.localizedStringWithFormat(String(localized: "error_server_error"), code)
         case .noResponse:
-            return "No response from AI service"
+            return String(localized: "error_no_response")
         case .decodingError:
-            return "Failed to decode response"
+            return String(localized: "error_decoding")
         }
     }
 }

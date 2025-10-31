@@ -17,15 +17,15 @@ struct CalmReportPromoCard: View {
     private var milestoneText: String {
         if isCompleted {
             if level.id == 5 {
-                return "Levels 1-5 complete. 🌿"
+                return String(localized: "report_promo_levels_1_5_complete")
             } else {
-                return "All 10 levels complete. 🌿"
+                return String(localized: "report_promo_all_levels_complete")
             }
         } else {
             if level.id == 5 {
-                return "Finish 1-5 to unlock your report."
+                return String(localized: "report_promo_finish_1_5")
             } else {
-                return "Finish all 10 to unlock your report."
+                return String(localized: "report_promo_finish_all_10")
             }
         }
     }
@@ -33,15 +33,15 @@ struct CalmReportPromoCard: View {
     private var reportDescription: String {
         if isCompleted {
             if level.id == 5 {
-                return "Your mid-journey summary is ready with quick insights on the first five steps."
+                return String(localized: "report_promo_desc_mid_journey")
             } else {
-                return "Your full journey story is ready with highlights from every level."
+                return String(localized: "report_promo_desc_full_journey")
             }
         } else {
             if level.id == 5 {
-                return "Wrap levels 1-5 to unlock a snapshot of your progress."
+                return String(localized: "report_promo_desc_unlock_mid")
             } else {
-                return "Complete the path to see your full calm report."
+                return String(localized: "report_promo_desc_unlock_full")
             }
         }
     }

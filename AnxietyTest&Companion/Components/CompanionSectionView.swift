@@ -56,26 +56,26 @@ struct CompanionSectionView: View {
     
     private var companionMessage: String {
         if gad7Entries.isEmpty {
-            return "We'll start once you log your first check-in."
+            return String(localized: "companion_message_first_checkin")
         }
         
         if gad7Entries.count == 1 {
-            return "Great start! Keep tracking your progress."
+            return String(localized: "companion_message_great_start")
         }
         
         // Compare last two entries for trend
         let sortedEntries = gad7Entries.sorted { $0.date ?? Date.distantPast < $1.date ?? Date.distantPast }
-        guard sortedEntries.count >= 2 else { return "Keep building your journey." }
+        guard sortedEntries.count >= 2 else { return String(localized: "companion_message_keep_building") }
         
         let latest = Int(sortedEntries.last?.score ?? 0)
         let previous = Int(sortedEntries[sortedEntries.count - 2].score)
         
         if latest < previous {
-            return "You're feeling calmer lately — nice work 🌿"
+            return String(localized: "companion_message_feeling_calmer")
         } else if latest > previous {
-            return "Ups and downs are part of growth."
+            return String(localized: "companion_message_ups_downs")
         } else {
-            return "You're showing great consistency."
+            return String(localized: "companion_message_consistency")
         }
     }
 }

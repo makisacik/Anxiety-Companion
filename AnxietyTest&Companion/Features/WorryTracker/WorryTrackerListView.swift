@@ -29,12 +29,12 @@ struct WorryTrackerListView: View {
                         .foregroundColor(.themeText.opacity(0.8))
                         .padding(.top, 20)
                     
-                    Text("Worry Tracker")
+                    Text(String(localized: "worry_tracker_title"))
                         .font(.system(.largeTitle, design: .serif))
                         .fontWeight(.bold)
                         .foregroundColor(.themeText)
                     
-                    Text("Notice how worries change over time")
+                    Text(String(localized: "worry_tracker_subtitle"))
                         .font(.system(.subheadline, design: .rounded))
                         .foregroundColor(.themeText.opacity(0.7))
                         .multilineTextAlignment(.center)
@@ -195,7 +195,7 @@ struct WorryTrackerListView: View {
                         .frame(width: 6, height: 6)
                 }
                 
-                Text("\(worry.intensity)/10")
+                Text(String.localizedStringWithFormat(String(localized: "worry_tracker_intensity"), Int(worry.intensity)))
                     .font(.system(.caption2, design: .rounded))
                     .foregroundColor(.themeText.opacity(0.6))
             }
@@ -205,7 +205,7 @@ struct WorryTrackerListView: View {
                 HStack {
                     Image(systemName: "arrow.right.circle.fill")
                         .foregroundColor(.green)
-                    Text("Tap to reflect")
+                    Text(String(localized: "worry_tracker_tap_reflect"))
                         .font(.system(.caption, design: .rounded))
                         .fontWeight(.medium)
                         .foregroundColor(.green)
@@ -228,7 +228,7 @@ struct WorryTrackerListView: View {
             Button(role: .destructive) {
                 viewModel.deleteWorry(worry)
             } label: {
-                Label("Delete", systemImage: "trash")
+                Label(String(localized: "action_delete"), systemImage: "trash")
             }
         }
     }
@@ -242,12 +242,12 @@ struct WorryTrackerListView: View {
                 .foregroundColor(.themeText.opacity(0.3))
                 .padding(.top, 60)
             
-            Text("No worries yet")
+            Text(String(localized: "worry_tracker_no_worries"))
                 .font(.system(.title2, design: .rounded))
                 .fontWeight(.semibold)
                 .foregroundColor(.themeText)
             
-            Text("When you log a worry, you can reflect on it later and see how things actually turned out")
+            Text(String(localized: "worry_tracker_no_worries_message"))
                 .font(.system(.body, design: .rounded))
                 .foregroundColor(.themeText.opacity(0.7))
                 .multilineTextAlignment(.center)
@@ -266,7 +266,7 @@ struct WorryTrackerListView: View {
             HStack {
                 Image(systemName: "plus.circle.fill")
                     .font(.title3)
-                Text("Log a Worry")
+                Text(String(localized: "worry_tracker_log_button"))
                     .font(.system(.body, design: .rounded))
                     .fontWeight(.semibold)
             }

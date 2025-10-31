@@ -27,7 +27,7 @@ struct OnboardingScreenView: View {
         message: String,
         companionExpression: CompanionFaceView.Expression = .neutral,
         showGlow: Bool = false,
-        buttonText: String = "Continue",
+        buttonText: String = String(localized: "onboarding_continue_button"),
         onContinue: @escaping () -> Void,
         customContent: AnyView? = nil,
         imageName: String? = nil,
@@ -93,7 +93,7 @@ struct OnboardingScreenView: View {
             .padding(.bottom, 40)
             
             // Title
-            Text(title)
+                Text(title)
                 .font(.system(.title, design: .serif))
                 .fontWeight(.semibold)
                 .foregroundColor(.themeText)
@@ -106,11 +106,11 @@ struct OnboardingScreenView: View {
                 customContent
                     .padding(.horizontal, 40)
             } else {
-                TypingTextView(text: message) {
-                    withAnimation(.easeOut(duration: 0.5)) {
-                        showButton = true
+                    TypingTextView(text: message) {
+                        withAnimation(.easeOut(duration: 0.5)) {
+                            showButton = true
+                        }
                     }
-                }
                 .padding(.horizontal, 40)
             }
             

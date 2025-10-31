@@ -12,21 +12,43 @@ final class CalmingActivityStore {
 
     private init() {}
 
-    let activities: [CalmingActivity] = [
-        CalmingActivity(title: "Breathing", emoji: "🌬️",
-                        description: "Inhale for 4, hold 2, exhale for 4.",
-                        colorHex: "#A5C4E3"),
-        CalmingActivity(title: "Grounding", emoji: "🌍",
-                        description: "Name 3 things you can see right now.",
-                        colorHex: "#EED9A2"),
-        CalmingActivity(title: "Journaling", emoji: "🖊️",
-                        description: "Write one thought that's been looping in your mind.",
-                        colorHex: "#D0B3E3"),
-        CalmingActivity(title: "Gratitude", emoji: "🌤️",
-                        description: "Think of one small thing that made you smile today.",
-                        colorHex: "#F9E79F"),
-        CalmingActivity(title: "Affirmation", emoji: "🌸",
-                        description: "Say this aloud: 'I'm allowed to take things slow.'",
-                        colorHex: "#F6C1C1")
-    ]
+    var activities: [CalmingActivity] {
+        [
+            CalmingActivity(
+                type: .breathing,
+                title: String(localized: "activity_breathing_title"),
+                emoji: "🌬️",
+                description: String(localized: "activity_breathing_desc"),
+                colorHex: "#A5C4E3"
+            ),
+            CalmingActivity(
+                type: .grounding,
+                title: String(localized: "activity_grounding_title"),
+                emoji: "🌍",
+                description: String(localized: "activity_grounding_desc"),
+                colorHex: "#EED9A2"
+            ),
+            CalmingActivity(
+                type: .journaling,
+                title: String(localized: "activity_journaling_title"),
+                emoji: "🖊️",
+                description: String(localized: "activity_journaling_desc"),
+                colorHex: "#D0B3E3"
+            ),
+            CalmingActivity(
+                type: .gratitude,
+                title: String(localized: "activity_gratitude_title"),
+                emoji: "🌤️",
+                description: String(localized: "activity_gratitude_desc"),
+                colorHex: "#F9E79F"
+            ),
+            CalmingActivity(
+                type: .affirmation,
+                title: String(localized: "activity_affirmation_title"),
+                emoji: "🌸",
+                description: String(localized: "activity_affirmation_desc"),
+                colorHex: "#F6C1C1"
+            )
+        ]
+    }
 }

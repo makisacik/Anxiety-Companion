@@ -57,7 +57,7 @@ struct CalmLevelSessionView: View {
             
             sessionContent
         }
-        .navigationTitle("Level \(level.id)")
+        .navigationTitle(String.localizedStringWithFormat(String(localized: "nav_title_level"), level.id))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.hidden, for: .tabBar)
         .toolbarBackground(Color.themeText, for: .navigationBar)
@@ -110,7 +110,7 @@ struct CalmLevelSessionView: View {
                         .font(.system(size: 40))
                 }
                 
-                Text("Today's calm practice: \(level.title) 🌤️")
+                Text(String.localizedStringWithFormat(String(localized: "session_today_practice"), level.title))
                     .font(.title2.bold())
                     .foregroundColor(.themeText)
                     .multilineTextAlignment(.center)
@@ -133,7 +133,7 @@ struct CalmLevelSessionView: View {
                 HStack {
                     Image(systemName: "play.fill")
                         .font(.system(size: 18, weight: .semibold))
-                    Text("Start Session")
+                    Text(String(localized: "session_start"))
                         .font(.system(.body, design: .rounded))
                         .fontWeight(.semibold)
                 }
@@ -266,13 +266,13 @@ struct CalmLevelSessionView: View {
         VStack(spacing: 16) {
             // Progress indicator
             HStack {
-                Text("Progress")
+                Text(String(localized: "session_progress"))
                     .font(.system(.headline, design: .rounded))
                     .foregroundColor(.themeText)
                 
                 Spacer()
                 
-                Text("\(currentStepIndex + 1)/\(totalSteps)")
+                Text(String.localizedStringWithFormat(String(localized: "session_step"), currentStepIndex + 1, totalSteps))
                     .font(.system(.headline, design: .rounded))
                     .foregroundColor(.themeText.opacity(0.7))
             }
@@ -296,7 +296,7 @@ struct CalmLevelSessionView: View {
             
             if exercise.type == .breathing {
                 // For breathing exercises, show a proper explanation instead of the first instruction
-                let explanation = "Let's practice \(exercise.title.lowercased()). This technique helps calm your nervous system by regulating your breath. Follow the guided breathing exercise that will appear next."
+                let explanation = String.localizedStringWithFormat(String(localized: "breathing_exercise_explanation"), exercise.title)
                 // Use first image if available
                 let imageName = exercise.imageNames.first ?? nil
                 let step = InstructionStep(
@@ -331,7 +331,7 @@ struct CalmLevelSessionView: View {
             } else if exercise.type == .relaxBody {
                 // For relax body exercises, create 7 steps: 1 intro + 6 body parts
                 // Intro step
-                let explanation = "Let's progressively relax each part of your body. This interactive exercise will guide you through releasing tension from your toes to your face."
+                let explanation = String(localized: "relax_body_explanation")
                 let step = InstructionStep(
                     id: stepId,
                     instruction: explanation,
@@ -346,7 +346,14 @@ struct CalmLevelSessionView: View {
                 stepId += 1
                 
                 // Add 6 placeholder steps for each body part
-                let bodyParts = ["Toes", "Legs", "Stomach", "Chest", "Shoulders", "Face"]
+                let bodyParts = [
+                    String(localized: "body_part_toes"),
+                    String(localized: "body_part_legs"),
+                    String(localized: "body_part_stomach"),
+                    String(localized: "body_part_chest"),
+                    String(localized: "body_part_shoulders"),
+                    String(localized: "body_part_face")
+                ]
                 for part in bodyParts {
                     let bodyStep = InstructionStep(
                         id: stepId,

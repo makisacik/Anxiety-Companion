@@ -51,11 +51,11 @@ struct TrackingView: View {
                     VStack(spacing: 24) {
                         // Header with decorative background image (does not affect layout height)
                         VStack(alignment: .leading, spacing: 16) {
-                            Text("Your Progress 📊")
+                            Text(String(localized: "tracking_title"))
                                 .font(.largeTitle.bold())
                                 .foregroundColor(.themeText)
 
-                            Text("Track your anxiety patterns and see how you're improving over time.")
+                            Text(String(localized: "tracking_subtitle"))
                                 .font(.system(.body, design: .rounded))
                                 .foregroundColor(.themeText.opacity(0.8))
                         }
@@ -159,24 +159,24 @@ private struct PremiumTrackingPromoCard: View {
                     .clipShape(RoundedRectangle(cornerRadius: 10))
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Unlock Progress Tracking")
+                    Text(String(localized: "tracking_unlock_title"))
                         .font(.system(.title3, design: .rounded)).bold()
                         .foregroundColor(.themeText)
-                    Text("See trends, reflect daily, and understand your patterns with beautiful charts and calendar insights.")
+                    Text(String(localized: "tracking_unlock_message"))
                         .font(.system(.subheadline, design: .rounded))
                         .foregroundColor(.themeText.opacity(0.8))
                 }
             }
 
             VStack(alignment: .leading, spacing: 10) {
-                promoRow(icon: "chart.line.uptrend.xyaxis", text: "GAD‑7 score trends and insights")
-                promoRow(icon: "calendar", text: "Visual calendar of mood and entries")
-                promoRow(icon: "bell", text: "Gentle reminders to build habits")
+                promoRow(icon: "chart.line.uptrend.xyaxis", text: String(localized: "tracking_promo_gad7_trends"))
+                promoRow(icon: "calendar", text: String(localized: "tracking_promo_calendar"))
+                promoRow(icon: "bell", text: String(localized: "tracking_promo_reminders"))
             }
 
             Button(action: onUnlock) {
                 HStack {
-                    Text("Unlock access")
+                    Text(String(localized: "tracking_unlock_button"))
                         .font(.system(.headline, design: .rounded))
                         .fontWeight(.semibold)
                         .foregroundColor(.themeBackgroundPure)

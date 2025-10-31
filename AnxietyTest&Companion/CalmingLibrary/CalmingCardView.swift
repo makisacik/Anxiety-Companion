@@ -38,7 +38,7 @@ struct CalmingCardView: View {
                 Spacer()
 
                 if showCompleteMessage {
-                    Text("Nice work 🌿 You gave yourself a calm moment.")
+                    Text(String(localized: "calming_card_complete"))
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
                         .transition(.opacity)
@@ -51,7 +51,7 @@ struct CalmingCardView: View {
                         dismiss()
                     }
                 }) {
-                    Text("Done")
+                    Text(String(localized: "exercise_done"))
                         .font(.headline)
                         .padding(.horizontal, 40)
                         .padding(.vertical, 12)

@@ -9,11 +9,22 @@ import Foundation
 import SwiftUI
 
 enum BreathingExerciseType: String, CaseIterable, Identifiable {
-    case boxBreathing = "Box Breathing"
-    case fourSevenEight = "4-7-8 Breathing"
-    case calmFlow = "Calm Flow"
+    case boxBreathing = "boxBreathing"
+    case fourSevenEight = "fourSevenEight"
+    case calmFlow = "calmFlow"
     
     var id: String { rawValue }
+    
+    var displayName: String {
+        switch self {
+        case .boxBreathing:
+            return String(localized: "breathing_type_box_breathing")
+        case .fourSevenEight:
+            return String(localized: "breathing_type_478_breathing")
+        case .calmFlow:
+            return String(localized: "breathing_type_calm_flow")
+        }
+    }
     
     var icon: String {
         switch self {
@@ -29,11 +40,11 @@ enum BreathingExerciseType: String, CaseIterable, Identifiable {
     var description: String {
         switch self {
         case .boxBreathing:
-            return "Inhale, hold, exhale, hold — all for 4 counts. A balanced rhythm for focus."
+            return String(localized: "breathing_desc_box_breathing")
         case .fourSevenEight:
-            return "Inhale for 4, hold for 7, exhale for 8. Deeply calming, great before sleep."
+            return String(localized: "breathing_desc_478_breathing")
         case .calmFlow:
-            return "Inhale for 4, exhale for 6. Gentle and soothing for everyday calm."
+            return String(localized: "breathing_desc_calm_flow")
         }
     }
     

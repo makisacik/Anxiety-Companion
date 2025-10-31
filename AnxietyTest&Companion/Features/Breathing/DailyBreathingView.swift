@@ -82,13 +82,13 @@ struct DailyBreathingView: View {
                 
                 // Title
                 VStack(spacing: 8) {
-                    Text("Start Your Calm Minute")
+                    Text(String(localized: "breathing_title"))
                         .font(.system(.largeTitle, design: .serif))
                         .fontWeight(.bold)
                         .foregroundColor(.themeText)
                         .multilineTextAlignment(.center)
                     
-                    Text("Take a moment to breathe and center yourself")
+                    Text(String(localized: "breathing_subtitle"))
                         .font(.system(.body, design: .rounded))
                         .foregroundColor(.themeText.opacity(0.7))
                         .multilineTextAlignment(.center)
@@ -99,20 +99,20 @@ struct DailyBreathingView: View {
                 VStack(spacing: 16) {
                     benefitRow(
                         icon: "heart.circle.fill",
-                        title: "Calm Your Mind",
-                        description: "Slow breathing activates your body's natural relaxation response"
+                        title: String(localized: "breathing_benefit_calm_title"),
+                        description: String(localized: "breathing_benefit_calm_desc")
                     )
                     
                     benefitRow(
                         icon: "brain.head.profile",
-                        title: "Focus & Clarity",
-                        description: "Bring your attention to the present moment with intention"
+                        title: String(localized: "breathing_benefit_focus_title"),
+                        description: String(localized: "breathing_benefit_focus_desc")
                     )
                     
                     benefitRow(
                         icon: "moon.stars.fill",
-                        title: "Reduce Tension",
-                        description: "Release physical and mental stress with each exhale"
+                        title: String(localized: "breathing_benefit_tension_title"),
+                        description: String(localized: "breathing_benefit_tension_desc")
                     )
                 }
                 .padding(.horizontal, 30)
@@ -128,7 +128,7 @@ struct DailyBreathingView: View {
                     HStack(spacing: 12) {
                         Image(systemName: "play.circle.fill")
                             .font(.system(size: 22))
-                        Text("Choose Exercise & Begin")
+                        Text(String(localized: "breathing_choose_button"))
                             .font(.system(.body, design: .rounded))
                             .fontWeight(.semibold)
                     }
@@ -183,12 +183,12 @@ struct DailyBreathingView: View {
             
             // Exercise name
             VStack(spacing: 8) {
-                Text(exercise.rawValue)
+                Text(exercise.displayName)
                     .font(.system(.title, design: .serif))
                     .fontWeight(.semibold)
                     .foregroundColor(.themeText)
                 
-                Text("Follow the circle's rhythm")
+                Text(String(localized: "breathing_follow_rhythm"))
                     .font(.system(.subheadline, design: .rounded))
                     .foregroundColor(.themeText.opacity(0.6))
             }
@@ -223,13 +223,13 @@ struct DailyBreathingView: View {
         VStack(spacing: 20) {
             // Success message
             VStack(spacing: 8) {
-                Text("Well done — you took a minute for calm 🌿")
+                Text(String(localized: "breathing_completion_title"))
                     .font(.system(.title3, design: .rounded))
                     .fontWeight(.semibold)
                     .foregroundColor(.themeText)
                     .multilineTextAlignment(.center)
                 
-                Text("Your mind and body thank you")
+                Text(String(localized: "breathing_completion_subtitle"))
                     .font(.system(.subheadline, design: .rounded))
                     .foregroundColor(.themeText.opacity(0.7))
                     .multilineTextAlignment(.center)
@@ -241,7 +241,7 @@ struct DailyBreathingView: View {
                 HapticFeedback.soft()
                 dismiss()
             }) {
-                Text("Finish")
+                Text(String(localized: "breathing_finish"))
                     .font(.system(.body, design: .rounded))
                     .fontWeight(.semibold)
                     .foregroundColor(.themeBackgroundPure)

@@ -98,8 +98,8 @@ struct CalmJourneyView: View {
             .sheet(isPresented: $showSettings) {
                 SettingsView()
             }
-            .alert("Complete Required Levels", isPresented: $showIncompleteAlert) {
-                Button("OK", role: .cancel) { }
+            .alert(String(localized: "journey_complete_required"), isPresented: $showIncompleteAlert) {
+                Button(String(localized: "journey_ok"), role: .cancel) { }
             } message: {
                 Text(incompleteLevelsMessage)
             }
@@ -132,11 +132,11 @@ struct CalmJourneyView: View {
     // MARK: - Header
     private var header: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Your Calm Journey 🌿")
+            Text(String(localized: "journey_title"))
                 .font(.largeTitle.bold())
                 .foregroundColor(.themeText)
 
-            Text("Structured exercises to build lasting calm, based on proven therapy techniques.")
+            Text(String(localized: "journey_subtitle"))
                 .font(.system(.body, design: .rounded))
                 .foregroundColor(.themeText.opacity(0.8))
         }
@@ -166,7 +166,7 @@ struct CalmJourneyView: View {
         let isCompleted = checkCompletion(for: levelId)
         if !isCompleted {
             let missingLevels = getMissingLevels(for: levelId)
-            incompleteLevelsMessage = "Please complete \(missingLevels) to unlock your personalized report."
+            incompleteLevelsMessage = String.localizedStringWithFormat(String(localized: "journey_missing_levels"), missingLevels)
             showIncompleteAlert = true
             return
         }
@@ -199,14 +199,16 @@ struct CalmJourneyView: View {
         let missing = requiredLevels.filter { !completedLevels.contains($0) }
         
         if missing.isEmpty {
-            return "all levels"
+            return String(localized: "journey_all_levels")
         } else if missing.count == 1 {
-            return "Level \(missing[0])"
+            return String.localizedStringWithFormat(String(localized: "journey_level"), missing[0])
         } else if missing.count == 2 {
-            return "Levels \(missing[0]) and \(missing[1])"
+            let level1 = String.localizedStringWithFormat(String(localized: "journey_level"), missing[0])
+            let level2 = String.localizedStringWithFormat(String(localized: "journey_level"), missing[1])
+            return String.localizedStringWithFormat(String(localized: "journey_levels"), level1, level2)
         } else {
-            let allButLast = missing.dropLast().map { "Level \($0)" }.joined(separator: ", ")
-            return "\(allButLast), and Level \(missing.last!)"
+            let allButLast = missing.dropLast().map { String.localizedStringWithFormat(String(localized: "journey_level"), $0) }.joined(separator: ", ")
+            return String.localizedStringWithFormat(String(localized: "journey_levels_list"), allButLast, missing.last!)
         }
     }
 

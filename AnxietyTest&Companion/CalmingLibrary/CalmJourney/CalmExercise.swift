@@ -33,15 +33,15 @@ struct CalmExercise: Identifiable, Codable, Hashable {
     var displayType: String {
         switch type {
         case .breathing:
-            return "Breathing Exercise"
+            return String(localized: "exercise_display_breathing")
         case .prompt:
-            return "Reflection Prompt"
+            return String(localized: "exercise_display_prompt")
         case .education:
-            return "Learn"
+            return String(localized: "exercise_display_education")
         case .grounding:
-            return "Grounding Exercise"
+            return String(localized: "exercise_display_grounding")
         case .relaxBody:
-            return "Body Relaxation"
+            return String(localized: "exercise_display_relax_body")
         }
     }
     

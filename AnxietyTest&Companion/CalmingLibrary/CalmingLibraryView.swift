@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct CalmingLibraryView: View {
-    private let activities = CalmingActivityStore.shared.activities
+    private var activities: [CalmingActivity] {
+        CalmingActivityStore.shared.activities
+    }
     @ObservedObject var sessionManager = CalmingSessionManager()
 
     var body: some View {
@@ -18,11 +20,11 @@ struct CalmingLibraryView: View {
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    Text("Find Your Calm 🌿")
+                    Text(String(localized: "calming_title"))
                         .font(.largeTitle.bold())
                         .foregroundColor(.themeText)
 
-                    Text("Choose a small action to reset your mind.")
+                    Text(String(localized: "calming_subtitle"))
                         .foregroundColor(.themeText.opacity(0.8))
 
                     LazyVStack(spacing: 16) {
@@ -42,19 +44,17 @@ struct CalmingLibraryView: View {
     
     @ViewBuilder
     private func destinationView(for activity: CalmingActivity) -> some View {
-        switch activity.title {
-        case "Breathing":
+        switch activity.type {
+        case .breathing:
             GuidedBreathingView()
-        case "Grounding":
+        case .grounding:
             GroundingView()
-        case "Journaling":
+        case .journaling:
             JournalingView()
-        case "Gratitude":
+        case .gratitude:
             GratitudeView()
-        case "Affirmation":
+        case .affirmation:
             AffirmationView()
-        default:
-            CalmingCardView(activity: activity)
         }
     }
 }

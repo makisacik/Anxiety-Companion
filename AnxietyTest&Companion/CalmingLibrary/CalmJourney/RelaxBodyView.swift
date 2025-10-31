@@ -24,12 +24,12 @@ struct RelaxBodyView: View {
     }
     
     @State private var bodyParts: [BodyPart] = [
-        BodyPart(emoji: "🦶", name: "Toes"),
-        BodyPart(emoji: "🦵", name: "Legs"),
-        BodyPart(emoji: "🫄", name: "Stomach"),
-        BodyPart(emoji: "🫁", name: "Chest"),
-        BodyPart(emoji: "💪", name: "Shoulders"),
-        BodyPart(emoji: "😌", name: "Face")
+        BodyPart(emoji: "🦶", name: String(localized: "body_part_toes")),
+        BodyPart(emoji: "🦵", name: String(localized: "body_part_legs")),
+        BodyPart(emoji: "🫄", name: String(localized: "body_part_stomach")),
+        BodyPart(emoji: "🫁", name: String(localized: "body_part_chest")),
+        BodyPart(emoji: "💪", name: String(localized: "body_part_shoulders")),
+        BodyPart(emoji: "😌", name: String(localized: "body_part_face"))
     ]
     
     @State private var showCompletion = false
@@ -68,12 +68,12 @@ struct RelaxBodyView: View {
                 Text("🌿")
                     .font(.system(size: 44))
                     .scaleEffect(pulseScale)
-                Text("Relax the Body")
+                Text(String(localized: "relax_title"))
                     .font(.system(.title3, design: .serif))
                     .fontWeight(.bold)
                     .foregroundColor(.themeText)
                     .multilineTextAlignment(.center)
-                Text("Tap each body part to release tension")
+                Text(String(localized: "relax_instruction"))
                     .font(.system(.footnote, design: .rounded))
                     .foregroundColor(.themeText.opacity(0.7))
                     .multilineTextAlignment(.center)
@@ -121,13 +121,13 @@ struct RelaxBodyView: View {
                             Image(systemName: "checkmark.circle.fill")
                                 .font(.system(size: 11))
                                 .foregroundColor(.green)
-                            Text("Relaxed")
+                            Text(String(localized: "relax_relaxed"))
                                 .font(.system(.caption2, design: .rounded))
                                 .foregroundColor(.green)
                         }
                         .transition(.scale.combined(with: .opacity))
                     } else {
-                        Text("Tap")
+                        Text(String(localized: "relax_tap"))
                             .font(.system(.caption2, design: .rounded))
                             .foregroundColor(.themeText.opacity(0.5))
                     }
@@ -170,7 +170,7 @@ struct RelaxBodyView: View {
                 .scaleEffect(pulseScale)
             
             // Title
-            Text("Your body is relaxed 🌸")
+            Text(String(localized: "relax_complete"))
                 .font(.system(.largeTitle, design: .serif))
                 .fontWeight(.bold)
                 .foregroundColor(.themeText)
@@ -178,7 +178,7 @@ struct RelaxBodyView: View {
                 .padding(.horizontal, 32)
             
             // Message
-            Text("You're safe and grounded.")
+            Text(String(localized: "completion_breath"))
                 .font(.system(.body, design: .rounded))
                 .foregroundColor(.themeText.opacity(0.7))
                 .multilineTextAlignment(.center)
@@ -191,7 +191,7 @@ struct RelaxBodyView: View {
                 HapticFeedback.success()
                 onComplete()
             }) {
-                Text("Done")
+                Text(String(localized: "relax_done"))
                     .font(.system(.body, design: .rounded))
                     .fontWeight(.semibold)
                     .foregroundColor(.themeBackgroundPure)

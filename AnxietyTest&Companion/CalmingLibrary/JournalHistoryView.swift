@@ -28,13 +28,13 @@ struct JournalHistoryView: View {
                         Text("📝")
                             .font(.system(size: 30))
                         
-                        Text("Journal History")
+                        Text(String(localized: "journal_history_title"))
                             .font(.largeTitle.bold())
                             .foregroundColor(.white)
                         
                         Spacer()
                         
-                        Button("Done") {
+                        Button(String(localized: "journal_history_done")) {
                             dismiss()
                         }
                         .foregroundColor(.white.opacity(0.8))
@@ -50,11 +50,11 @@ struct JournalHistoryView: View {
                             Text("📖")
                                 .font(.system(size: 80))
                             
-                            Text("No Entries Yet")
+                            Text(String(localized: "journal_history_empty_title"))
                                 .font(.title2.bold())
                                 .foregroundColor(.white)
                             
-                            Text("Start journaling to see your entries here. Your thoughts and reflections will be saved for you to revisit.")
+                            Text(String(localized: "journal_history_empty_message"))
                                 .font(.body)
                                 .foregroundColor(.white.opacity(0.8))
                                 .multilineTextAlignment(.center)
@@ -138,7 +138,7 @@ struct JournalEntryCard: View {
                         .font(.caption)
                         .foregroundColor(.white.opacity(0.7))
                     
-                    Text(entry.prompt ?? "Journal Entry")
+                    Text(entry.prompt ?? String(localized: "journal_history_entry_default"))
                         .font(.headline)
                         .foregroundColor(.white)
                         .lineLimit(2)

@@ -21,13 +21,15 @@ struct GroundingView: View {
     @State private var smellResponses = Array(repeating: "", count: 2)
     @State private var tasteResponse = ""
     
-    private let steps = [
-        GroundingStep(title: "5 Things You See", description: "Look around and name 5 things you can see", count: 5, emoji: "👁️"),
-        GroundingStep(title: "4 Things You Hear", description: "Listen carefully and name 4 things you can hear", count: 4, emoji: "👂"),
-        GroundingStep(title: "3 Things You Touch", description: "Feel around and name 3 things you can touch", count: 3, emoji: "✋"),
-        GroundingStep(title: "2 Things You Smell", description: "Take a deep breath and name 2 things you can smell", count: 2, emoji: "👃"),
-        GroundingStep(title: "1 Thing You Taste", description: "Notice and name 1 thing you can taste", count: 1, emoji: "👅")
-    ]
+    private var steps: [GroundingStep] {
+        [
+            GroundingStep(title: String(localized: "grounding_step_see_title"), description: String(localized: "grounding_step_see_desc"), count: 5, emoji: "👁️"),
+            GroundingStep(title: String(localized: "grounding_step_hear_title"), description: String(localized: "grounding_step_hear_desc"), count: 4, emoji: "👂"),
+            GroundingStep(title: String(localized: "grounding_step_touch_title"), description: String(localized: "grounding_step_touch_desc"), count: 3, emoji: "✋"),
+            GroundingStep(title: String(localized: "grounding_step_smell_title"), description: String(localized: "grounding_step_smell_desc"), count: 2, emoji: "👃"),
+            GroundingStep(title: String(localized: "grounding_step_taste_title"), description: String(localized: "grounding_step_taste_desc"), count: 1, emoji: "👅")
+        ]
+    }
     
     var body: some View {
         ZStack {
@@ -71,7 +73,7 @@ struct GroundingView: View {
                 )
 
             // Title
-            Text("5-4-3-2-1 Grounding")
+            Text(String(localized: "grounding_title"))
                 .font(.system(.largeTitle, design: .serif))
                 .fontWeight(.bold)
                 .foregroundColor(.white)
@@ -80,20 +82,20 @@ struct GroundingView: View {
             VStack(spacing: 16) {
                 benefitRow(
                     icon: "cross.case.fill",
-                    title: "Reduces Panic Symptoms",
-                    description: "Grounding techniques help interrupt anxious thought patterns and shift focus to your immediate environment."
+                    title: String(localized: "grounding_benefit_panic_title"),
+                    description: String(localized: "grounding_benefit_panic_desc")
                 )
 
                 benefitRow(
                     icon: "eye.fill",
-                    title: "Engages Your Senses",
-                    description: "By using all five senses, you activate different parts of your brain, helping you feel more present and anchored."
+                    title: String(localized: "grounding_benefit_senses_title"),
+                    description: String(localized: "grounding_benefit_senses_desc")
                 )
 
                 benefitRow(
                     icon: "arrow.counterclockwise",
-                    title: "Breaks Anxiety Cycles",
-                    description: "This technique disrupts the anxiety loop by redirecting your attention to concrete, observable things in your environment."
+                    title: String(localized: "grounding_benefit_cycle_title"),
+                    description: String(localized: "grounding_benefit_cycle_desc")
                 )
             }
             .padding(.horizontal, 30)
@@ -110,7 +112,7 @@ struct GroundingView: View {
                 HStack {
                     Image(systemName: "play.fill")
                         .font(.system(size: 18, weight: .semibold))
-                    Text("Start Grounding Exercise")
+                    Text(String(localized: "grounding_start_button"))
                         .font(.system(.body, design: .rounded))
                         .fontWeight(.semibold)
                 }
@@ -185,7 +187,7 @@ struct GroundingView: View {
             // Navigation buttons
             HStack(spacing: 20) {
                 if currentStep > 0 {
-                    Button("Previous") {
+                    Button(String(localized: "grounding_previous")) {
                         withAnimation(.easeInOut) {
                             currentStep -= 1
                         }
@@ -200,7 +202,7 @@ struct GroundingView: View {
                 
                 Spacer()
                 
-                Button(currentStep == steps.count - 1 ? "Complete" : "Next") {
+                Button(currentStep == steps.count - 1 ? String(localized: "grounding_complete") : String(localized: "grounding_next")) {
                     if currentStep == steps.count - 1 {
                         completeGrounding()
                     } else {
@@ -235,11 +237,11 @@ struct GroundingView: View {
                         Text("🌿")
                             .font(.system(size: 60))
                         
-                        Text("Well Done!")
+                        Text(String(localized: "grounding_complete_title"))
                             .font(.largeTitle.bold())
                             .foregroundColor(.white)
                         
-                        Text("You've completed the grounding exercise. Take a moment to notice how you feel.")
+                        Text(String(localized: "grounding_complete_message"))
                             .font(.title3)
                             .foregroundColor(.white.opacity(0.9))
                             .multilineTextAlignment(.center)
@@ -264,26 +266,26 @@ struct GroundingView: View {
             switch currentStep {
             case 0: // See
                 ForEach(0..<5, id: \.self) { index in
-                    TextField("Thing \(index + 1) you see", text: $seeResponses[index])
+                    TextField(String.localizedStringWithFormat(String(localized: "grounding_thing_see"), index + 1), text: $seeResponses[index])
                         .textFieldStyle(GroundingTextFieldStyle())
                 }
             case 1: // Hear
                 ForEach(0..<4, id: \.self) { index in
-                    TextField("Thing \(index + 1) you hear", text: $hearResponses[index])
+                    TextField(String.localizedStringWithFormat(String(localized: "grounding_thing_hear"), index + 1), text: $hearResponses[index])
                         .textFieldStyle(GroundingTextFieldStyle())
                 }
             case 2: // Touch
                 ForEach(0..<3, id: \.self) { index in
-                    TextField("Thing \(index + 1) you touch", text: $touchResponses[index])
+                    TextField(String.localizedStringWithFormat(String(localized: "grounding_thing_touch"), index + 1), text: $touchResponses[index])
                         .textFieldStyle(GroundingTextFieldStyle())
                 }
             case 3: // Smell
                 ForEach(0..<2, id: \.self) { index in
-                    TextField("Thing \(index + 1) you smell", text: $smellResponses[index])
+                    TextField(String.localizedStringWithFormat(String(localized: "grounding_thing_smell"), index + 1), text: $smellResponses[index])
                         .textFieldStyle(GroundingTextFieldStyle())
                 }
             case 4: // Taste
-                TextField("Thing you taste", text: $tasteResponse)
+                TextField(String(localized: "grounding_thing_taste"), text: $tasteResponse)
                     .textFieldStyle(GroundingTextFieldStyle())
             default:
                 EmptyView()

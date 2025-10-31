@@ -19,11 +19,13 @@ struct WorryLogEntryView: View {
     @State private var customReminderDate = Date()
     @State private var isCustomTime = false
     
-    private let reminderOptions = [
-        (hours: 3, label: "In 3 hours"),
-        (hours: 6, label: "In 6 hours"),
-        (hours: 24, label: "Tomorrow")
-    ]
+    private var reminderOptions: [(hours: Int, label: String)] {
+        [
+            (hours: 3, label: String(localized: "worry_reminder_in_3_hours")),
+            (hours: 6, label: String(localized: "worry_reminder_in_6_hours")),
+            (hours: 24, label: String(localized: "worry_reminder_tomorrow"))
+        ]
+    }
     
     var body: some View {
         ScrollView {
@@ -36,13 +38,13 @@ struct WorryLogEntryView: View {
                 
                 // Main Question
                 VStack(spacing: 12) {
-                    Text("What are you worried about now?")
+                    Text(String(localized: "worry_entry_title"))
                         .font(.system(.title3, design: .rounded))
                         .fontWeight(.semibold)
                         .foregroundColor(.themeText)
                         .multilineTextAlignment(.center)
                     
-                    Text("Express your concern freely")
+                    Text(String(localized: "worry_entry_placeholder"))
                         .font(.system(.caption, design: .rounded))
                         .foregroundColor(.themeText.opacity(0.6))
                 }
@@ -50,7 +52,7 @@ struct WorryLogEntryView: View {
                 
                 // Worry Text Input
                 VStack(alignment: .leading, spacing: 8) {
-                    TextField("e.g., Tomorrow's presentation", text: $worryText, axis: .vertical)
+                    TextField(String(localized: "worry_entry_textfield_placeholder"), text: $worryText, axis: .vertical)
                         .font(.system(.body, design: .rounded))
                         .padding(16)
                         .background(
@@ -63,7 +65,7 @@ struct WorryLogEntryView: View {
                         )
                         .lineLimit(3...6)
                     
-                    Text("\(worryText.count)/200")
+                    Text(String.localizedStringWithFormat(String(localized: "worry_entry_char_count"), worryText.count))
                         .font(.system(.caption2, design: .rounded))
                         .foregroundColor(.themeText.opacity(0.5))
                         .frame(maxWidth: .infinity, alignment: .trailing)
@@ -78,7 +80,7 @@ struct WorryLogEntryView: View {
                 // Intensity Slider
                 VStack(spacing: 16) {
                     VStack(spacing: 8) {
-                        Text("How strong does this feel?")
+                        Text(String(localized: "worry_entry_intensity_question"))
                             .font(.system(.subheadline, design: .rounded))
                             .fontWeight(.medium)
                             .foregroundColor(.themeText)
@@ -89,7 +91,7 @@ struct WorryLogEntryView: View {
                                 .fontWeight(.bold)
                                 .foregroundColor(intensityColor(for: Int(intensity)))
                             
-                            Text("/ 10")
+                            Text(String(localized: "worry_entry_slash_10"))
                                 .font(.system(.title3, design: .rounded))
                                 .foregroundColor(.themeText.opacity(0.6))
                         }
@@ -104,13 +106,13 @@ struct WorryLogEntryView: View {
                         .padding(.horizontal)
                     
                     HStack {
-                        Text("😌 Mild")
+                        Text(String(localized: "worry_entry_mild"))
                             .font(.system(.caption2, design: .rounded))
                             .foregroundColor(.themeText.opacity(0.6))
                         
                         Spacer()
                         
-                        Text("Intense 😰")
+                        Text(String(localized: "worry_entry_intense"))
                             .font(.system(.caption2, design: .rounded))
                             .foregroundColor(.themeText.opacity(0.6))
                     }
@@ -134,17 +136,17 @@ struct WorryLogEntryView: View {
                         Image(systemName: "hand.point.right.fill")
                             .foregroundColor(.green.opacity(0.7))
                         
-                        Text("One thing I can control is...")
+                        Text(String(localized: "worry_entry_control_prompt"))
                             .font(.system(.subheadline, design: .rounded))
                             .fontWeight(.medium)
                             .foregroundColor(.themeText)
                         
-                        Text("(optional)")
+                        Text(String(localized: "worry_entry_control_optional"))
                             .font(.system(.caption, design: .rounded))
                             .foregroundColor(.themeText.opacity(0.5))
                     }
                     
-                    TextField("e.g., How I prepare for it", text: $controlThought)
+                    TextField(String(localized: "worry_entry_control_placeholder"), text: $controlThought)
                         .font(.system(.body, design: .rounded))
                         .padding(16)
                         .background(
@@ -164,7 +166,7 @@ struct WorryLogEntryView: View {
                         Image(systemName: "bell.fill")
                             .foregroundColor(.themeText.opacity(0.7))
                         
-                        Text("Remind me to check in")
+                        Text(String(localized: "worry_entry_remind_label"))
                             .font(.system(.subheadline, design: .rounded))
                             .fontWeight(.medium)
                             .foregroundColor(.themeText)
@@ -217,7 +219,7 @@ struct WorryLogEntryView: View {
                         } label: {
                             VStack(spacing: 0) {
                                 HStack {
-                                    Text("Choose specific time")
+                                    Text(String(localized: "worry_entry_choose_time"))
                                         .font(.system(.body, design: .rounded))
                                         .foregroundColor(.themeText)
                                     
@@ -273,7 +275,7 @@ struct WorryLogEntryView: View {
                     HStack {
                         Image(systemName: "checkmark.circle.fill")
                             .font(.title3)
-                        Text("Save Worry")
+                        Text(String(localized: "worry_entry_save"))
                             .font(.system(.body, design: .rounded))
                             .fontWeight(.semibold)
                     }
@@ -309,7 +311,7 @@ struct WorryLogEntryView: View {
                 .ignoresSafeArea()
             }
         )
-        .navigationTitle("Log Worry")
+        .navigationTitle(String(localized: "nav_title_log_worry"))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {

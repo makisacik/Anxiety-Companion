@@ -40,7 +40,7 @@ struct CalmReportGenerationView: View {
             }
 
             ToolbarItem(placement: .principal) {
-                Text("Calm Report")
+                Text(String(localized: "report_title"))
                     .font(.system(.headline, design: .rounded))
                     .foregroundColor(.themeText)
             }
@@ -88,7 +88,7 @@ struct CalmReportGenerationView: View {
         VStack(spacing: 16) {
             ProgressView()
                 .progressViewStyle(CircularProgressViewStyle(tint: .themeText))
-            Text("Gathering your notes...")
+            Text(String(localized: "report_gathering"))
                 .font(.system(.body, design: .rounded))
                 .foregroundColor(.themeText.opacity(0.8))
         }
@@ -97,7 +97,7 @@ struct CalmReportGenerationView: View {
 
     private func errorView(message: String) -> some View {
         VStack(spacing: 16) {
-            Text("Something went wrong")
+            Text(String(localized: "report_error"))
                 .font(.system(.title3, design: .rounded).bold())
                 .foregroundColor(.themeText)
             Text(message)
@@ -108,7 +108,7 @@ struct CalmReportGenerationView: View {
                 HapticFeedback.light()
                 generateReport()
             } label: {
-                Text("Try Again")
+                Text(String(localized: "report_try_again"))
                     .font(.system(.body, design: .rounded).bold())
                     .foregroundColor(.themeText)
                     .frame(maxWidth: .infinity)
@@ -147,11 +147,11 @@ struct CalmReportGenerationView: View {
 
     private var heroSection: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text("You're building a calmer rhythm")
+            Text(String(localized: "report_hero_title"))
                 .font(.system(.title2, design: .rounded).bold())
                 .foregroundColor(.themeText)
 
-            Text("A quick reflection on how you're supporting your nervous system.")
+            Text(String(localized: "report_hero_subtitle"))
                 .font(.system(.body, design: .rounded))
                 .foregroundColor(.themeText.opacity(0.8))
 
@@ -159,9 +159,9 @@ struct CalmReportGenerationView: View {
                 .background(Color.themeDivider)
 
             HStack(spacing: 16) {
-                InsightChip(icon: "heart.fill", text: "Ground faster")
-                InsightChip(icon: "sparkles", text: "Spot strengths")
-                InsightChip(icon: "leaf.fill", text: "Breathe with purpose")
+                InsightChip(icon: "heart.fill", text: String(localized: "report_hero_ground_faster"))
+                InsightChip(icon: "sparkles", text: String(localized: "report_hero_spot_strengths"))
+                InsightChip(icon: "leaf.fill", text: String(localized: "report_hero_breathe_purpose"))
             }
             .padding(.top, 4)
         }
@@ -179,7 +179,7 @@ struct CalmReportGenerationView: View {
 
     private var highlightSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Moments to celebrate")
+            Text(String(localized: "report_moments"))
                 .font(.system(.headline, design: .rounded))
                 .foregroundColor(.themeText)
 
@@ -218,12 +218,12 @@ struct CalmReportGenerationView: View {
 
     private var encouragementFooter: some View {
         VStack(spacing: 12) {
-            Text("Keep listening to your calm moments")
+            Text(String(localized: "report_listening"))
                 .font(.system(.headline, design: .rounded).bold())
                 .foregroundColor(.themeText)
                 .multilineTextAlignment(.center)
 
-            Text("Small practices add up. Each return builds more trust in your calm.")
+            Text(String(localized: "report_practices"))
                 .font(.system(.body, design: .rounded))
                 .foregroundColor(.themeText.opacity(0.8))
                 .multilineTextAlignment(.center)
@@ -282,7 +282,7 @@ struct CalmReportGenerationView: View {
             parsed.append(
                 ReportSection(
                     title: title,
-                    content: content.isEmpty ? "Keep following the practices that feel supportive." : content,
+                    content: content.isEmpty ? String(localized: "report_fallback_supportive") : content,
                     icon: icon(for: title)
                 )
             )
@@ -291,8 +291,8 @@ struct CalmReportGenerationView: View {
         if parsed.isEmpty {
             parsed.append(
                 ReportSection(
-                    title: "Your Calm Journey",
-                    content: "Your reflections highlight growing awareness, kinder self-talk, and practical tools that now feel familiar.",
+                    title: String(localized: "report_fallback_title"),
+                    content: String(localized: "report_fallback_content"),
                     icon: "sparkles"
                 )
             )
@@ -312,9 +312,9 @@ struct CalmReportGenerationView: View {
 
             let title: String
             if index == 0 {
-                title = "Emotional Growth"
+                title = String(localized: "report_highlight_emotional_growth")
             } else if index == 1 {
-                title = "What You Did Well"
+                title = String(localized: "report_highlight_did_well")
             } else {
                 title = section.title
             }
@@ -331,8 +331,8 @@ struct CalmReportGenerationView: View {
         if result.isEmpty {
             result.append(
                 ReportHighlight(
-                    title: "Showing Up",
-                    detail: "Even noticing how you feel is a powerful practice—keep honoring that awareness.",
+                    title: String(localized: "report_highlight_showing_up"),
+                    detail: String(localized: "report_highlight_showing_up_detail"),
                     icon: "sparkles"
                 )
             )

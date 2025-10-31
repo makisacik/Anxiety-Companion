@@ -15,13 +15,15 @@ struct GratitudeView: View {
     @State private var currentPromptIndex = 0
     @State private var showGratitudeExercise = false
 
-    private let prompts = [
-        "What made you smile today?",
-        "What's one thing you're grateful for right now?",
-        "Who or what brought you comfort recently?",
-        "What small moment brought you joy?",
-        "What are you thankful for in this moment?"
-    ]
+    private var prompts: [String] {
+        [
+            String(localized: "gratitude_prompt_1"),
+            String(localized: "gratitude_prompt_2"),
+            String(localized: "gratitude_prompt_3"),
+            String(localized: "gratitude_prompt_4"),
+            String(localized: "gratitude_prompt_5")
+        ]
+    }
 
     private var currentPrompt: String {
         prompts[currentPromptIndex]
@@ -70,7 +72,7 @@ struct GratitudeView: View {
                         .fill(Color.white.opacity(0.2))
                 )
 
-            Text("Gratitude Reflection")
+            Text(String(localized: "gratitude_title"))
                 .font(.system(.largeTitle, design: .serif))
                 .fontWeight(.bold)
                 .foregroundColor(.white)
@@ -78,20 +80,20 @@ struct GratitudeView: View {
             VStack(spacing: 16) {
                 benefitRow(
                     icon: "brain.head.profile",
-                    title: "Rewires Your Brain",
-                    description: "Regular gratitude practice strengthens neural pathways linked to happiness and reduces activity in anxiety-related brain regions."
+                    title: String(localized: "gratitude_benefit_brain_title"),
+                    description: String(localized: "gratitude_benefit_brain_desc")
                 )
 
                 benefitRow(
                     icon: "sparkles",
-                    title: "Shifts Perspective",
-                    description: "Focusing on what you're grateful for helps you see the positive aspects of life, even during difficult times."
+                    title: String(localized: "gratitude_benefit_perspective_title"),
+                    description: String(localized: "gratitude_benefit_perspective_desc")
                 )
 
                 benefitRow(
                     icon: "bed.double.fill",
-                    title: "Improves Sleep",
-                    description: "Studies show that writing about things you're grateful for before bed can improve sleep quality and duration."
+                    title: String(localized: "gratitude_benefit_sleep_title"),
+                    description: String(localized: "gratitude_benefit_sleep_desc")
                 )
             }
             .padding(.horizontal, 30)
@@ -107,7 +109,7 @@ struct GratitudeView: View {
                 HStack {
                     Image(systemName: "play.fill")
                         .font(.system(size: 18, weight: .semibold))
-                    Text("Start Gratitude Practice")
+                    Text(String(localized: "gratitude_start_button"))
                         .font(.system(.body, design: .rounded))
                         .fontWeight(.semibold)
                 }
@@ -153,7 +155,7 @@ struct GratitudeView: View {
 
                 Spacer()
 
-                Button("New Prompt") {
+                Button(String(localized: "gratitude_new_prompt")) {
                     currentPromptIndex = (currentPromptIndex + 1) % prompts.count
                     gratitudeText = ""
                     HapticManager.shared.light()
@@ -165,7 +167,7 @@ struct GratitudeView: View {
 
             // Main content
             VStack(spacing: 20) {
-                Text("Gratitude Reflection")
+                Text(String(localized: "gratitude_title"))
                     .font(.largeTitle.bold())
                     .foregroundColor(.white)
 
@@ -185,13 +187,13 @@ struct GratitudeView: View {
                 // Text input
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
-                        Text("Your gratitude")
+                        Text(String(localized: "gratitude_your_gratitude"))
                             .font(.headline)
                             .foregroundColor(.white.opacity(0.8))
 
                         Spacer()
 
-                        Text("\(gratitudeText.count) characters")
+                        Text(String.localizedStringWithFormat(String(localized: "journaling_characters"), gratitudeText.count))
                             .font(.caption)
                             .foregroundColor(.white.opacity(0.6))
                     }
@@ -206,7 +208,7 @@ struct GratitudeView: View {
                             .frame(minHeight: 120)
 
                         if gratitudeText.isEmpty {
-                            Text("What are you grateful for?")
+                            Text(String(localized: "gratitude_placeholder"))
                                 .foregroundColor(.white.opacity(0.5))
                                 .padding(.horizontal, 16)
                                 .padding(.vertical, 12)
@@ -226,7 +228,7 @@ struct GratitudeView: View {
             Spacer()
 
             // Save button
-            Button("Save Gratitude") {
+            Button(String(localized: "gratitude_save")) {
                 saveGratitude()
             }
             .padding(.horizontal, 40)
@@ -250,11 +252,11 @@ struct GratitudeView: View {
                         Text("✨")
                             .font(.system(size: 60))
 
-                        Text("Gratitude Saved!")
+                        Text(String(localized: "gratitude_saved_title"))
                             .font(.largeTitle.bold())
                             .foregroundColor(.white)
 
-                        Text("Focusing on gratitude can help shift your perspective and bring more positivity into your day.")
+                        Text(String(localized: "gratitude_saved_message"))
                             .font(.title3)
                             .foregroundColor(.white.opacity(0.9))
                             .multilineTextAlignment(.center)

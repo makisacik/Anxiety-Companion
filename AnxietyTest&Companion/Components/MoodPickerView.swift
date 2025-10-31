@@ -36,15 +36,15 @@ struct MoodPickerView: View {
         var description: String {
             switch self {
             case .veryHappy:
-                return "Very Happy"
+                return String(localized: "mood_very_happy")
             case .good:
-                return "Good"
+                return String(localized: "mood_good")
             case .neutral:
-                return "Neutral"
+                return String(localized: "mood_neutral")
             case .sad:
-                return "Sad"
+                return String(localized: "mood_sad")
             case .verySad:
-                return "Very Sad"
+                return String(localized: "mood_very_sad")
             }
         }
     }
@@ -75,7 +75,7 @@ struct MoodPickerView: View {
                             .animation(.spring(response: 0.3, dampingFraction: 0.6), value: selectedMood)
                     }
                     .buttonStyle(PlainButtonStyle())
-                    .accessibilityLabel("\(mood.description) mood")
+                    .accessibilityLabel(String.localizedStringWithFormat(String(localized: "accessibility_mood"), mood.description))
                     .accessibilityAddTraits(selectedMood == mood ? .isSelected : [])
                 }
             }

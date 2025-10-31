@@ -14,22 +14,36 @@ struct JournalingView: View {
     @State private var startTime = Date()
     @State private var showHistory = false
     
-    private let prompts = [
-        "What thought has been looping in your mind?",
-        "What would you tell a friend feeling this way?",
-        "What's one thing you can let go of today?",
-        "Describe how your body feels right now",
-        "What do you need most in this moment?",
-        "What's been weighing on your heart lately?",
-        "What small win can you celebrate today?",
-        "What would you do if you weren't afraid?",
-        "What brings you comfort when you're overwhelmed?",
-        "What's one thing you're grateful for right now?"
-    ]
+    private var prompts: [String] {
+        [
+            String(localized: "journaling_prompt_1"),
+            String(localized: "journaling_prompt_2"),
+            String(localized: "journaling_prompt_3"),
+            String(localized: "journaling_prompt_4"),
+            String(localized: "journaling_prompt_5"),
+            String(localized: "journaling_prompt_6"),
+            String(localized: "journaling_prompt_7"),
+            String(localized: "journaling_prompt_8"),
+            String(localized: "journaling_prompt_9"),
+            String(localized: "journaling_prompt_10")
+        ]
+    }
     
-    @State private var currentPrompt: String
+    @State private var currentPrompt: String = ""
     
     init() {
+        let prompts = [
+            String(localized: "journaling_prompt_1"),
+            String(localized: "journaling_prompt_2"),
+            String(localized: "journaling_prompt_3"),
+            String(localized: "journaling_prompt_4"),
+            String(localized: "journaling_prompt_5"),
+            String(localized: "journaling_prompt_6"),
+            String(localized: "journaling_prompt_7"),
+            String(localized: "journaling_prompt_8"),
+            String(localized: "journaling_prompt_9"),
+            String(localized: "journaling_prompt_10")
+        ]
         _currentPrompt = State(initialValue: prompts.randomElement() ?? prompts[0])
     }
     
@@ -45,7 +59,7 @@ struct JournalingView: View {
             VStack(spacing: 20) {
                 // Header
                 HStack {
-                    Button("History") {
+                    Button(String(localized: "journaling_history")) {
                         showHistory = true
                     }
                     .foregroundColor(.white.opacity(0.8))
@@ -57,7 +71,7 @@ struct JournalingView: View {
                     
                     Spacer()
                     
-                    Button("New Prompt") {
+                    Button(String(localized: "journaling_new_prompt")) {
                         currentPrompt = prompts.randomElement() ?? prompts[0]
                         HapticManager.shared.light()
                     }
@@ -68,7 +82,7 @@ struct JournalingView: View {
                 
                 // Prompt
                 VStack(spacing: 16) {
-                    Text("Journal Prompt")
+                    Text(String(localized: "journaling_prompt_label"))
                         .font(.headline)
                         .foregroundColor(.white.opacity(0.8))
                     
@@ -90,13 +104,13 @@ struct JournalingView: View {
                 // Text editor
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
-                        Text("Your thoughts")
+                        Text(String(localized: "journaling_your_thoughts"))
                             .font(.headline)
                             .foregroundColor(.white.opacity(0.8))
                         
                         Spacer()
                         
-                        Text("\(journalText.count) characters")
+                        Text(String.localizedStringWithFormat(String(localized: "journaling_characters"), journalText.count))
                             .font(.caption)
                             .foregroundColor(.white.opacity(0.6))
                     }
@@ -111,7 +125,7 @@ struct JournalingView: View {
                             .frame(minHeight: 200)
                         
                         if journalText.isEmpty {
-                            Text("Start writing your thoughts here...")
+                            Text(String(localized: "journaling_placeholder"))
                                 .foregroundColor(.white.opacity(0.5))
                                 .padding(.horizontal, 16)
                                 .padding(.vertical, 12)
@@ -130,7 +144,7 @@ struct JournalingView: View {
                 Spacer()
                 
                 // Save button
-                Button("Save Entry") {
+                Button(String(localized: "journaling_save")) {
                     saveJournalEntry()
                 }
                 .padding(.horizontal, 40)
@@ -154,11 +168,11 @@ struct JournalingView: View {
                     Text("📝")
                         .font(.system(size: 60))
                     
-                    Text("Entry Saved!")
+                    Text(String(localized: "journaling_saved_title"))
                         .font(.largeTitle.bold())
                         .foregroundColor(.white)
                     
-                    Text("Your thoughts have been saved. Writing can be a powerful way to process emotions.")
+                    Text(String(localized: "journaling_saved_message"))
                         .font(.title3)
                         .foregroundColor(.white.opacity(0.9))
                         .multilineTextAlignment(.center)

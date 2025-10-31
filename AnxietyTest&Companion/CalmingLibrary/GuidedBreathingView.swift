@@ -53,7 +53,7 @@ struct GuidedBreathingView: View {
                 )
 
             // Title
-            Text("Guided Breathing")
+            Text(String(localized: "breathing_guided_title"))
                 .font(.system(.largeTitle, design: .serif))
                 .fontWeight(.bold)
                 .foregroundColor(.white)
@@ -62,20 +62,20 @@ struct GuidedBreathingView: View {
             VStack(spacing: 16) {
                 benefitRow(
                     icon: "heart.fill",
-                    title: "Activates Relaxation Response",
-                    description: "Slow, deep breathing triggers your parasympathetic nervous system, reducing stress hormones like cortisol."
+                    title: String(localized: "breathing_guided_relaxation_title"),
+                    description: String(localized: "breathing_guided_relaxation_desc")
                 )
 
                 benefitRow(
                     icon: "brain.head.profile",
-                    title: "Calms the Mind",
-                    description: "Focusing on your breath helps quiet racing thoughts and brings your attention to the present moment."
+                    title: String(localized: "breathing_guided_calm_title"),
+                    description: String(localized: "breathing_guided_calm_desc")
                 )
 
                 benefitRow(
                     icon: "bolt.heart.fill",
-                    title: "Lowers Heart Rate",
-                    description: "Controlled breathing helps regulate your heart rate variability, promoting a sense of calm and well-being."
+                    title: String(localized: "breathing_guided_heart_title"),
+                    description: String(localized: "breathing_guided_heart_desc")
                 )
             }
             .padding(.horizontal, 30)
@@ -92,7 +92,7 @@ struct GuidedBreathingView: View {
                 HStack {
                     Image(systemName: "play.fill")
                         .font(.system(size: 18, weight: .semibold))
-                    Text("Start Breathing Exercise")
+                    Text(String(localized: "breathing_journey_start"))
                         .font(.system(.body, design: .rounded))
                         .fontWeight(.semibold)
                 }
@@ -136,7 +136,7 @@ struct GuidedBreathingView: View {
                 onPhaseChange: manager.updatePhase
             )
 
-            Button("Finish Session 🌿") {
+            Button(String(localized: "breathing_guided_finish")) {
                 manager.finishSession()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     dismiss()

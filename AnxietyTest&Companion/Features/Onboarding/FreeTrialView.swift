@@ -30,13 +30,13 @@ struct FreeTrialView: View {
             VStack(spacing: 30) {
                 // Title
                 VStack(spacing: 10) {
-                    Text("How your free trial works")
+                        Text(String(localized: "freetrial_title"))
                         .font(.system(.title2, design: .rounded))
                         .fontWeight(.bold)
                         .foregroundColor(.themeText)
                         .multilineTextAlignment(.center)
                     
-                    Text("Today no charge will be taken")
+                        Text(String(localized: "freetrial_subtitle"))
                         .font(.system(.subheadline, design: .rounded))
                         .foregroundColor(.themeText.opacity(0.7))
                         .multilineTextAlignment(.center)
@@ -60,12 +60,12 @@ struct FreeTrialView: View {
                         
                         // Content
                         VStack(alignment: .leading, spacing: 5) {
-                            Text("Today")
+                                Text(String(localized: "freetrial_today_title"))
                                 .font(.system(.body, design: .rounded))
                                 .fontWeight(.semibold)
                                 .foregroundColor(.themeText)
                             
-                            Text("Get full access and see your mind transform gradually")
+                                Text(String(localized: "freetrial_today_message"))
                                 .font(.system(.subheadline, design: .rounded))
                                 .foregroundColor(.themeText.opacity(0.7))
                                 .fixedSize(horizontal: false, vertical: true)
@@ -90,12 +90,12 @@ struct FreeTrialView: View {
                         
                         // Content
                         VStack(alignment: .leading, spacing: 5) {
-                            Text("Day 5")
+                                Text(String(localized: "freetrial_day5_title"))
                                 .font(.system(.body, design: .rounded))
                                 .fontWeight(.semibold)
                                 .foregroundColor(.themeText)
                             
-                            Text("Get a gentle reminder as your trial nears its end")
+                                Text(String(localized: "freetrial_day5_message"))
                                 .font(.system(.subheadline, design: .rounded))
                                 .foregroundColor(.themeText.opacity(0.7))
                                 .fixedSize(horizontal: false, vertical: true)
@@ -120,12 +120,12 @@ struct FreeTrialView: View {
                         
                         // Content
                         VStack(alignment: .leading, spacing: 5) {
-                            Text("After 7 days")
+                                Text(String(localized: "freetrial_after7_title"))
                                 .font(.system(.body, design: .rounded))
                                 .fontWeight(.semibold)
                                 .foregroundColor(.themeText)
                             
-                            Text("Your free trial ends and you'll be charged, or cancel anytime before")
+                                Text(String(localized: "freetrial_after7_message"))
                                 .font(.system(.subheadline, design: .rounded))
                                 .foregroundColor(.themeText.opacity(0.7))
                                 .fixedSize(horizontal: false, vertical: true)
@@ -143,7 +143,7 @@ struct FreeTrialView: View {
                 .padding(.horizontal, 30)
                 
                 // Pricing Text
-                Text("7 days of unlimited free access, then\nyearly 2299.99 TL (191.67 TL/month)")
+                    Text(String(localized: "freetrial_pricing"))
                     .font(.system(.footnote, design: .rounded))
                     .foregroundColor(.themeText.opacity(0.6))
                     .multilineTextAlignment(.center)
@@ -154,7 +154,7 @@ struct FreeTrialView: View {
             
             // Start Free Trial Button
             Button(action: onContinue) {
-                Text("Start Free Trial")
+                    Text(String(localized: "freetrial_start_button"))
                     .font(.system(.body, design: .rounded))
                     .fontWeight(.semibold)
                     .foregroundColor(.themeText)
@@ -171,19 +171,19 @@ struct FreeTrialView: View {
             
             // Footer Links
             HStack(spacing: 30) {
-                Button("Terms & Conditions") {
+                    Button(String(localized: "freetrial_terms")) {
                     // Handle terms action
                 }
                 .font(.system(.caption, design: .rounded))
                 .foregroundColor(.themeText.opacity(0.5))
                 
-                Button("Privacy Policy") {
+                    Button(String(localized: "freetrial_privacy")) {
                     // Handle privacy action
                 }
                 .font(.system(.caption, design: .rounded))
                 .foregroundColor(.themeText.opacity(0.5))
                 
-                Button("Restore Purchase") {
+                    Button(String(localized: "freetrial_restore")) {
                     // Handle restore action
                 }
                 .font(.system(.caption, design: .rounded))

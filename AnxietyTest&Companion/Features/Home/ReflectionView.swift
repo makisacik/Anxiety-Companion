@@ -21,28 +21,30 @@ struct ReflectionView: View {
     // Base date to compute day offset from (start from first prompt on first launch)
     @AppStorage("reflectionPromptBaseDate") private var promptBaseDateTimestamp: Double = 0
 
-private let prompts = [
-    "What tiny victory can you appreciate right now?",    
-    "When did you feel most like yourself today?",
-    "What moment made you feel safe or grounded today?",
-    "What’s one thing that brought you a quiet smile?",
-    "If your mind could rest on one thought tonight, what would it be?",
-    "What helped you breathe easier today?",
-    "What felt a little lighter than yesterday?",
-    "What kindness — big or small — did you show yourself today?",
-    "Was there a moment you handled something better than before?",
-    "Who or what helped you feel supported today?",
-    "What’s something you’re learning to let go of?",
-    "When did you feel calm, even for a short moment?",
-    "What do you wish to thank yourself for today?",
-    "What made today feel a little more manageable?",
-    "What’s one thing you want to carry into tomorrow?",
-    "What thought or worry lost a bit of its power today?",
-    "What helped you reconnect with the present moment?",
-    "What do you appreciate about who you are becoming?",
-    "What small act of care did you give your body or mind?",
-    "What gave you a sense of peace, even briefly?"
-]
+private var prompts: [String] {
+    [
+        String(localized: "reflection_prompt_1"),
+        String(localized: "reflection_prompt_2"),
+        String(localized: "reflection_prompt_3"),
+        String(localized: "reflection_prompt_4"),
+        String(localized: "reflection_prompt_5"),
+        String(localized: "reflection_prompt_6"),
+        String(localized: "reflection_prompt_7"),
+        String(localized: "reflection_prompt_8"),
+        String(localized: "reflection_prompt_9"),
+        String(localized: "reflection_prompt_10"),
+        String(localized: "reflection_prompt_11"),
+        String(localized: "reflection_prompt_12"),
+        String(localized: "reflection_prompt_13"),
+        String(localized: "reflection_prompt_14"),
+        String(localized: "reflection_prompt_15"),
+        String(localized: "reflection_prompt_16"),
+        String(localized: "reflection_prompt_17"),
+        String(localized: "reflection_prompt_18"),
+        String(localized: "reflection_prompt_19"),
+        String(localized: "reflection_prompt_20")
+    ]
+}
 
 
     var body: some View {
@@ -56,7 +58,7 @@ private let prompts = [
             VStack(spacing: 16) {
                 // Header
                 HStack(spacing: 12) {
-                    Text("Reflect for a moment ✍️")
+                    Text(String(localized: "reflection_title"))
                         .font(.system(.title3, design: .serif)).fontWeight(.semibold)
                         .foregroundColor(.themeText)
                     Spacer()
@@ -70,14 +72,14 @@ private let prompts = [
                                     .fill(Color.themeBackgroundPure)
                                     .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.themeDivider, lineWidth: 1))
                             )
-                            .accessibilityLabel("Randomize prompt")
+                            .accessibilityLabel(String(localized: "reflection_randomize_prompt"))
                     }
                     .buttonStyle(PlainButtonStyle())
                 }
 
                 // Prompt
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Today's prompt")
+                    Text(String(localized: "reflection_today_prompt"))
                         .font(.system(.caption, design: .rounded)).foregroundColor(.themeText.opacity(0.7))
                     Text(currentPrompt)
                         .font(.system(.headline, design: .rounded))
@@ -98,7 +100,7 @@ private let prompts = [
                         .frame(minHeight: 60)
 
                     if text.isEmpty {
-                        Text("Write a few words…")
+                        Text(String(localized: "reflection_placeholder"))
                             .foregroundColor(.themeText.opacity(0.4))
                             .padding(.horizontal, 14)
                     }
@@ -114,7 +116,7 @@ private let prompts = [
                 // Yesterday preview
                 if !yesterdayPreview.isEmpty {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Your last reflection…")
+                        Text(String(localized: "reflection_last_preview"))
                             .font(.system(.caption, design: .rounded))
                             .foregroundColor(.themeText.opacity(0.6))
                         Text(yesterdayPreview)
@@ -133,7 +135,7 @@ private let prompts = [
 
                 // Save button
                 Button(action: save) {
-                    Text("Save Reflection")
+                    Text(String(localized: "reflection_save_button"))
                         .font(.system(.body, design: .rounded)).fontWeight(.medium)
                         .foregroundColor(.themeBackgroundPure)
                         .frame(maxWidth: .infinity)
@@ -153,10 +155,10 @@ private let prompts = [
 
             if showAffirmation {
                 VStack(spacing: 8) {
-                    Text("Saved ✨")
+                    Text(String(localized: "reflection_saved_title"))
                         .font(.system(.headline, design: .rounded))
                         .foregroundColor(.themeText)
-                    Text("You gave your mind a gentle pause.")
+                    Text(String(localized: "reflection_saved_message"))
                         .font(.system(.footnote, design: .rounded))
                         .foregroundColor(.themeText.opacity(0.8))
                 }

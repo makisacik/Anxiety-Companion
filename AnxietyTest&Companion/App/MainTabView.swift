@@ -21,14 +21,14 @@ struct MainTabView: View {
                 AnxietyTestHomeView()
                     .tabItem {
                         Image(systemName: "house.fill")
-                        Text("Home")
+                        Text(String(localized: "tab_home"))
                     }
                     .tag(0)
 
                 TrackingView()
                     .tabItem {
                         Image(systemName: "chart.line.uptrend.xyaxis")
-                        Text("Tracking")
+                        Text(String(localized: "tab_tracking"))
                     }
                     .tag(1)
 
@@ -37,7 +37,7 @@ struct MainTabView: View {
                 }
                 .tabItem {
                     Image(systemName: "map.fill")
-                    Text("Journey")
+                    Text(String(localized: "tab_journey"))
                 }
                 .tag(2)
             }

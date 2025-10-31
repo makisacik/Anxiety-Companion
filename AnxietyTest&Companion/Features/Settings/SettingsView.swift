@@ -29,12 +29,12 @@ struct SettingsView: View {
                     VStack(spacing: 24) {
                         // Header
                         VStack(spacing: 8) {
-                            Text("Settings")
+                            Text(String(localized: "settings_title"))
                                 .font(.system(.largeTitle, design: .serif))
                                 .fontWeight(.bold)
                                 .foregroundColor(.themeText)
                             
-                            Text("Customize your experience")
+                            Text(String(localized: "settings_subtitle"))
                                 .font(.system(.body, design: .rounded))
                                 .foregroundColor(.themeText.opacity(0.7))
                         }
@@ -49,7 +49,7 @@ struct SettingsView: View {
                                     .foregroundColor(.themeText)
                                     .font(.system(size: 20))
                                 
-                                Text("Reminders")
+                                Text(String(localized: "settings_reminders"))
                                     .font(.system(.title2, design: .serif))
                                     .fontWeight(.semibold)
                                     .foregroundColor(.themeText)
@@ -61,11 +61,11 @@ struct SettingsView: View {
                             VStack(spacing: 16) {
                                 HStack {
                                     VStack(alignment: .leading, spacing: 4) {
-                                        Text("Gentle Check-ins")
+                                        Text(String(localized: "settings_gentle_checkins"))
                                             .font(.system(.headline, design: .rounded))
                                             .foregroundColor(.themeText)
                                         
-                                        Text("Get gentle reminders to check in on your wellbeing every few days")
+                                        Text(String(localized: "settings_gentle_checkins_desc"))
                                             .font(.system(.caption, design: .rounded))
                                             .foregroundColor(.themeText.opacity(0.7))
                                             .multilineTextAlignment(.leading)
@@ -108,11 +108,11 @@ struct SettingsView: View {
                             VStack(spacing: 16) {
                                 HStack(alignment: .top) {
                                     VStack(alignment: .leading, spacing: 4) {
-                                        Text("Quiet Hours")
+                                        Text(String(localized: "settings_quiet_hours"))
                                             .font(.system(.headline, design: .rounded))
                                             .foregroundColor(.themeText)
 
-                                        Text("Mute non‑urgent reminders between your preferred hours")
+                                        Text(String(localized: "settings_quiet_hours_desc"))
                                             .font(.system(.caption, design: .rounded))
                                             .foregroundColor(.themeText.opacity(0.7))
                                             .multilineTextAlignment(.leading)
@@ -131,14 +131,14 @@ struct SettingsView: View {
                                 if quietHoursEnabled {
                                     VStack(spacing: 12) {
                                         HStack(spacing: 12) {
-                                            hourPicker(title: "From", selection: $quietStartHour)
-                                            hourPicker(title: "To", selection: $quietEndHour)
+                                            hourPicker(title: String(localized: "settings_quiet_hours_from"), selection: $quietStartHour)
+                                            hourPicker(title: String(localized: "settings_quiet_hours_to"), selection: $quietEndHour)
                                         }
                                         .accessibilityElement(children: .contain)
                                         
                                         HStack(spacing: 8) {
                                             Image(systemName: "moon.stars.fill").foregroundColor(.themeText)
-                                            Text("Notifications will be postponed to the next safe time outside quiet hours.")
+                                            Text(String(localized: "settings_quiet_hours_message"))
                                                 .font(.system(.caption, design: .rounded))
                                                 .foregroundColor(.themeText.opacity(0.7))
                                             Spacer()
@@ -174,7 +174,7 @@ struct SettingsView: View {
                                     .foregroundColor(.themeText)
                                     .font(.system(size: 20))
                                 
-                                Text("Development")
+                                Text(String(localized: "settings_development"))
                                     .font(.system(.title2, design: .serif))
                                     .fontWeight(.semibold)
                                     .foregroundColor(.themeText)
@@ -187,11 +187,11 @@ struct SettingsView: View {
                                 VStack(spacing: 16) {
                                     HStack {
                                         VStack(alignment: .leading, spacing: 4) {
-                                            Text("Premium Access")
+                                            Text(String(localized: "settings_premium_title"))
                                                 .font(.system(.headline, design: .rounded))
                                                 .foregroundColor(.themeText)
 
-                                            Text("Unlock all Calm Journey levels for testing")
+                                            Text(String(localized: "settings_premium_desc"))
                                                 .font(.system(.caption, design: .rounded))
                                                 .foregroundColor(.themeText.opacity(0.7))
                                                 .multilineTextAlignment(.leading)
@@ -215,15 +215,15 @@ struct SettingsView: View {
 
                                 SettingsRow(
                                     icon: "clock.fill",
-                                    title: "Reminder Frequency",
-                                    subtitle: "Customize how often you get reminders",
+                                    title: String(localized: "settings_reminder_frequency"),
+                                    subtitle: String(localized: "settings_reminder_frequency_desc"),
                                     isEnabled: false
                                 )
                                 
                                 SettingsRow(
                                     icon: "message.fill",
-                                    title: "Message Customization",
-                                    subtitle: "Personalize your reminder messages",
+                                    title: String(localized: "settings_message_customization"),
+                                    subtitle: String(localized: "settings_message_customization_desc"),
                                     isEnabled: false
                                 )
                                 
@@ -238,12 +238,12 @@ struct SettingsView: View {
                                             .frame(width: 24)
                                         
                                         VStack(alignment: .leading, spacing: 2) {
-                                            Text("Reset Today's Mood")
+                                            Text(String(localized: "settings_reset_mood_title"))
                                                 .font(.system(.body, design: .rounded))
                                                 .fontWeight(.medium)
                                                 .foregroundColor(.themeText)
                                             
-                                            Text("Clear today's mood selection for testing")
+                                            Text(String(localized: "settings_reset_mood_desc"))
                                                 .font(.system(.caption, design: .rounded))
                                                 .foregroundColor(.themeText.opacity(0.7))
                                         }
@@ -277,12 +277,12 @@ struct SettingsView: View {
                                             .frame(width: 24)
                                         
                                         VStack(alignment: .leading, spacing: 2) {
-                                            Text("Fill Debug Data")
+                                            Text(String(localized: "settings_fill_debug_title"))
                                                 .font(.system(.body, design: .rounded))
                                                 .fontWeight(.medium)
                                                 .foregroundColor(.themeText)
                                             
-                                            Text("Fill user data with realistic anxious responses for testing")
+                                            Text(String(localized: "settings_fill_debug_desc"))
                                                 .font(.system(.caption, design: .rounded))
                                                 .foregroundColor(.themeText.opacity(0.7))
                                         }
@@ -316,12 +316,12 @@ struct SettingsView: View {
                                             .frame(width: 24)
                                         
                                         VStack(alignment: .leading, spacing: 2) {
-                                            Text("Reset Debug Data")
+                                            Text(String(localized: "settings_reset_debug_title"))
                                                 .font(.system(.body, design: .rounded))
                                                 .fontWeight(.medium)
                                                 .foregroundColor(.themeText)
                                             
-                                            Text("Clear all exercise responses and reset completed levels")
+                                            Text(String(localized: "settings_reset_debug_desc"))
                                                 .font(.system(.caption, design: .rounded))
                                                 .foregroundColor(.themeText.opacity(0.7))
                                         }
@@ -355,12 +355,12 @@ struct SettingsView: View {
                                             .frame(width: 24)
                                         
                                         VStack(alignment: .leading, spacing: 2) {
-                                            Text("Reset Onboarding")
+                                            Text(String(localized: "settings_reset_onboarding_title"))
                                                 .font(.system(.body, design: .rounded))
                                                 .fontWeight(.medium)
                                                 .foregroundColor(.themeText)
                                             
-                                            Text("Return to the onboarding experience")
+                                            Text(String(localized: "settings_reset_onboarding_desc"))
                                                 .font(.system(.caption, design: .rounded))
                                                 .foregroundColor(.themeText.opacity(0.7))
                                         }
@@ -394,12 +394,12 @@ struct SettingsView: View {
                                             .frame(width: 24)
                                         
                                         VStack(alignment: .leading, spacing: 2) {
-                                            Text("Reset Worry Tracker Intro")
+                                            Text(String(localized: "settings_reset_worry_intro_title"))
                                                 .font(.system(.body, design: .rounded))
                                                 .fontWeight(.medium)
                                                 .foregroundColor(.themeText)
                                             
-                                            Text("See the worry tracker introduction again")
+                                            Text(String(localized: "settings_reset_worry_intro_desc"))
                                                 .font(.system(.caption, design: .rounded))
                                                 .foregroundColor(.themeText.opacity(0.7))
                                         }
@@ -437,11 +437,11 @@ struct SettingsView: View {
     
     private var statusText: String {
         if notificationsEnabled && actualNotificationStatus {
-            return "Reminders are active and working"
+            return String(localized: "settings_reminders_active")
         } else if notificationsEnabled && !actualNotificationStatus {
-            return "Reminders are off — enable them in iOS Settings 🌿"
+            return String(localized: "settings_reminders_off")
         } else {
-            return "Reminders are disabled"
+            return String(localized: "settings_reminders_disabled")
         }
     }
     
@@ -642,7 +642,7 @@ struct SettingsRow: View {
             Spacer()
             
             if !isEnabled {
-                Text("Coming Soon")
+                Text(String(localized: "settings_coming_soon"))
                     .font(.system(.caption, design: .rounded))
                     .foregroundColor(.themeText.opacity(0.4))
                     .padding(.horizontal, 8)
@@ -683,7 +683,7 @@ private extension SettingsView {
                 .font(.system(.caption, design: .rounded))
                 .foregroundColor(.themeText.opacity(0.7))
             HStack {
-                Image(systemName: title == "From" ? "clock" : "alarm")
+                Image(systemName: title == String(localized: "settings_quiet_hours_from") ? "clock" : "alarm")
                     .foregroundColor(.themeText.opacity(0.9))
                 Picker(hourString(selection.wrappedValue), selection: selection) {
                     ForEach(0..<24, id: \.self) { hour in

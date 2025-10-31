@@ -1,0 +1,833 @@
+/* Onboarding - Notification Permission */
+"onboarding_notification_title" = "Enable Notifications";
+"onboarding_notification_description" = "Stay updated with helpful reminders and tips.";
+"onboarding_notification_allow_button" = "Allow Notifications";
+"onboarding_notification_skip_button" = "Skip";
+
+/* Onboarding - Main Flow */
+"onboarding_welcome_title" = "Hey there.";
+"onboarding_welcome_message" = "I'm your companion, here to help you face anxious thoughts with calm and care.";
+"onboarding_name_title" = "What should I call you?";
+"onboarding_name_typing" = "Names make things feel warmer, don't they? I'd love to know yours.";
+"onboarding_name_placeholder" = "Your name";
+"onboarding_name_fallback" = "Friend";
+"onboarding_continue_button" = "Continue";
+"onboarding_gentle_space_title" = "A gentle space";
+"onboarding_gentle_space_message" = "This is your space to track and gently understand your mind.";
+"onboarding_patterns_title" = "Notice your patterns";
+"onboarding_patterns_message" = "Track your worries and use brief GAD-7 checks to notice your improvement..";
+"onboarding_final_title" = "You're doing great.";
+"onboarding_final_message" = "Let's dive in. I'll be right here with you.";
+"onboarding_begin_button" = "Let's Begin";
+
+/* Mind State Preview */
+"mindstate_title" = "Your Current Mind State";
+"mindstate_subtitle" = "See how tracking can transform your inner world";
+"mindstate_chart_with_tracking" = "With Tracking";
+"mindstate_chart_with_tracking_subtitle" = "Tracking brings awareness. Awareness brings calm. You'll see patterns, triggers, and most importantly — progress.";
+"mindstate_chart_without_tracking" = "Without Tracking";
+"mindstate_chart_without_tracking_subtitle" = "When we don't track how we feel, emotions can feel overwhelming and unpredictable.";
+"mindstate_stat_anxious_thoughts" = "Anxious Thoughts";
+"mindstate_stat_mind_clarity" = "Mind Clarity";
+"mindstate_stat_calm_moments" = "Calm Moments";
+"mindstate_stat_self_compassion" = "Self-Compassion";
+"mindstate_hold_to_see" = "Tap and hold to see your potential";
+"mindstate_keep_holding" = "Keep holding...";
+"mindstate_continue_button" = "Continue";
+
+/* Free Trial */
+"freetrial_title" = "How your free trial works";
+"freetrial_subtitle" = "Today no charge will be taken";
+"freetrial_today_title" = "Today";
+"freetrial_today_message" = "Get full access and see your mind transform gradually";
+"freetrial_day5_title" = "Day 5";
+"freetrial_day5_message" = "Get a gentle reminder as your trial nears its end";
+"freetrial_after7_title" = "After 7 days";
+"freetrial_after7_message" = "Your free trial ends and you'll be charged, or cancel anytime before";
+"freetrial_pricing" = "7 days of unlimited free access, then\nyearly 2299.99 TL (191.67 TL/month)";
+"freetrial_start_button" = "Start Free Trial";
+"freetrial_terms" = "Terms & Conditions";
+"freetrial_privacy" = "Privacy Policy";
+"freetrial_restore" = "Restore Purchase";
+
+/* Home */
+"home_greeting_good_morning" = "Good morning";
+"home_greeting_hi" = "Hi";
+"home_greeting_good_evening" = "Good evening";
+"home_greeting_good_night" = "Good night";
+"home_greeting_fallback" = "How are you feeling today?";
+"home_companion_message_1" = "You're stronger than you know";
+"home_companion_message_2" = "You're not alone in this journey";
+"home_companion_message_3" = "Your feelings are valid and important";
+"home_companion_message_4" = "Take a deep breath, you've got this";
+"home_companion_message_5" = "Every small step counts";
+"home_companion_message_6" = "Be gentle with yourself today";
+"home_companion_message_7" = "You're worthy of peace and calm";
+"home_companion_message_8" = "You're doing better than you think";
+"home_companion_message_9" = "You deserve to rest and recharge";
+"home_companion_message_10" = "Your emotions don't define your worth";
+"home_companion_message_11" = "You've handled hard days before — you can handle today too";
+"home_companion_message_12" = "It's okay to slow down and just be";
+"home_companion_message_13" = "You are growing, even if it doesn't feel like it";
+"home_companion_message_14" = "You bring light to more people than you realize";
+"home_companion_message_15" = "Peace begins with one gentle breath";
+"home_companion_message_16" = "You don't have to be perfect to be enough";
+"home_companion_message_17" = "It's okay to feel however you're feeling";
+"home_companion_message_18" = "You are allowed to start over at any moment";
+"home_companion_message_19" = "Healing takes time — and you're already on your way";
+"home_companion_message_20" = "Progress is still progress, no matter how small";
+"home_breathing_title" = "Start your calm minute 🌬️";
+"home_breathing_completed" = "You've breathed mindfully today 🌿";
+"home_breathing_prompt" = "Take a moment to breathe and center yourself";
+"home_reflection_title" = "Reflect for a moment ✍️";
+"home_reflection_subtitle" = "Share your thoughts and feelings";
+"home_worry_title" = "Worry Tracker 💭";
+"home_worry_subtitle" = "Notice how worries change over time";
+"home_anxiety_checkin_title" = "Your Anxiety Check-In";
+"home_anxiety_last_test_today" = "Today";
+"home_anxiety_last_test_days_ago" = "%d days ago";
+"home_anxiety_last_test_format" = "Last test: %@ • Score: %@ (%d/21)";
+"home_anxiety_last_test_none" = "You haven't done a check-in yet.";
+"home_anxiety_take_test" = "Take Test";
+"home_anxiety_retake_test" = "Retake Test";
+"home_anxiety_score_minimal" = "Minimal";
+"home_anxiety_score_mild" = "Mild";
+"home_anxiety_score_moderate" = "Moderate";
+"home_anxiety_score_severe" = "Severe";
+"home_mood_question" = "How do you feel right now?";
+"home_mood_thanks" = "Thanks for sharing";
+
+/* Reflection */
+"reflection_title" = "Reflect for a moment ✍️";
+"reflection_today_prompt" = "Today's prompt";
+"reflection_placeholder" = "Write a few words…";
+"reflection_last_preview" = "Your last reflection…";
+"reflection_save_button" = "Save Reflection";
+"reflection_saved_title" = "Saved ✨";
+"reflection_saved_message" = "You gave your mind a gentle pause.";
+"reflection_randomize_prompt" = "Randomize prompt";
+"reflection_prompt_1" = "What tiny victory can you appreciate right now?";
+"reflection_prompt_2" = "When did you feel most like yourself today?";
+"reflection_prompt_3" = "What moment made you feel safe or grounded today?";
+"reflection_prompt_4" = "What's one thing that brought you a quiet smile?";
+"reflection_prompt_5" = "If your mind could rest on one thought tonight, what would it be?";
+"reflection_prompt_6" = "What helped you breathe easier today?";
+"reflection_prompt_7" = "What felt a little lighter than yesterday?";
+"reflection_prompt_8" = "What kindness — big or small — did you show yourself today?";
+"reflection_prompt_9" = "Was there a moment you handled something better than before?";
+"reflection_prompt_10" = "Who or what helped you feel supported today?";
+"reflection_prompt_11" = "What's something you're learning to let go of?";
+"reflection_prompt_12" = "When did you feel calm, even for a short moment?";
+"reflection_prompt_13" = "What do you wish to thank yourself for today?";
+"reflection_prompt_14" = "What made today feel a little more manageable?";
+"reflection_prompt_15" = "What's one thing you want to carry into tomorrow?";
+"reflection_prompt_16" = "What thought or worry lost a bit of its power today?";
+"reflection_prompt_17" = "What helped you reconnect with the present moment?";
+"reflection_prompt_18" = "What do you appreciate about who you are becoming?";
+"reflection_prompt_19" = "What small act of care did you give your body or mind?";
+"reflection_prompt_20" = "What gave you a sense of peace, even briefly?";
+
+/* GAD-7 Test */
+"test_progress" = "%d of 7";
+"test_question_prefix" = "Over the last 2 weeks, how often have you been bothered by:";
+"test_question_1" = "Feeling nervous, anxious, or on edge";
+"test_question_2" = "Not being able to stop or control worrying";
+"test_question_3" = "Worrying too much about different things";
+"test_question_4" = "Trouble relaxing";
+"test_question_5" = "Being so restless that it's hard to sit still";
+"test_question_6" = "Becoming easily annoyed or irritable";
+"test_question_7" = "Feeling afraid as if something awful might happen";
+"test_option_not_at_all" = "Not at all";
+"test_option_several_days" = "Several days";
+"test_option_more_than_half" = "More than half the days";
+"test_option_nearly_every_day" = "Nearly every day";
+"test_continue" = "Continue";
+"test_see_results" = "See Results";
+"test_results_title" = "Your Results";
+"test_score" = "Score: %d/21";
+"test_category_minimal_title" = "Minimal";
+"test_category_minimal_description" = "Your anxiety levels are minimal. Keep up the great work!";
+"test_category_mild_title" = "Mild";
+"test_category_mild_description" = "You're experiencing mild anxiety. Consider some relaxation techniques.";
+"test_category_moderate_title" = "Moderate";
+"test_category_moderate_description" = "Your anxiety is moderate. It might be helpful to talk to someone.";
+"test_category_severe_title" = "Severe";
+"test_category_severe_description" = "Your anxiety is severe. Please consider seeking professional support.";
+
+/* Tab Bar */
+"tab_home" = "Home";
+"tab_tracking" = "Tracking";
+"tab_journey" = "Journey";
+
+/* Tracking */
+"tracking_title" = "Your Progress";
+"tracking_subtitle" = "See how you've been feeling";
+"tracking_intro_title" = "Welcome to Your Progress";
+"tracking_intro_message" = "Here you can see your mood and anxiety scores over time. The more you track, the more insights you'll discover.";
+"tracking_intro_got_it" = "Got it";
+"tracking_no_data_title" = "No data yet";
+"tracking_no_data_message" = "Start tracking your mood and taking anxiety check-ins to see your progress here.";
+"tracking_unlock_title" = "Unlock Advanced Tracking";
+"tracking_unlock_message" = "Get detailed insights into your mental health journey";
+"tracking_unlock_button" = "Unlock Premium";
+"tracking_checkins_title" = "Check-ins";
+"tracking_calm" = "Calm";
+"tracking_moderate" = "Moderate";
+"tracking_high" = "High";
+"tracking_gad7_score" = "GAD-7 Score";
+"tracking_mood" = "Mood";
+"tracking_no_data_for_day" = "No data recorded for this day.";
+"tracking_calm_trend" = "Calm Trend";
+"tracking_no_data_yet" = "No data yet";
+"tracking_progress_will_appear" = "Your progress will appear here as you track";
+"tracking_promo_gad7_trends" = "GAD‑7 score trends and insights";
+"tracking_promo_calendar" = "Visual calendar of mood and entries";
+"tracking_promo_reminders" = "Gentle reminders to build habits";
+"tracking_anxiety_minimal" = "Minimal Anxiety";
+"tracking_anxiety_mild" = "Mild Anxiety";
+"tracking_anxiety_moderate" = "Moderate Anxiety";
+"tracking_anxiety_severe" = "Severe Anxiety";
+
+/* Breathing */
+"breathing_title" = "Guided Breathing";
+"breathing_subtitle" = "Take a moment to breathe and find your calm";
+"breathing_completion_title" = "Well done";
+"breathing_completion_subtitle" = "Your mind and body thank you";
+"breathing_selection_title" = "Choose Your Breathing";
+"breathing_selection_subtitle" = "Select a breathing pattern that feels right for you";
+"breathing_follow_rhythm" = "Follow the circle's rhythm";
+"breathing_benefit_calm_title" = "Calm Your Mind";
+"breathing_benefit_calm_desc" = "Slow breathing activates your body's natural relaxation response";
+"breathing_phase_inhale" = "Inhale...";
+"breathing_phase_hold" = "Hold...";
+"breathing_phase_exhale" = "Exhale...";
+"breathing_phase_finished" = "Finished 🌿";
+"breathing_circle_cycle" = "Cycle %d";
+"breathing_cycle" = "%d / %d";
+"breathing_guided_title" = "Guided Breathing";
+"breathing_guided_relaxation_title" = "Deep Relaxation";
+"breathing_guided_relaxation_desc" = "Slow, controlled breathing activates your body's natural relaxation response";
+"breathing_guided_calm_title" = "Mental Clarity";
+"breathing_guided_calm_desc" = "Regulated breathing helps calm racing thoughts and brings focus";
+"breathing_guided_heart_title" = "Heart Rate Regulation";
+"breathing_guided_heart_desc" = "Consistent breathing patterns can help stabilize your heart rate";
+"breathing_guided_finish" = "Finish";
+"breathing_benefit_focus_title" = "Focus & Clarity";
+"breathing_benefit_focus_desc" = "Bring your attention to the present moment with intention";
+"breathing_benefit_tension_title" = "Reduce Tension";
+"breathing_benefit_tension_desc" = "Release physical and mental stress with each exhale";
+"breathing_type_box_breathing" = "Box Breathing";
+"breathing_type_478_breathing" = "4-7-8 Breathing";
+"breathing_type_calm_flow" = "Calm Flow";
+"breathing_desc_box_breathing" = "Inhale, hold, exhale, hold — all for 4 counts. A balanced rhythm for focus.";
+"breathing_desc_478_breathing" = "Inhale for 4, hold for 7, exhale for 8. Deeply calming, great before sleep.";
+"breathing_desc_calm_flow" = "Inhale for 4, exhale for 6. Gentle and soothing for everyday calm.";
+
+/* Worry Tracker */
+"worry_tracker_title" = "Worry Tracker";
+"worry_tracker_subtitle" = "Notice how worries change over time";
+"worry_tracker_intensity" = "%d/10";
+"worry_tracker_tap_reflect" = "Tap to reflect";
+"worry_tracker_no_worries" = "No worries yet";
+"worry_tracker_no_worries_message" = "When you log a worry, you can reflect on it later and see how things actually turned out";
+"worry_tracker_log_button" = "Log a Worry";
+"worry_intro_scene_1" = "Sometimes you worry too much about something…";
+"worry_intro_scene_2" = "…and later you realize it wasn't as bad as it felt.";
+"worry_entry_title" = "What are you worried about now?";
+"worry_entry_placeholder" = "Express your concern freely";
+"worry_entry_textfield_placeholder" = "e.g., Tomorrow's presentation";
+"worry_reminder_in_3_hours" = "In 3 hours";
+"worry_reminder_in_6_hours" = "In 6 hours";
+"worry_reminder_tomorrow" = "Tomorrow";
+"worry_time_left_hours" = "%dh %dm left";
+"worry_time_left_minutes" = "%dm left";
+"worry_time_left_soon" = "Soon";
+"worry_entry_char_count" = "%d/200";
+"worry_entry_intensity_question" = "How strong does this feel?";
+"worry_entry_slash_10" = "/ 10";
+"worry_entry_mild" = "😌 Mild";
+"worry_entry_intense" = "Intense 😰";
+"worry_entry_control_prompt" = "One thing I can control is...";
+"worry_entry_control_optional" = "(optional)";
+"worry_entry_control_placeholder" = "e.g., How I prepare for it";
+"worry_entry_remind_label" = "Remind me to check in";
+"worry_entry_choose_time" = "Choose specific time";
+"worry_entry_save" = "Save Worry";
+"worry_reflection_title" = "Time to Reflect";
+"worry_reflection_subtitle" = "Let's check in on your worry";
+"worry_reflection_you_were_worried" = "You were worried about:";
+"worry_reflection_what_control" = "What you could control:";
+"worry_reflection_intensity" = "Intensity:";
+"worry_reflection_question" = "Was it better than expected?";
+"worry_reflection_better_yes" = "Yes, it was better";
+"worry_reflection_better_okay" = "Things turned out okay";
+"worry_reflection_better_no" = "No, it wasn't";
+"worry_reflection_better_tough" = "It was as tough as I thought";
+"worry_reflection_success_better_title" = "You handled it better than you thought. 🌸";
+"worry_reflection_success_better_message" = "Remember this moment next time worry creeps in.";
+"worry_reflection_success_okay_title" = "That's okay — awareness is progress. 🌿";
+"worry_reflection_success_okay_message" = "You faced it with courage. That's what matters.";
+
+/* Calming Library */
+"calming_title" = "Find Your Calm 🌿";
+"calming_subtitle" = "Choose a small action to reset your mind.";
+
+/* Journaling */
+"journaling_history" = "History";
+"journaling_new_prompt" = "New Prompt";
+"journaling_prompt_label" = "Journal Prompt";
+"journaling_your_thoughts" = "Your thoughts";
+"journaling_characters" = "%d characters";
+"journaling_placeholder" = "Start writing your thoughts here...";
+"journaling_save" = "Save Entry";
+"journaling_saved_title" = "Entry Saved!";
+"journaling_saved_message" = "Your thoughts have been saved. Writing can be a powerful way to process emotions.";
+"journaling_prompt_1" = "What thought has been looping in your mind?";
+"journaling_prompt_2" = "What would you tell a friend feeling this way?";
+"journaling_prompt_3" = "What's one thing you can let go of today?";
+"journaling_prompt_4" = "Describe how your body feels right now";
+"journaling_prompt_5" = "What do you need most in this moment?";
+"journaling_prompt_6" = "What's been weighing on your heart lately?";
+"journaling_prompt_7" = "What small win can you celebrate today?";
+"journaling_prompt_8" = "What would you do if you weren't afraid?";
+"journaling_prompt_9" = "What brings you comfort when you're overwhelmed?";
+"journaling_prompt_10" = "What's one thing you're grateful for right now?";
+
+/* Gratitude */
+"gratitude_title" = "Gratitude Reflection";
+"gratitude_benefit_brain_title" = "Rewires Your Brain";
+"gratitude_benefit_brain_desc" = "Regular gratitude practice strengthens neural pathways linked to happiness and reduces activity in anxiety-related brain regions.";
+"gratitude_benefit_perspective_title" = "Shifts Perspective";
+"gratitude_benefit_perspective_desc" = "Focusing on what you're grateful for helps you see the positive aspects of life, even during difficult times.";
+"gratitude_benefit_sleep_title" = "Improves Sleep";
+"gratitude_benefit_sleep_desc" = "Studies show that writing about things you're grateful for before bed can improve sleep quality and duration.";
+"gratitude_start_button" = "Start Gratitude Practice";
+"gratitude_new_prompt" = "New Prompt";
+"gratitude_your_gratitude" = "Your gratitude";
+"gratitude_placeholder" = "What are you grateful for?";
+"gratitude_save" = "Save Gratitude";
+"gratitude_saved_title" = "Gratitude Saved!";
+"gratitude_saved_message" = "Focusing on gratitude can help shift your perspective and bring more positivity into your day.";
+"gratitude_prompt_1" = "What made you smile today?";
+"gratitude_prompt_2" = "What's one thing you're grateful for right now?";
+"gratitude_prompt_3" = "Who or what brought you comfort recently?";
+"gratitude_prompt_4" = "What small moment brought you joy?";
+"gratitude_prompt_5" = "What are you thankful for in this moment?";
+
+/* Grounding */
+"grounding_title" = "5-4-3-2-1 Grounding";
+"grounding_benefit_panic_title" = "Reduces Panic Symptoms";
+"grounding_benefit_panic_desc" = "Grounding techniques help interrupt anxious thought patterns and shift focus to your immediate environment.";
+"grounding_benefit_senses_title" = "Engages Your Senses";
+"grounding_benefit_senses_desc" = "By using all five senses, you activate different parts of your brain, helping you feel more present and anchored.";
+"grounding_benefit_cycle_title" = "Breaks Anxiety Cycles";
+"grounding_benefit_cycle_desc" = "This technique disrupts the anxiety loop by redirecting your attention to concrete, observable things in your environment.";
+"grounding_start_button" = "Start Grounding Exercise";
+"grounding_step_see_title" = "5 Things You See";
+"grounding_step_see_desc" = "Look around and name 5 things you can see";
+"grounding_step_hear_title" = "4 Things You Hear";
+"grounding_step_hear_desc" = "Listen carefully and name 4 things you can hear";
+"grounding_step_touch_title" = "3 Things You Touch";
+"grounding_step_touch_desc" = "Feel around and name 3 things you can touch";
+"grounding_step_smell_title" = "2 Things You Smell";
+"grounding_step_smell_desc" = "Take a deep breath and name 2 things you can smell";
+"grounding_step_taste_title" = "1 Thing You Taste";
+"grounding_step_taste_desc" = "Notice and name 1 thing you can taste";
+"grounding_thing_see" = "Thing %d you see";
+"grounding_thing_hear" = "Thing %d you hear";
+"grounding_thing_touch" = "Thing %d you touch";
+"grounding_thing_smell" = "Thing %d you smell";
+"grounding_thing_taste" = "Thing you taste";
+"grounding_previous" = "Previous";
+"grounding_next" = "Next";
+"grounding_complete" = "Complete";
+"grounding_complete_title" = "Well Done!";
+"grounding_complete_message" = "You've completed the grounding exercise. Take a moment to notice how you feel.";
+
+/* Affirmation */
+"affirmation_title" = "Affirmation";
+"affirmation_new" = "New Affirmation";
+"affirmation_breath" = "Take a deep breath";
+"affirmation_breath_cycle" = "Breathe in... hold... breathe out";
+"affirmation_breath_count" = "%d / 3";
+"affirmation_repeat" = "Repeat this to yourself:";
+"affirmation_say" = "Say it out loud or in your mind";
+"affirmation_start" = "Start Affirmation";
+"affirmation_complete_button" = "Complete";
+"affirmation_next" = "Next";
+"affirmation_done_title" = "Affirmation Complete!";
+"affirmation_done_message" = "You've taken a moment to speak kindness to yourself. Remember, you are worthy of compassion.";
+"affirmation_1" = "I'm allowed to take things slow";
+"affirmation_2" = "I'm doing the best I can";
+"affirmation_3" = "My feelings are valid";
+"affirmation_4" = "I deserve kindness and rest";
+"affirmation_5" = "I am stronger than I think";
+"affirmation_6" = "It's okay to not be okay";
+"affirmation_7" = "I am worthy of love and care";
+"affirmation_8" = "This feeling will pass";
+"affirmation_9" = "I am safe in this moment";
+"affirmation_10" = "I trust myself to handle whatever comes";
+
+/* Settings */
+"settings_title" = "Settings";
+"settings_subtitle" = "Customize your experience";
+"settings_reminders" = "Reminders";
+"settings_gentle_checkins" = "Gentle Check-ins";
+"settings_gentle_checkins_desc" = "Receive thoughtful reminders for reflections and weekly check-ins";
+"settings_reminders_active" = "Active";
+"settings_reminders_off" = "Check Settings";
+"settings_reminders_disabled" = "Disabled";
+"settings_quiet_hours" = "Quiet Hours";
+"settings_quiet_hours_desc" = "Prevent notifications during your chosen hours";
+"settings_quiet_hours_from" = "From";
+"settings_quiet_hours_to" = "To";
+"settings_quiet_hours_message" = "Reminders will be scheduled outside these hours";
+"settings_development" = "Development";
+"settings_premium_title" = "Premium User";
+"settings_premium_desc" = "Toggle premium features for testing";
+"settings_reminder_frequency" = "Reminder Frequency";
+"settings_reminder_frequency_desc" = "Customize how often you receive reminders";
+"settings_message_customization" = "Message Customization";
+"settings_message_customization_desc" = "Personalize reminder messages";
+"settings_coming_soon" = "Coming Soon";
+"settings_reset_mood_title" = "Reset Mood";
+"settings_reset_mood_desc" = "Clear today's mood selection";
+"settings_fill_debug_title" = "Fill Debug Data";
+"settings_fill_debug_desc" = "Add sample exercise responses for testing";
+"settings_reset_debug_title" = "Reset Debug Data";
+"settings_reset_debug_desc" = "Clear all exercise responses and completed levels";
+"settings_reset_onboarding_title" = "Reset Onboarding";
+"settings_reset_onboarding_desc" = "Show onboarding flow again";
+"settings_reset_worry_intro_title" = "Reset Worry Intro";
+"settings_reset_worry_intro_desc" = "Show worry intro animation again";
+
+/* Summary Card */
+"summary_recent_checkin" = "Recent Check-in";
+"summary_last_test_format" = "%@ • Score: %@ (%d/21)";
+"summary_no_checkin" = "No check-ins yet";
+
+/* Companion Messages */
+"companion_message_first_checkin" = "We'll start once you log your first check-in.";
+"companion_message_great_start" = "Great start! Keep tracking your progress.";
+"companion_message_keep_building" = "Keep building your journey.";
+"companion_message_feeling_calmer" = "You're feeling calmer lately — nice work 🌿";
+"companion_message_ups_downs" = "Ups and downs are part of growth.";
+"companion_message_consistency" = "You're showing great consistency.";
+
+/* Calm Journey */
+"journey_title" = "Your Calm Journey 🌿";
+"journey_subtitle" = "Structured exercises to build lasting calm, based on proven therapy techniques.";
+"journey_complete_required" = "Complete Required Levels";
+"journey_missing_levels" = "Please complete %@ to unlock your personalized report.";
+"journey_ok" = "OK";
+"journey_level" = "Level %d";
+"journey_levels" = "Levels %@ and %@";
+"journey_levels_list" = "%@, and Level %d";
+"journey_all_levels" = "all levels";
+
+/* Exercise Instruction */
+"exercise_type_response" = "Type your response here...";
+
+/* Exercise Display Types */
+"exercise_display_breathing" = "Breathing Exercise";
+"exercise_display_prompt" = "Reflection Prompt";
+"exercise_display_education" = "Learn";
+"exercise_display_grounding" = "Grounding Exercise";
+"exercise_display_relax_body" = "Body Relaxation";
+
+/* Calm Exercise */
+"exercise_grounding_separate" = "Grounding exercises are interactive and handled separately.";
+"exercise_relax_separate" = "Body relaxation exercises are interactive and handled separately.";
+"exercise_ready_breathing" = "Ready to start breathing?";
+"exercise_your_reflection" = "Your reflection:";
+"exercise_science" = "The Science";
+"exercise_start_breathing" = "Start Breathing Exercise";
+"exercise_done" = "Done";
+
+/* Breathing Exercise Explanation */
+"breathing_exercise_explanation" = "Let's practice %@. This technique helps calm your nervous system by regulating your breath. Follow the guided breathing exercise that will appear next.";
+
+/* Level Completion */
+"completion_congrats" = "You've completed this calm step 🌿";
+"completion_breath" = "Take a deep breath.\nYou're doing great.";
+"completion_back_to_journey" = "Back to Journey";
+"completion_repeat_session" = "Repeat Session";
+
+/* Relax Body */
+"relax_title" = "Relax the Body";
+"relax_instruction" = "Tap each body part to release tension";
+"relax_relaxed" = "Relaxed";
+"relax_tap" = "Tap";
+"relax_complete" = "Your body is relaxed 🌸";
+"relax_done" = "Done";
+
+/* Grounding Counter */
+"grounding_counter_complete" = "🌿 Grounding complete";
+"grounding_counter_done" = "Done";
+"grounding_counter_noticed" = "%d/%d noticed";
+"grounding_counter_tap_when" = "Tap When You Name One";
+
+/* Level Session */
+"session_start" = "Start Session";
+"session_progress" = "Progress";
+"session_step" = "%d/%d";
+"session_today_practice" = "Today's practice: %@";
+
+/* Level Detail */
+"level_detail_progress" = "Progress";
+"level_detail_complete" = "Level Complete! 🎉";
+"level_detail_repeat" = "Repeat Level";
+"level_detail_start" = "Start Level";
+"level_detail_continue" = "Continue";
+"level_detail_completed_exercises" = "You've completed all exercises in %@.";
+
+/* Navigation Titles */
+"nav_title_level" = "Level %d";
+"nav_title_breathing_exercise" = "Breathing Exercise";
+"nav_title_grounding" = "Grounding 5-4-3-2-1";
+"nav_title_log_worry" = "Log Worry";
+
+/* Common Actions */
+"action_restore" = "Restore";
+"action_delete" = "Delete";
+"action_done" = "Done";
+
+/* Content View */
+"content_item_at" = "Item at %@";
+"content_add_item" = "Add Item";
+"content_select_item" = "Select an item";
+
+/* Calendar Days */
+"calendar_day_sun" = "S";
+"calendar_day_mon" = "M";
+"calendar_day_tue" = "T";
+"calendar_day_wed" = "W";
+"calendar_day_thu" = "T";
+"calendar_day_fri" = "F";
+"calendar_day_sat" = "S";
+
+/* Error Messages */
+"error_no_reflections" = "No reflections available to generate report";
+"error_invalid_url" = "Invalid API URL";
+"error_encoding" = "Failed to encode request";
+"error_invalid_response" = "Invalid response from server";
+"error_invalid_api_key" = "Invalid API key";
+"error_rate_limited" = "Rate limit exceeded. Please try again later.";
+"error_server_error" = "Server error: %d";
+"error_no_response" = "No response from AI service";
+"error_decoding" = "Failed to decode response";
+
+/* Accessibility */
+"accessibility_mood" = "%@ mood";
+
+/* Mood Descriptions */
+"mood_very_happy" = "Very Happy";
+"mood_good" = "Good";
+"mood_neutral" = "Neutral";
+"mood_sad" = "Sad";
+"mood_very_sad" = "Very Sad";
+
+/* Notifications */
+"notification_reflection_title" = "A gentle pause ✨";
+"notification_reflection_body" = "If it feels okay, write a few honest lines about today. No pressure.";
+"notification_weekly_test_title" = "Weekly check-in 📊";
+"notification_weekly_test_body" = "When you're ready, take a moment to see how this week felt. One step at a time.";
+"notification_checkin_title" = "Time for your calm check-in 🌤️";
+"notification_checkin_body" = "Take a moment to reflect on how you've been feeling lately.";
+
+/* Body Parts */
+"body_part_toes" = "Toes";
+"body_part_legs" = "Legs";
+"body_part_stomach" = "Stomach";
+"body_part_chest" = "Chest";
+"body_part_shoulders" = "Shoulders";
+"body_part_face" = "Face";
+
+/* Relax Body Explanation */
+"relax_body_explanation" = "Let's progressively relax each part of your body. This interactive exercise will guide you through releasing tension from your toes to your face.";
+
+/* Calming Activities */
+"activity_breathing_title" = "Breathing";
+"activity_breathing_desc" = "Inhale for 4, hold 2, exhale for 4.";
+"activity_grounding_title" = "Grounding";
+"activity_grounding_desc" = "Name 3 things you can see right now.";
+"activity_journaling_title" = "Journaling";
+"activity_journaling_desc" = "Write one thought that's been looping in your mind.";
+"activity_gratitude_title" = "Gratitude";
+"activity_gratitude_desc" = "Think of one small thing that made you smile today.";
+"activity_affirmation_title" = "Affirmation";
+"activity_affirmation_desc" = "Say this aloud: 'I'm allowed to take things slow.'";
+
+/* Paywall */
+"paywall_unlimited" = "Unlimited Access";
+"paywall_benefit_breathing" = "Guided breathing and relaxation";
+"paywall_benefit_tracking" = "Daily reflections and mood tracking";
+"paywall_benefit_insights" = "Personalized insights and reminders";
+"paywall_benefit_habits" = "Tips for calm habits and routines";
+"paywall_free" = "FREE";
+"paywall_trial_enabled" = "Free Trial Enabled";
+"paywall_try_free" = "Try for Free";
+"paywall_plan_yearly_title" = "Yearly Plan";
+"paywall_plan_yearly_price" = "$39.99 per year";
+"paywall_plan_yearly_original" = "$415.48";
+"paywall_plan_yearly_save" = "SAVE 90%";
+"paywall_plan_trial_title" = "3-Day Trial";
+"paywall_plan_trial_price" = "then $7.99 per week";
+
+/* Journal History */
+"journal_history_title" = "Journal History";
+"journal_history_done" = "Done";
+"journal_history_empty_title" = "No Entries Yet";
+"journal_history_empty_message" = "Start journaling to see your entries here.";
+"journal_history_entry_default" = "Journal Entry";
+
+/* Breathing Journey */
+"breathing_journey_science" = "The Science";
+"breathing_journey_start" = "Start Breathing Exercise";
+"breathing_journey_continue" = "Continue →";
+"breathing_journey_skip" = "Skip Exercise";
+
+/* Calm Report */
+"report_title" = "Calm Report";
+"report_gathering" = "Gathering your notes...";
+"report_error" = "Something went wrong";
+"report_try_again" = "Try Again";
+"report_moments" = "Moments to celebrate";
+"report_listening" = "Keep listening to your calm moments";
+"report_practices" = "Small practices add up. Each return builds more trust in your calm.";
+"report_fallback_supportive" = "Keep following the practices that feel supportive.";
+"report_fallback_title" = "Your Calm Journey";
+"report_fallback_content" = "Your reflections highlight growing awareness, kinder self-talk, and practical tools that now feel familiar.";
+"report_highlight_emotional_growth" = "Emotional Growth";
+"report_highlight_did_well" = "What You Did Well";
+"report_highlight_showing_up" = "Showing Up";
+"report_highlight_showing_up_detail" = "Even noticing how you feel is a powerful practice—keep honoring that awareness.";
+"report_promo_levels_1_5_complete" = "Levels 1-5 complete. 🌿";
+"report_promo_all_levels_complete" = "All 10 levels complete. 🌿";
+"report_promo_finish_1_5" = "Finish 1-5 to unlock your report.";
+"report_promo_finish_all_10" = "Finish all 10 to unlock your report.";
+"report_promo_desc_mid_journey" = "Your mid-journey summary is ready with quick insights on the first five steps.";
+"report_promo_desc_full_journey" = "Your full journey story is ready with highlights from every level.";
+"report_promo_desc_unlock_mid" = "Wrap levels 1-5 to unlock a snapshot of your progress.";
+"report_promo_desc_unlock_full" = "Complete the path to see your full calm report.";
+
+/* Report Hero Section */
+"report_hero_title" = "You're building a calmer rhythm";
+"report_hero_subtitle" = "A quick reflection on how you're supporting your nervous system.";
+"report_hero_ground_faster" = "Ground faster";
+"report_hero_spot_strengths" = "Spot strengths";
+"report_hero_breathe_purpose" = "Breathe with purpose";
+
+/* Calm Journey Data - Level 1 */
+"journey_level_1_title" = "Breathe & Ground";
+"journey_level_1_summary" = "Learn to calm your body before your mind.";
+"journey_level_1_exercise_1_title" = "What happens in anxiety";
+"journey_level_1_exercise_1_instruction_0" = "When you feel anxious, your body activates the fight-flight-freeze response.";
+"journey_level_1_exercise_1_instruction_1" = "Your heart races, muscles tense, and breathing becomes shallow.";
+"journey_level_1_exercise_1_instruction_2" = "This is your nervous system trying to protect you from perceived danger.";
+"journey_level_1_exercise_1_instruction_3" = "Learning to recognize and calm this response is the first step to managing anxiety.";
+"journey_level_1_exercise_1_science" = "Understanding the fight-flight-freeze response helps you recognize anxiety as a normal protective mechanism.";
+"journey_level_1_exercise_2_title" = "Box Breathing";
+"journey_level_1_exercise_2_instruction_0" = "Inhale for 4 seconds.";
+"journey_level_1_exercise_2_instruction_1" = "Hold your breath for 4 seconds.";
+"journey_level_1_exercise_2_instruction_2" = "Exhale for 4 seconds.";
+"journey_level_1_exercise_2_instruction_3" = "Hold again for 4 seconds.";
+"journey_level_1_exercise_2_instruction_4" = "Repeat for 1–2 minutes.";
+"journey_level_1_exercise_2_science" = "Box breathing lowers heart rate and activates the parasympathetic nervous system.";
+"journey_level_1_exercise_3_title" = "Grounding 5-4-3-2-1";
+"journey_level_1_exercise_3_instruction_0" = "Name 5 things you can see.";
+"journey_level_1_exercise_3_instruction_1" = "Name 4 things you can touch.";
+"journey_level_1_exercise_3_instruction_2" = "Name 3 things you can hear.";
+"journey_level_1_exercise_3_instruction_3" = "Name 2 things you can smell.";
+"journey_level_1_exercise_3_instruction_4" = "Name 1 thing you can taste.";
+"journey_level_1_exercise_3_science" = "Grounding shifts attention from anxious thoughts to the present moment.";
+"journey_level_1_exercise_4_title" = "Relax the Body 🌿";
+"journey_level_1_exercise_4_instruction_0" = "Let's progressively relax each part of your body. This interactive exercise will guide you through releasing tension from your toes to your face.";
+"journey_level_1_exercise_4_science" = "Progressive relaxation reduces muscle tension and activates calm-body awareness.";
+
+/* Calm Journey Data - Level 2 */
+"journey_level_2_title" = "Understand Anxiety";
+"journey_level_2_summary" = "Learn why anxiety appears and how to interrupt the cycle.";
+"journey_level_2_exercise_1_title" = "The Anxiety Loop";
+"journey_level_2_exercise_1_instruction_0" = "Anxiety starts with a perceived threat.";
+"journey_level_2_exercise_1_instruction_1" = "This triggers physical sensations (heart racing, tension).";
+"journey_level_2_exercise_1_instruction_2" = "You feel fear or worry and try to avoid the trigger.";
+"journey_level_2_exercise_1_instruction_3" = "Avoidance brings short relief but strengthens the anxiety cycle.";
+"journey_level_2_exercise_1_instruction_4" = "Awareness helps you break this loop.";
+"journey_level_2_exercise_1_science" = "Understanding the anxiety feedback loop is a foundation of CBT.";
+"journey_level_2_exercise_2_title" = "Identify Triggers";
+"journey_level_2_exercise_2_instruction_0" = "Think of a recent time you felt anxious.";
+"journey_level_2_exercise_2_instruction_1" = "What was happening around you?";
+"journey_level_2_exercise_2_instruction_2" = "What did you do to cope?";
+"journey_level_2_exercise_2_instruction_3" = "Did the anxiety fade or grow afterward?";
+"journey_level_2_exercise_2_science" = "Recognizing triggers builds control over automatic reactions.";
+"journey_level_2_exercise_3_title" = "Break the Loop";
+"journey_level_2_exercise_3_instruction_0" = "Imagine the same situation again.";
+"journey_level_2_exercise_3_instruction_1" = "What could you do differently next time?";
+"journey_level_2_exercise_3_instruction_2" = "Try small changes: breathing, staying present, or acting despite fear.";
+"journey_level_2_exercise_3_science" = "Behavioral change interrupts avoidance and restores control.";
+
+/* Calm Journey Data - Level 3 */
+"journey_level_3_title" = "Thought Awareness";
+"journey_level_3_summary" = "Learn to observe and reframe anxious thoughts.";
+"journey_level_3_exercise_1_title" = "Why Thoughts Matter";
+"journey_level_3_exercise_1_instruction_0" = "Our thoughts influence how we feel and act.";
+"journey_level_3_exercise_1_instruction_1" = "When anxious, we often believe our thoughts are facts.";
+"journey_level_3_exercise_1_instruction_2" = "Learning to question them can reduce anxiety.";
+"journey_level_3_exercise_1_science" = "Cognitive restructuring reduces emotional reactivity.";
+"journey_level_3_exercise_2_title" = "Catch the Thought";
+"journey_level_3_exercise_2_instruction_0" = "Write down one anxious thought you've had recently.";
+"journey_level_3_exercise_2_instruction_1" = "Describe when it appeared and what you felt in your body.";
+"journey_level_3_exercise_2_science" = "Awareness is the first step toward change.";
+"journey_level_3_exercise_3_title" = "Check the Evidence";
+"journey_level_3_exercise_3_instruction_0" = "Ask yourself: What evidence supports this thought?";
+"journey_level_3_exercise_3_instruction_1" = "What evidence goes against it?";
+"journey_level_3_exercise_3_instruction_2" = "Is there another possible explanation?";
+"journey_level_3_exercise_3_science" = "CBT teaches balanced thinking to counter distorted beliefs.";
+"journey_level_3_exercise_4_title" = "Reframe the Thought";
+"journey_level_3_exercise_4_instruction_0" = "Take your original thought and make it gentler.";
+"journey_level_3_exercise_4_instruction_1" = "Example: 'I can't handle this' → 'This is hard, but I've managed before.'";
+"journey_level_3_exercise_4_instruction_2" = "Notice how your body feels after reframing.";
+"journey_level_3_exercise_4_science" = "Reframing reduces catastrophizing and promotes calm thinking.";
+
+/* Calm Journey Data - Level 4 */
+"journey_level_4_title" = "Build Calm Habits";
+"journey_level_4_summary" = "Create small routines that support mental balance.";
+"journey_level_4_exercise_1_title" = "Habits and Mood";
+"journey_level_4_exercise_1_instruction_0" = "Regular routines reduce uncertainty.";
+"journey_level_4_exercise_1_instruction_1" = "Even small activities like walking or journaling can improve mood.";
+"journey_level_4_exercise_1_instruction_2" = "Structure supports emotional stability.";
+"journey_level_4_exercise_1_science" = "Behavioral activation increases positive reinforcement and reduces anxiety.";
+"journey_level_4_exercise_2_title" = "Identify Calm Habits";
+"journey_level_4_exercise_2_instruction_0" = "What daily habit helps you feel calm?";
+"journey_level_4_exercise_2_instruction_1" = "It could be a walk, music, journaling, or talking to a friend.";
+"journey_level_4_exercise_2_science" = "Linking calm behaviors to routine strengthens emotional regulation.";
+"journey_level_4_exercise_3_title" = "Plan a Small Action";
+"journey_level_4_exercise_3_instruction_0" = "Choose one small calm action for today.";
+"journey_level_4_exercise_3_instruction_1" = "Set a specific time you'll do it.";
+"journey_level_4_exercise_3_instruction_2" = "Later, reflect on how it felt.";
+"journey_level_4_exercise_3_science" = "Small achievable goals build momentum and confidence.";
+
+/* Calm Journey Data - Level 5 */
+"journey_level_5_title" = "Compassion & Maintenance";
+"journey_level_5_summary" = "Learn to be kind to yourself and maintain balance.";
+"journey_level_5_exercise_1_title" = "Why Self-Compassion Matters";
+"journey_level_5_exercise_1_instruction_0" = "Anxiety often comes with self-criticism.";
+"journey_level_5_exercise_1_instruction_1" = "Treating yourself with kindness reduces shame and fear.";
+"journey_level_5_exercise_1_instruction_2" = "Self-compassion is strength, not weakness.";
+"journey_level_5_exercise_1_science" = "Self-compassion improves resilience and emotion regulation.";
+"journey_level_5_exercise_2_title" = "Self-Compassion Check";
+"journey_level_5_exercise_2_instruction_0" = "Think of a moment you felt anxious or embarrassed.";
+"journey_level_5_exercise_2_instruction_1" = "What did you tell yourself?";
+"journey_level_5_exercise_2_instruction_2" = "What would you say to a close friend in the same situation?";
+"journey_level_5_exercise_2_science" = "Reframing self-talk promotes emotional healing.";
+"journey_level_5_exercise_3_title" = "Values Reflection";
+"journey_level_5_exercise_3_instruction_0" = "What truly matters to you that anxiety sometimes gets in the way of?";
+"journey_level_5_exercise_3_instruction_1" = "What small step can you take toward it anyway?";
+"journey_level_5_exercise_3_science" = "Acting on values builds long-term emotional balance.";
+"journey_level_5_exercise_4_title" = "Calm Reminder Note";
+"journey_level_5_exercise_4_instruction_0" = "Write a message to your future self for hard moments.";
+"journey_level_5_exercise_4_instruction_1" = "Example: 'Breathe. You've handled harder days before.'";
+"journey_level_5_exercise_4_science" = "Personal affirmations reinforce emotional safety.";
+
+/* Calm Journey Data - Level 6 */
+"journey_level_6_title" = "Facing Fears Gently";
+"journey_level_6_summary" = "Build courage through small, safe steps toward feared situations.";
+"journey_level_6_exercise_6_title" = "Understanding Fear";
+"journey_level_6_exercise_6_instruction_0" = "Fear is your body's alarm system, designed to keep you safe.";
+"journey_level_6_exercise_6_instruction_1" = "When the alarm goes off too often, it can limit your life.";
+"journey_level_6_exercise_6_instruction_2" = "Facing fear gently teaches your brain that safety can exist even in discomfort.";
+"journey_level_6_exercise_6_science" = "Gradual exposure reduces avoidance and rewires fear pathways.";
+"journey_level_6_exercise_7_title" = "Your Fear Ladder";
+"journey_level_6_exercise_7_instruction_0" = "List three things that make you anxious: one mild, one moderate, one strong.";
+"journey_level_6_exercise_7_instruction_1" = "Choose one small fear to face safely this week.";
+"journey_level_6_exercise_7_instruction_2" = "Imagine how it might feel afterward.";
+"journey_level_6_exercise_7_science" = "Breaking fears into small steps increases confidence and control.";
+"journey_level_6_exercise_8_title" = "Reflect on Courage";
+"journey_level_6_exercise_8_instruction_0" = "Recall a time you faced something scary and it went better than expected.";
+"journey_level_6_exercise_8_instruction_1" = "What helped you stay grounded in that moment?";
+"journey_level_6_exercise_8_science" = "Remembering success reinforces self-efficacy and calm.";
+"journey_level_6_exercise_9_title" = "Calm Before Action";
+"journey_level_6_exercise_9_instruction_0" = "Before approaching a fear, pause and breathe slowly for 10 seconds.";
+"journey_level_6_exercise_9_instruction_1" = "Inhale gently through the nose, exhale through the mouth.";
+"journey_level_6_exercise_9_instruction_2" = "Remind yourself: 'I can do this step calmly.'";
+"journey_level_6_exercise_9_science" = "Pre-exposure breathing reduces physiological arousal.";
+
+/* Calm Journey Data - Level 7 */
+"journey_level_7_title" = "Mindful Presence";
+"journey_level_7_summary" = "Learn to stay grounded in the present moment.";
+"journey_level_7_exercise_10_title" = "What Is Mindfulness?";
+"journey_level_7_exercise_10_instruction_0" = "Mindfulness means paying attention to now, without judging it.";
+"journey_level_7_exercise_10_instruction_1" = "It helps you notice thoughts and sensations rather than reacting to them.";
+"journey_level_7_exercise_10_instruction_2" = "Calm often arises when awareness replaces resistance.";
+"journey_level_7_exercise_10_science" = "Mindfulness reduces rumination and increases emotional regulation.";
+"journey_level_7_exercise_11_title" = "Five-Minute Presence";
+"journey_level_7_exercise_11_instruction_0" = "Set a timer for five minutes.";
+"journey_level_7_exercise_11_instruction_1" = "Focus on your breath as it moves in and out.";
+"journey_level_7_exercise_11_instruction_2" = "When your mind wanders, gently bring it back to the breath.";
+"journey_level_7_exercise_11_instruction_3" = "Notice sensations, sounds, and the space around you.";
+"journey_level_7_exercise_11_science" = "Brief mindfulness practice activates the parasympathetic system.";
+"journey_level_7_exercise_12_title" = "Observe Without Fixing";
+"journey_level_7_exercise_12_instruction_0" = "Recall a recent difficult emotion.";
+"journey_level_7_exercise_12_instruction_1" = "Write what it felt like in your body without labeling it good or bad.";
+"journey_level_7_exercise_12_instruction_2" = "What happened when you simply observed it?";
+"journey_level_7_exercise_12_science" = "Non-judgmental observation decreases emotional reactivity.";
+
+/* Calm Journey Data - Level 8 */
+"journey_level_8_title" = "Emotional Balance";
+"journey_level_8_summary" = "Understand and regulate emotions with compassion.";
+"journey_level_8_exercise_13_title" = "Riding Emotional Waves";
+"journey_level_8_exercise_13_instruction_0" = "Emotions rise and fall like waves.";
+"journey_level_8_exercise_13_instruction_1" = "Trying to block them often makes them stronger.";
+"journey_level_8_exercise_13_instruction_2" = "Riding the wave means allowing the feeling until it naturally fades.";
+"journey_level_8_exercise_13_science" = "Emotion regulation involves acceptance rather than suppression.";
+"journey_level_8_exercise_14_title" = "Name the Feeling";
+"journey_level_8_exercise_14_instruction_0" = "Think of something that upset you recently.";
+"journey_level_8_exercise_14_instruction_1" = "Label the main emotion as precisely as you can.";
+"journey_level_8_exercise_14_instruction_2" = "Where do you feel it in your body?";
+"journey_level_8_exercise_14_science" = "Labeling emotions activates prefrontal control and reduces intensity.";
+"journey_level_8_exercise_15_title" = "Pause Practice";
+"journey_level_8_exercise_15_instruction_0" = "When a strong emotion appears, take one slow breath.";
+"journey_level_8_exercise_15_instruction_1" = "Ask: 'What do I need right now — to act or to rest?'";
+"journey_level_8_exercise_15_instruction_2" = "Write a short reflection afterward.";
+"journey_level_8_exercise_15_science" = "The pause between emotion and reaction builds emotional mastery.";
+
+/* Calm Journey Data - Level 9 */
+"journey_level_9_title" = "Connection & Support";
+"journey_level_9_summary" = "Strengthen bonds and find safety in connection.";
+"journey_level_9_exercise_16_title" = "Why Connection Calms";
+"journey_level_9_exercise_16_instruction_0" = "Humans regulate emotions through relationships.";
+"journey_level_9_exercise_16_instruction_1" = "Sharing stress with someone safe can lower your cortisol levels.";
+"journey_level_9_exercise_16_instruction_2" = "Connection turns isolation into safety.";
+"journey_level_9_exercise_16_science" = "Co-regulation is a proven buffer against anxiety.";
+"journey_level_9_exercise_17_title" = "Safe People Map";
+"journey_level_9_exercise_17_instruction_0" = "List three people who make you feel calm or supported.";
+"journey_level_9_exercise_17_instruction_1" = "What qualities make them feel safe to you?";
+"journey_level_9_exercise_17_science" = "Identifying supportive figures increases perceived safety.";
+"journey_level_9_exercise_18_title" = "Reach Out";
+"journey_level_9_exercise_18_instruction_0" = "Think of someone you haven't spoken to in a while but trust.";
+"journey_level_9_exercise_18_instruction_1" = "Send a short message or plan a brief chat.";
+"journey_level_9_exercise_18_instruction_2" = "Afterward, reflect on how it felt to connect.";
+"journey_level_9_exercise_18_science" = "Positive social contact boosts oxytocin and reduces anxiety.";
+
+/* Calm Journey Data - Level 10 */
+"journey_level_10_title" = "Growth & Purpose";
+"journey_level_10_summary" = "Integrate calm into daily life and long-term meaning.";
+"journey_level_10_exercise_19_title" = "Your Calm Journey";
+"journey_level_10_exercise_19_instruction_0" = "Every calm skill you've learned is part of a larger growth story.";
+"journey_level_10_exercise_19_instruction_1" = "Progress is not perfection — it's presence, patience, and practice.";
+"journey_level_10_exercise_19_instruction_2" = "Let's look at what this growth means to you.";
+"journey_level_10_exercise_19_science" = "Reflecting on progress consolidates learning and motivation.";
+"journey_level_10_exercise_20_title" = "Letter to Future You";
+"journey_level_10_exercise_20_instruction_0" = "Write a short message to your future self for when anxiety returns.";
+"journey_level_10_exercise_20_instruction_1" = "Include words of encouragement and a reminder of your strengths.";
+"journey_level_10_exercise_20_science" = "Self-directed compassion strengthens resilience over time.";
+"journey_level_10_exercise_21_title" = "Purpose Compass";
+"journey_level_10_exercise_21_instruction_0" = "What matters most to you beyond anxiety?";
+"journey_level_10_exercise_21_instruction_1" = "What small daily action aligns with that value?";
+"journey_level_10_exercise_21_instruction_2" = "How could you make calm part of your purpose?";
+"journey_level_10_exercise_21_science" = "Values-based living supports long-term emotional stability.";
+"journey_level_10_exercise_22_title" = "Gratitude Grounding";
+"journey_level_10_exercise_22_instruction_0" = "List three things you're grateful for today.";
+"journey_level_10_exercise_22_instruction_1" = "Notice how your body feels when focusing on gratitude.";
+"journey_level_10_exercise_22_science" = "Gratitude practices increase positive affect and reduce anxiety symptoms.";

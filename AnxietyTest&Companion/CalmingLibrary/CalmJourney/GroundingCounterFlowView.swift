@@ -85,7 +85,7 @@ struct GroundingCounterFlowView: View {
                 .id("step-\(currentStepIndex)")
             }
         }
-        .navigationTitle("Grounding 5-4-3-2-1")
+        .navigationTitle(String(localized: "nav_title_grounding"))
         .navigationBarTitleDisplayMode(.inline)
     }
     
@@ -104,14 +104,14 @@ struct GroundingCounterFlowView: View {
                 )
             
             // Title
-            Text("🌿 Grounding complete")
+            Text(String(localized: "grounding_counter_complete"))
                 .font(.system(.largeTitle, design: .serif))
                 .fontWeight(.bold)
                 .foregroundColor(.themeText)
                 .multilineTextAlignment(.center)
             
             // Message
-            Text("You've re-centered in the present moment.")
+            Text(String(localized: "completion_breath"))
                 .font(.system(.body, design: .rounded))
                 .foregroundColor(.themeText.opacity(0.7))
                 .multilineTextAlignment(.center)
@@ -124,7 +124,7 @@ struct GroundingCounterFlowView: View {
                 HapticFeedback.success()
                 onComplete()
             }) {
-                Text("Done")
+                Text(String(localized: "grounding_counter_done"))
                     .font(.system(.body, design: .rounded))
                     .fontWeight(.semibold)
                     .foregroundColor(.themeBackgroundPure)

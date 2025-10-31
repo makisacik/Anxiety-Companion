@@ -26,12 +26,12 @@ struct WorryReflectionView: View {
                         .foregroundColor(.green.opacity(0.7))
                         .padding(.top, 30)
                     
-                    Text("Time to Reflect")
+                    Text(String(localized: "worry_reflection_title"))
                         .font(.system(.largeTitle, design: .serif))
                         .fontWeight(.bold)
                         .foregroundColor(.themeText)
                     
-                    Text("Let's check in on your worry")
+                    Text(String(localized: "worry_reflection_subtitle"))
                         .font(.system(.subheadline, design: .rounded))
                         .foregroundColor(.themeText.opacity(0.7))
                 }
@@ -50,7 +50,7 @@ struct WorryReflectionView: View {
                     }
                     
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("You were worried about:")
+                        Text(String(localized: "worry_reflection_you_were_worried"))
                             .font(.system(.caption, design: .rounded))
                             .fontWeight(.medium)
                             .foregroundColor(.themeText.opacity(0.7))
@@ -76,7 +76,7 @@ struct WorryReflectionView: View {
                                 .padding(.top, 2)
                             
                             VStack(alignment: .leading, spacing: 4) {
-                                Text("What you could control:")
+                                Text(String(localized: "worry_reflection_what_control"))
                                     .font(.system(.caption2, design: .rounded))
                                     .foregroundColor(.themeText.opacity(0.6))
                                     .textCase(.uppercase)
@@ -92,7 +92,7 @@ struct WorryReflectionView: View {
                     
                     // Intensity
                     HStack {
-                        Text("Intensity:")
+                        Text(String(localized: "worry_reflection_intensity"))
                             .font(.system(.caption, design: .rounded))
                             .foregroundColor(.themeText.opacity(0.6))
                         
@@ -104,7 +104,7 @@ struct WorryReflectionView: View {
                             }
                         }
                         
-                        Text("\(worry.intensity)/10")
+                        Text(String.localizedStringWithFormat(String(localized: "worry_tracker_intensity"), Int(worry.intensity)))
                             .font(.system(.caption, design: .rounded))
                             .foregroundColor(.themeText.opacity(0.6))
                     }
@@ -123,7 +123,7 @@ struct WorryReflectionView: View {
                 // Question
                 if !answered {
                     VStack(spacing: 24) {
-                        Text("Was it better than expected?")
+                        Text(String(localized: "worry_reflection_question"))
                             .font(.system(.title2, design: .rounded))
                             .fontWeight(.semibold)
                             .foregroundColor(.themeText)
@@ -140,11 +140,11 @@ struct WorryReflectionView: View {
                                         .font(.title2)
                                     
                                     VStack(alignment: .leading, spacing: 4) {
-                                        Text("Yes, it was better")
+                                        Text(String(localized: "worry_reflection_better_yes"))
                                             .font(.system(.body, design: .rounded))
                                             .fontWeight(.semibold)
                                         
-                                        Text("Things turned out okay")
+                                        Text(String(localized: "worry_reflection_better_okay"))
                                             .font(.system(.caption, design: .rounded))
                                             .opacity(0.8)
                                     }
@@ -177,11 +177,11 @@ struct WorryReflectionView: View {
                                         .font(.title2)
                                     
                                     VStack(alignment: .leading, spacing: 4) {
-                                        Text("No, it wasn't")
+                                        Text(String(localized: "worry_reflection_better_no"))
                                             .font(.system(.body, design: .rounded))
                                             .fontWeight(.semibold)
                                         
-                                        Text("It was as tough as I thought")
+                                        Text(String(localized: "worry_reflection_better_tough"))
                                             .font(.system(.caption, design: .rounded))
                                             .opacity(0.8)
                                     }
@@ -218,8 +218,8 @@ struct WorryReflectionView: View {
                             .foregroundColor(wasBetter == true ? .green : .orange)
                         
                         Text(wasBetter == true
-                             ? "You handled it better than you thought. 🌸"
-                             : "That's okay — awareness is progress. 🌿")
+                             ? String(localized: "worry_reflection_success_better_title")
+                             : String(localized: "worry_reflection_success_okay_title"))
                             .font(.system(.title3, design: .rounded))
                             .fontWeight(.medium)
                             .foregroundColor(.themeText)
@@ -227,8 +227,8 @@ struct WorryReflectionView: View {
                             .padding(.horizontal, 30)
                         
                         Text(wasBetter == true
-                             ? "Remember this moment next time worry creeps in."
-                             : "You faced it with courage. That's what matters.")
+                             ? String(localized: "worry_reflection_success_better_message")
+                             : String(localized: "worry_reflection_success_okay_message"))
                             .font(.system(.subheadline, design: .rounded))
                             .foregroundColor(.themeText.opacity(0.7))
                             .multilineTextAlignment(.center)

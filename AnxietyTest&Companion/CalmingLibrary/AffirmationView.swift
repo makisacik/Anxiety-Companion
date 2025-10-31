@@ -17,18 +17,20 @@ struct AffirmationView: View {
     @State private var breathingCount = 0
     @State private var isBreathingPhase = true
     
-    private let affirmations = [
-        "I'm allowed to take things slow",
-        "I'm doing the best I can",
-        "My feelings are valid",
-        "I deserve kindness and rest",
-        "I am stronger than I think",
-        "It's okay to not be okay",
-        "I am worthy of love and care",
-        "This feeling will pass",
-        "I am safe in this moment",
-        "I trust myself to handle whatever comes"
-    ]
+    private var affirmations: [String] {
+        [
+            String(localized: "affirmation_1"),
+            String(localized: "affirmation_2"),
+            String(localized: "affirmation_3"),
+            String(localized: "affirmation_4"),
+            String(localized: "affirmation_5"),
+            String(localized: "affirmation_6"),
+            String(localized: "affirmation_7"),
+            String(localized: "affirmation_8"),
+            String(localized: "affirmation_9"),
+            String(localized: "affirmation_10")
+        ]
+    }
     
     private var currentAffirmation: String {
         affirmations[currentAffirmationIndex]
@@ -51,7 +53,7 @@ struct AffirmationView: View {
                     
                     Spacer()
                     
-                    Button("New Affirmation") {
+                    Button(String(localized: "affirmation_new")) {
                         nextAffirmation()
                     }
                     .foregroundColor(.white.opacity(0.8))
@@ -61,18 +63,18 @@ struct AffirmationView: View {
                 
                 // Main content
                 VStack(spacing: 24) {
-                    Text("Affirmation")
+                    Text(String(localized: "affirmation_title"))
                         .font(.largeTitle.bold())
                         .foregroundColor(.white)
                     
                     if isBreathingPhase {
                         // Breathing phase
                         VStack(spacing: 20) {
-                            Text("Take a deep breath")
+                            Text(String(localized: "affirmation_breath"))
                                 .font(.title2)
                                 .foregroundColor(.white.opacity(0.9))
                             
-                            Text("Breathe in... hold... breathe out")
+                            Text(String(localized: "affirmation_breath_cycle"))
                                 .font(.body)
                                 .foregroundColor(.white.opacity(0.7))
                             
@@ -88,7 +90,7 @@ struct AffirmationView: View {
                                         .animation(.easeInOut(duration: 2), value: breathingCount)
                                 )
                             
-                            Text("\(breathingCount + 1) / 3")
+                            Text(String.localizedStringWithFormat(String(localized: "affirmation_breath_count"), breathingCount + 1))
                                 .font(.caption)
                                 .foregroundColor(.white.opacity(0.6))
                         }
@@ -96,7 +98,7 @@ struct AffirmationView: View {
                     } else {
                         // Affirmation phase
                         VStack(spacing: 20) {
-                            Text("Repeat this to yourself:")
+                            Text(String(localized: "affirmation_repeat"))
                                 .font(.title3)
                                 .foregroundColor(.white.opacity(0.8))
                             
@@ -116,7 +118,7 @@ struct AffirmationView: View {
                                     .stroke(Color.white.opacity(0.2), lineWidth: 1)
                             )
                             
-                            Text("Say it out loud or in your mind")
+                            Text(String(localized: "affirmation_say"))
                                 .font(.body)
                                 .foregroundColor(.white.opacity(0.7))
                         }
@@ -129,7 +131,7 @@ struct AffirmationView: View {
                 // Action buttons
                 VStack(spacing: 16) {
                     if isBreathingPhase {
-                        Button("Start Affirmation") {
+                        Button(String(localized: "affirmation_start")) {
                             startAffirmationPhase()
                         }
                         .padding(.horizontal, 40)
@@ -139,7 +141,7 @@ struct AffirmationView: View {
                         .foregroundColor(.white)
                     } else {
                         HStack(spacing: 20) {
-                            Button("Complete") {
+                            Button(String(localized: "affirmation_complete_button")) {
                                 completeAffirmation()
                             }
                             .padding(.horizontal, 30)
@@ -148,7 +150,7 @@ struct AffirmationView: View {
                             .cornerRadius(25)
                             .foregroundColor(.white)
                             
-                            Button("Next") {
+                            Button(String(localized: "affirmation_next")) {
                                 nextAffirmation()
                             }
                             .padding(.horizontal, 30)
@@ -174,11 +176,11 @@ struct AffirmationView: View {
                     Text("💫")
                         .font(.system(size: 60))
                     
-                    Text("Affirmation Complete!")
+                    Text(String(localized: "affirmation_done_title"))
                         .font(.largeTitle.bold())
                         .foregroundColor(.white)
                     
-                    Text("You've taken a moment to speak kindness to yourself. Remember, you are worthy of compassion.")
+                    Text(String(localized: "affirmation_done_message"))
                         .font(.title3)
                         .foregroundColor(.white.opacity(0.9))
                         .multilineTextAlignment(.center)

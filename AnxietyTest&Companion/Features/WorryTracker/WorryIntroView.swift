@@ -9,10 +9,12 @@ struct WorryIntroView: View {
     @State private var progress: CGFloat = 0.0
     @State private var fadeOut = false
     
-    let scenes: [(emoji: String, text: String)] = [
-        ("💭", "Sometimes you worry too much about something…"),
-        ("🌤️", "…and later you realize it wasn’t as bad as it felt.")
-    ]
+    var scenes: [(emoji: String, text: String)] {
+        [
+            ("💭", String(localized: "worry_intro_scene_1")),
+            ("🌤️", String(localized: "worry_intro_scene_2"))
+        ]
+    }
     
     var body: some View {
         ZStack {

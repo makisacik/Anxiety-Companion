@@ -115,13 +115,13 @@ class WorryTrackerViewModel: ObservableObject {
         
         if let hours = components.hour, let minutes = components.minute {
             if hours > 0 {
-                return "\(hours)h \(minutes)m left"
+                return String.localizedStringWithFormat(String(localized: "worry_time_left_hours"), hours, minutes)
             } else if minutes > 0 {
-                return "\(minutes)m left"
+                return String.localizedStringWithFormat(String(localized: "worry_time_left_minutes"), minutes)
             } else {
-                return "Soon"
+                return String(localized: "worry_time_left_soon")
             }
         }
-        return "Soon"
+        return String(localized: "worry_time_left_soon")
     }
 }

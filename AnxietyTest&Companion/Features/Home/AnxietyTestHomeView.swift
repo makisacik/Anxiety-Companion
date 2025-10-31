@@ -50,36 +50,38 @@ struct AnxietyTestHomeView: View {
     @State private var showThankYou = false
     @State private var cardWidth: CGFloat = 0
     
-    private let greetingMessages = [
-        "You don’t have to be perfect to be enough",
-        "It's okay to feel however you're feeling",
-        "You're stronger than you know",
-        "You're not alone in this journey",
-        "Your feelings are valid and important",
-        "Take a deep breath, you've got this",
-        "Every small step counts",
-        "Be gentle with yourself today",
-        "You're worthy of peace and calm",
-        "You're doing better than you think",
-        "You deserve to rest and recharge",
-        "Your emotions don’t define your worth",
-        "You’ve handled hard days before — you can handle today too",
-        "It’s okay to slow down and just be",
-        "You are growing, even if it doesn’t feel like it",
-        "You bring light to more people than you realize",
-        "Peace begins with one gentle breath",
-        "You are allowed to start over at any moment",
-        "Healing takes time — and you’re already on your way",
-        "Progress is still progress, no matter how small",
-    ]
+    private var greetingMessages: [String] {
+        [
+            String(localized: "home_companion_message_16"),
+            String(localized: "home_companion_message_17"),
+            String(localized: "home_companion_message_1"),
+            String(localized: "home_companion_message_2"),
+            String(localized: "home_companion_message_3"),
+            String(localized: "home_companion_message_4"),
+            String(localized: "home_companion_message_5"),
+            String(localized: "home_companion_message_6"),
+            String(localized: "home_companion_message_7"),
+            String(localized: "home_companion_message_8"),
+            String(localized: "home_companion_message_9"),
+            String(localized: "home_companion_message_10"),
+            String(localized: "home_companion_message_11"),
+            String(localized: "home_companion_message_12"),
+            String(localized: "home_companion_message_13"),
+            String(localized: "home_companion_message_14"),
+            String(localized: "home_companion_message_15"),
+            String(localized: "home_companion_message_18"),
+            String(localized: "home_companion_message_19"),
+            String(localized: "home_companion_message_20")
+        ]
+    }
 
     
     private var buttonText: String {
         if hasCompletedTest || !gad7Entries.isEmpty {
             let daysAgo = Calendar.current.dateComponents([.day], from: lastGAD7Date, to: Date()).day ?? 0
-            return daysAgo == 0 ? "Retake Test" : "Take Test"
+            return daysAgo == 0 ? String(localized: "home_anxiety_retake_test") : String(localized: "home_anxiety_take_test")
         } else {
-            return "Take Test"
+            return String(localized: "home_anxiety_take_test")
         }
     }
     
@@ -95,13 +97,13 @@ struct AnxietyTestHomeView: View {
         let hour = Calendar.current.component(.hour, from: Date())
         switch hour {
         case 5..<12:
-            return "Good morning"
+            return String(localized: "home_greeting_good_morning")
         case 12..<17:
-            return "Hi"
+            return String(localized: "home_greeting_hi")
         case 17..<21:
-            return "Good evening"
+            return String(localized: "home_greeting_good_evening")
         default:
-            return "Good night"
+            return String(localized: "home_greeting_good_night")
         }
     }
     
@@ -194,12 +196,12 @@ struct AnxietyTestHomeView: View {
                 
                 // Content
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("Start your calm minute 🌬️")
+                    Text(String(localized: "home_breathing_title"))
                         .font(.system(.headline, design: .rounded))
                         .fontWeight(.semibold)
                         .foregroundColor(.themeText)
                     
-                    Text(isBreathingForToday ? "You've breathed mindfully today 🌿" : "Take a moment to breathe and center yourself")
+                    Text(isBreathingForToday ? String(localized: "home_breathing_completed") : String(localized: "home_breathing_prompt"))
                         .font(.system(.caption, design: .rounded))
                         .foregroundColor(.themeText.opacity(0.7))
                         .multilineTextAlignment(.leading)
@@ -246,12 +248,12 @@ struct AnxietyTestHomeView: View {
                 
                 // Content
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("Reflect for a moment ✍️")
+                    Text(String(localized: "home_reflection_title"))
                         .font(.system(.headline, design: .rounded))
                         .fontWeight(.semibold)
                         .foregroundColor(.themeText)
                     
-                    Text("Share your thoughts and feelings")
+                    Text(String(localized: "home_reflection_subtitle"))
                         .font(.system(.caption, design: .rounded))
                         .foregroundColor(.themeText.opacity(0.7))
                         .multilineTextAlignment(.leading)
@@ -293,12 +295,12 @@ struct AnxietyTestHomeView: View {
                 
                 // Content
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("Worry Tracker 💭")
+                    Text(String(localized: "home_worry_title"))
                         .font(.system(.headline, design: .rounded))
                         .fontWeight(.semibold)
                         .foregroundColor(.themeText)
                     
-                    Text("Notice how worries change over time")
+                    Text(String(localized: "home_worry_subtitle"))
                         .font(.system(.caption, design: .rounded))
                         .foregroundColor(.themeText.opacity(0.7))
                         .multilineTextAlignment(.leading)
@@ -395,7 +397,7 @@ struct AnxietyTestHomeView: View {
         VStack(spacing: 16) {
             HStack {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Your Anxiety Check-In")
+                    Text(String(localized: "home_anxiety_checkin_title"))
                         .font(.system(.title2, design: .serif))
                         .fontWeight(.semibold)
                         .foregroundColor(.themeText)
@@ -403,11 +405,12 @@ struct AnxietyTestHomeView: View {
                     if hasCompletedTest || !gad7Entries.isEmpty {
                         let daysAgo = Calendar.current.dateComponents([.day], from: lastGAD7Date, to: Date()).day ?? 0
                         let category = getScoreCategory(lastGAD7Score)
-                        Text("Last test: \(daysAgo == 0 ? "Today" : "\(daysAgo) days ago") • Score: \(category) (\(lastGAD7Score)/21)")
+                        let daysAgoText = daysAgo == 0 ? String(localized: "home_anxiety_last_test_today") : String.localizedStringWithFormat(String(localized: "home_anxiety_last_test_days_ago"), daysAgo)
+                        Text(String.localizedStringWithFormat(String(localized: "home_anxiety_last_test_format"), daysAgoText, category, lastGAD7Score))
                             .font(.system(.caption, design: .rounded))
                             .foregroundColor(.themeText.opacity(0.7))
                     } else {
-                        Text("You haven't done a check-in yet.")
+                        Text(String(localized: "home_anxiety_last_test_none"))
                             .font(.system(.caption, design: .rounded))
                             .foregroundColor(.themeText.opacity(0.7))
                     }
@@ -450,7 +453,7 @@ struct AnxietyTestHomeView: View {
             if !isMoodForToday || showThankYou {
                 VStack(spacing: 20) {
                     if !showThankYou {
-                        Text("How do you feel right now?")
+                        Text(String(localized: "home_mood_question"))
                             .font(.system(.headline, design: .rounded))
                             .foregroundColor(.themeText)
                         
@@ -472,7 +475,7 @@ struct AnxietyTestHomeView: View {
                             }
                         }
                     } else {
-                        Text("Thanks for sharing")
+                        Text(String(localized: "home_mood_thanks"))
                             .font(.system(.headline, design: .rounded))
                             .foregroundColor(.themeText)
                             .transition(.opacity.combined(with: .scale))
@@ -496,7 +499,7 @@ struct AnxietyTestHomeView: View {
     // MARK: - Helpers
     
     private func selectRandomGreeting() {
-        currentGreeting = greetingMessages.randomElement() ?? "How are you feeling today?"
+        currentGreeting = greetingMessages.randomElement() ?? String(localized: "home_greeting_fallback")
     }
 
     private func startGreetingAnimation() {
@@ -542,10 +545,10 @@ struct AnxietyTestHomeView: View {
 
     private func getScoreCategory(_ score: Int) -> String {
         switch score {
-        case 0...4: return "Minimal"
-        case 5...9: return "Mild"
-        case 10...14: return "Moderate"
-        default: return "Severe"
+        case 0...4: return String(localized: "home_anxiety_score_minimal")
+        case 5...9: return String(localized: "home_anxiety_score_mild")
+        case 10...14: return String(localized: "home_anxiety_score_moderate")
+        default: return String(localized: "home_anxiety_score_severe")
         }
     }
 }

@@ -78,7 +78,7 @@ struct ExerciseInstructionPageView: View {
                         .focused($isTextFieldFocused)
 
                     if userResponse.isEmpty {
-                        Text("Type your response here...")
+                        Text(String(localized: "exercise_type_response"))
                             .font(.body)
                             .foregroundColor(.themeText.opacity(0.6))
                             .padding(EdgeInsets(top: 24, leading: 28, bottom: 0, trailing: 0))

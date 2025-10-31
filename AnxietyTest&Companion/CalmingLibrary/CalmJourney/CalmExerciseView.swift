@@ -91,14 +91,14 @@ struct CalmExerciseView: View {
         case .grounding:
             // Grounding exercises are handled separately in CalmLevelSessionView
             // This should not be reached, but provide a fallback
-            Text("Grounding exercises are interactive and handled separately.")
+            Text(String(localized: "exercise_grounding_separate"))
                 .font(.system(.body, design: .rounded))
                 .foregroundColor(.themeText.opacity(0.7))
                 .padding()
         case .relaxBody:
             // Relax body exercises are handled separately in CalmLevelSessionView
             // This should not be reached, but provide a fallback
-            Text("Body relaxation exercises are interactive and handled separately.")
+            Text(String(localized: "exercise_relax_separate"))
                 .font(.system(.body, design: .rounded))
                 .foregroundColor(.themeText.opacity(0.7))
                 .padding()
@@ -151,7 +151,7 @@ struct CalmExerciseView: View {
                             .fill(Color.themeCard)
                     )
                 
-                Text("Ready to start breathing?")
+                Text(String(localized: "exercise_ready_breathing"))
                     .font(.system(.headline, design: .rounded))
                     .foregroundColor(.themeText)
             }
@@ -195,7 +195,7 @@ struct CalmExerciseView: View {
             
             // Text input
             VStack(alignment: .leading, spacing: 12) {
-                Text("Your reflection:")
+                Text(String(localized: "exercise_your_reflection"))
                     .font(.system(.headline, design: .rounded))
                     .foregroundColor(.themeText)
                 
@@ -255,7 +255,7 @@ struct CalmExerciseView: View {
                     .font(.system(size: 20))
                     .foregroundColor(.themeText)
                 
-                Text("The Science")
+                Text(String(localized: "exercise_science"))
                     .font(.system(.headline, design: .rounded))
                     .foregroundColor(.themeText)
                 
@@ -290,7 +290,7 @@ struct CalmExerciseView: View {
                     HStack {
                         Image(systemName: "play.fill")
                             .font(.system(size: 18, weight: .semibold))
-                        Text("Start Breathing Exercise")
+                        Text(String(localized: "exercise_start_breathing"))
                             .font(.system(.body, design: .rounded))
                             .fontWeight(.semibold)
                     }
@@ -313,7 +313,7 @@ struct CalmExerciseView: View {
                     HStack {
                         Image(systemName: "checkmark.circle.fill")
                             .font(.system(size: 18, weight: .semibold))
-                        Text("Done")
+                        Text(String(localized: "exercise_done"))
                             .font(.system(.body, design: .rounded))
                             .fontWeight(.semibold)
                     }

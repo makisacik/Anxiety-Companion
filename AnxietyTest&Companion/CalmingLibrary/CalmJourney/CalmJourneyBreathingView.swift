@@ -21,7 +21,7 @@ struct CalmJourneyBreathingView: View {
                 introView
             }
         }
-        .navigationTitle("Breathing Exercise")
+        .navigationTitle(String(localized: "nav_title_breathing_exercise"))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.hidden, for: .tabBar)
         .toolbarBackground(Color.themeBackground, for: .navigationBar)
@@ -90,7 +90,7 @@ struct CalmJourneyBreathingView: View {
                             .font(.system(size: 18))
                             .foregroundColor(.themeText)
                         
-                        Text("The Science")
+                        Text(String(localized: "breathing_journey_science"))
                             .font(.system(.headline, design: .rounded))
                             .foregroundColor(.themeText)
                         
@@ -123,7 +123,7 @@ struct CalmJourneyBreathingView: View {
                     HStack {
                         Image(systemName: "play.fill")
                             .font(.system(size: 18, weight: .semibold))
-                        Text("Start Breathing Exercise")
+                        Text(String(localized: "breathing_journey_start"))
                             .font(.system(.body, design: .rounded))
                             .fontWeight(.semibold)
                     }
@@ -160,7 +160,7 @@ struct CalmJourneyBreathingView: View {
                     HapticFeedback.success()
                     onComplete()
                 }) {
-                    Text("Continue →")
+                    Text(String(localized: "breathing_journey_continue"))
                         .font(.system(.body, design: .rounded).bold())
                         .foregroundColor(.themeText)
                         .frame(maxWidth: .infinity)
@@ -180,7 +180,7 @@ struct CalmJourneyBreathingView: View {
                     manager.finishSession()
                     onComplete()
                 }) {
-                    Text("Skip Exercise")
+                    Text(String(localized: "breathing_journey_skip"))
                         .font(.system(.body, design: .rounded))
                         .foregroundColor(.themeText.opacity(0.7))
                         .frame(maxWidth: .infinity)

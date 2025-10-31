@@ -34,22 +34,26 @@ struct GAD7TestView: View {
     @State private var answers: [Int] = Array(repeating: 0, count: 7)
     @State private var showResults = false
     @State private var companionExpression: CompanionFaceView.Expression = .neutral
-    private let questions = [
-        "Feeling nervous, anxious, or on edge",
-        "Not being able to stop or control worrying",
-        "Worrying too much about different things",
-        "Trouble relaxing",
-        "Being so restless that it's hard to sit still",
-        "Becoming easily annoyed or irritable",
-        "Feeling afraid as if something awful might happen"
-    ]
+    private var questions: [String] {
+        [
+            String(localized: "test_question_1"),
+            String(localized: "test_question_2"),
+            String(localized: "test_question_3"),
+            String(localized: "test_question_4"),
+            String(localized: "test_question_5"),
+            String(localized: "test_question_6"),
+            String(localized: "test_question_7")
+        ]
+    }
     
-    private let answerOptions = [
-        "Not at all",
-        "Several days",
-        "More than half the days",
-        "Nearly every day"
-    ]
+    private var answerOptions: [String] {
+        [
+            String(localized: "test_option_not_at_all"),
+            String(localized: "test_option_several_days"),
+            String(localized: "test_option_more_than_half"),
+            String(localized: "test_option_nearly_every_day")
+        ]
+    }
     
     var body: some View {
         ZStack {
@@ -87,7 +91,7 @@ struct GAD7TestView: View {
                     
                     Spacer()
                     
-                    Text("\(currentQuestion + 1) of 7")
+                    Text(String.localizedStringWithFormat(String(localized: "test_progress"), currentQuestion + 1))
                         .font(.system(.caption, design: .rounded))
                         .foregroundColor(.themeText.opacity(0.7))
                 }
@@ -110,7 +114,7 @@ struct GAD7TestView: View {
             
             // Question
             VStack(spacing: 12) {
-                Text("Over the last 2 weeks, how often have you been bothered by:")
+                Text(String(localized: "test_question_prefix"))
                     .font(.system(.body, design: .rounded))
                     .foregroundColor(.themeText.opacity(0.8))
                     .multilineTextAlignment(.center)
@@ -176,7 +180,7 @@ struct GAD7TestView: View {
             // Continue button
             if answers[currentQuestion] >= 0 {
                 Button(action: nextQuestion) {
-                    Text(currentQuestion == 6 ? "See Results" : "Continue")
+                    Text(currentQuestion == 6 ? String(localized: "test_see_results") : String(localized: "test_continue"))
                         .font(.system(.body, design: .rounded))
                         .fontWeight(.medium)
                         .foregroundColor(.themeText)
@@ -208,7 +212,7 @@ struct GAD7TestView: View {
             
             // Results
             VStack(spacing: 20) {
-                Text("Your Results")
+                Text(String(localized: "test_results_title"))
                     .font(.system(.title, design: .serif))
                     .fontWeight(.semibold)
                     .foregroundColor(.themeText)
@@ -217,7 +221,7 @@ struct GAD7TestView: View {
                 let category = getCategory(for: totalScore)
                 
                 VStack(spacing: 12) {
-                    Text("Score: \(totalScore)/21")
+                    Text(String.localizedStringWithFormat(String(localized: "test_score"), totalScore))
                         .font(.system(.title2, design: .rounded))
                         .fontWeight(.medium)
                         .foregroundColor(.themeText)
@@ -277,7 +281,7 @@ struct GAD7TestView: View {
                 }
                 dismiss()
             }) {
-                Text("Done")
+                Text(String(localized: "test_done"))
                     .font(.system(.body, design: .rounded))
                     .fontWeight(.medium)
                     .foregroundColor(.themeText)
@@ -349,13 +353,13 @@ struct GAD7TestView: View {
     private func getCategory(for score: Int) -> (title: String, description: String, color: Color) {
         switch score {
         case 0...4:
-            return ("Minimal", "Your anxiety levels are minimal. Keep up the great work!", Color.green)
+            return (String(localized: "test_category_minimal_title"), String(localized: "test_category_minimal_description"), Color.green)
         case 5...9:
-            return ("Mild", "You're experiencing mild anxiety. Consider some relaxation techniques.", Color.yellow)
+            return (String(localized: "test_category_mild_title"), String(localized: "test_category_mild_description"), Color.yellow)
         case 10...14:
-            return ("Moderate", "Your anxiety is moderate. It might be helpful to talk to someone.", Color.orange)
+            return (String(localized: "test_category_moderate_title"), String(localized: "test_category_moderate_description"), Color.orange)
         default:
-            return ("Severe", "Your anxiety levels are high. Please consider reaching out for professional support.", Color.red)
+            return (String(localized: "test_category_severe_title"), String(localized: "test_category_severe_description"), Color.red)
         }
     }
 }

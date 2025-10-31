@@ -15,19 +15,19 @@ struct ScoreGraphView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Your Calm Trend")
+            Text(String(localized: "tracking_calm_trend"))
                 .font(.system(.headline, design: .serif))
                 .fontWeight(.semibold)
                 .foregroundColor(.themeText)
             
             if gad7Entries.isEmpty {
                 VStack(spacing: 8) {
-                    Text("No data yet — take your first check-in to begin.")
+                    Text(String(localized: "tracking_no_data_yet"))
                         .font(.system(.subheadline, design: .rounded))
                         .foregroundColor(.themeText.opacity(0.7))
                         .multilineTextAlignment(.center)
                     
-                    Text("Your progress will appear here once you start tracking.")
+                    Text(String(localized: "tracking_progress_will_appear"))
                         .font(.system(.caption, design: .rounded))
                         .foregroundColor(.themeText.opacity(0.5))
                         .multilineTextAlignment(.center)

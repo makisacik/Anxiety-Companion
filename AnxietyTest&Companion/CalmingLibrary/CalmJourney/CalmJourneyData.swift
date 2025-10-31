@@ -22,19 +22,19 @@ class CalmJourneyDataStore: ObservableObject {
             // LEVEL 1 — Breathe & Ground (Free)
             CalmLevel(
                 id: 1,
-                title: "Breathe & Ground",
-                summary: "Learn to calm your body before your mind.",
+                title: String(localized: "journey_level_1_title"),
+                summary: String(localized: "journey_level_1_summary"),
                 free: true,
                 exercises: [
                     CalmExercise(
                         id: 1,
                         type: .education,
-                        title: "What happens in anxiety",
+                        title: String(localized: "journey_level_1_exercise_1_title"),
                         instructions: [
-                            "When you feel anxious, your body activates the fight-flight-freeze response.",
-                            "Your heart races, muscles tense, and breathing becomes shallow.",
-                            "This is your nervous system trying to protect you from perceived danger.",
-                            "Learning to recognize and calm this response is the first step to managing anxiety."
+                            String(localized: "journey_level_1_exercise_1_instruction_0"),
+                            String(localized: "journey_level_1_exercise_1_instruction_1"),
+                            String(localized: "journey_level_1_exercise_1_instruction_2"),
+                            String(localized: "journey_level_1_exercise_1_instruction_3")
                         ],
                         instructionPromptTypes: [
                             .statement,
@@ -42,20 +42,20 @@ class CalmJourneyDataStore: ObservableObject {
                             .statement,
                             .statement
                         ],
-                        scienceNote: "Understanding the fight-flight-freeze response helps you recognize anxiety as a normal protective mechanism.",
+                        scienceNote: String(localized: "journey_level_1_exercise_1_science"),
                         reportValue: .exclude,
                         imageNames: ["afraid", "afraid", "shadow-monster", "thinking-bulb"]
                     ),
                     CalmExercise(
                         id: 2,
                         type: .breathing,
-                        title: "Box Breathing",
+                        title: String(localized: "journey_level_1_exercise_2_title"),
                         instructions: [
-                            "Inhale for 4 seconds.",
-                            "Hold your breath for 4 seconds.",
-                            "Exhale for 4 seconds.",
-                            "Hold again for 4 seconds.",
-                            "Repeat for 1–2 minutes."
+                            String(localized: "journey_level_1_exercise_2_instruction_0"),
+                            String(localized: "journey_level_1_exercise_2_instruction_1"),
+                            String(localized: "journey_level_1_exercise_2_instruction_2"),
+                            String(localized: "journey_level_1_exercise_2_instruction_3"),
+                            String(localized: "journey_level_1_exercise_2_instruction_4")
                         ],
                         instructionPromptTypes: [
                             .statement,
@@ -64,20 +64,20 @@ class CalmJourneyDataStore: ObservableObject {
                             .action,
                             .action
                         ],
-                        scienceNote: "Box breathing lowers heart rate and activates the parasympathetic nervous system.",
+                        scienceNote: String(localized: "journey_level_1_exercise_2_science"),
                         reportValue: .exclude,
                         imageNames: []
                     ),
                     CalmExercise(
                         id: 3,
                         type: .grounding,
-                        title: "Grounding 5-4-3-2-1",
+                        title: String(localized: "journey_level_1_exercise_3_title"),
                         instructions: [
-                            "Name 5 things you can see.",
-                            "Name 4 things you can touch.",
-                            "Name 3 things you can hear.",
-                            "Name 2 things you can smell.",
-                            "Name 1 thing you can taste."
+                            String(localized: "journey_level_1_exercise_3_instruction_0"),
+                            String(localized: "journey_level_1_exercise_3_instruction_1"),
+                            String(localized: "journey_level_1_exercise_3_instruction_2"),
+                            String(localized: "journey_level_1_exercise_3_instruction_3"),
+                            String(localized: "journey_level_1_exercise_3_instruction_4")
                         ],
                         instructionPromptTypes: [
                             .question,
@@ -86,21 +86,21 @@ class CalmJourneyDataStore: ObservableObject {
                             .question,
                             .question
                         ],
-                        scienceNote: "Grounding shifts attention from anxious thoughts to the present moment.",
+                        scienceNote: String(localized: "journey_level_1_exercise_3_science"),
                         reportValue: .exclude,
                         imageNames: []
                     ),
                     CalmExercise(
                         id: 4,
                         type: .relaxBody,
-                        title: "Relax the Body 🌿",
+                        title: String(localized: "journey_level_1_exercise_4_title"),
                         instructions: [
-                            "Let's progressively relax each part of your body. This interactive exercise will guide you through releasing tension from your toes to your face."
+                            String(localized: "journey_level_1_exercise_4_instruction_0")
                         ],
                         instructionPromptTypes: [
                             .statement
                         ],
-                        scienceNote: "Progressive relaxation reduces muscle tension and activates calm-body awareness.",
+                        scienceNote: String(localized: "journey_level_1_exercise_4_science"),
                         reportValue: .exclude,
                         imageNames: []
                     )
@@ -110,20 +110,20 @@ class CalmJourneyDataStore: ObservableObject {
             // LEVEL 2 — Understand Anxiety (Premium)
             CalmLevel(
                 id: 2,
-                title: "Understand Anxiety",
-                summary: "Learn why anxiety appears and how to interrupt the cycle.",
+                title: String(localized: "journey_level_2_title"),
+                summary: String(localized: "journey_level_2_summary"),
                 free: false,
                 exercises: [
                     CalmExercise(
                         id: 1,
                         type: .education,
-                        title: "The Anxiety Loop",
+                        title: String(localized: "journey_level_2_exercise_1_title"),
                         instructions: [
-                            "Anxiety starts with a perceived threat.",
-                            "This triggers physical sensations (heart racing, tension).",
-                            "You feel fear or worry and try to avoid the trigger.",
-                            "Avoidance brings short relief but strengthens the anxiety cycle.",
-                            "Awareness helps you break this loop."
+                            String(localized: "journey_level_2_exercise_1_instruction_0"),
+                            String(localized: "journey_level_2_exercise_1_instruction_1"),
+                            String(localized: "journey_level_2_exercise_1_instruction_2"),
+                            String(localized: "journey_level_2_exercise_1_instruction_3"),
+                            String(localized: "journey_level_2_exercise_1_instruction_4")
                         ],
                         instructionPromptTypes: [
                             .statement,
@@ -132,19 +132,19 @@ class CalmJourneyDataStore: ObservableObject {
                             .statement,
                             .statement
                         ],
-                        scienceNote: "Understanding the anxiety feedback loop is a foundation of CBT.",
+                        scienceNote: String(localized: "journey_level_2_exercise_1_science"),
                         reportValue: .exclude,
                         imageNames: ["shadow-monster", "afraid", "inside-box-sad", "cutting-branch", "break-egg"]
                     ),
                     CalmExercise(
                         id: 2,
                         type: .prompt,
-                        title: "Identify Triggers",
+                        title: String(localized: "journey_level_2_exercise_2_title"),
                         instructions: [
-                            "Think of a recent time you felt anxious.",
-                            "What was happening around you?",
-                            "What did you do to cope?",
-                            "Did the anxiety fade or grow afterward?"
+                            String(localized: "journey_level_2_exercise_2_instruction_0"),
+                            String(localized: "journey_level_2_exercise_2_instruction_1"),
+                            String(localized: "journey_level_2_exercise_2_instruction_2"),
+                            String(localized: "journey_level_2_exercise_2_instruction_3")
                         ],
                         instructionPromptTypes: [
                             .question,
@@ -152,25 +152,25 @@ class CalmJourneyDataStore: ObservableObject {
                             .question,
                             .question
                         ],
-                        scienceNote: "Recognizing triggers builds control over automatic reactions.",
+                        scienceNote: String(localized: "journey_level_2_exercise_2_science"),
                         reportValue: .include,
                         imageNames: []
                     ),
                     CalmExercise(
                         id: 3,
                         type: .prompt,
-                        title: "Break the Loop",
+                        title: String(localized: "journey_level_2_exercise_3_title"),
                         instructions: [
-                            "Imagine the same situation again.",
-                            "What could you do differently next time?",
-                            "Try small changes: breathing, staying present, or acting despite fear."
+                            String(localized: "journey_level_2_exercise_3_instruction_0"),
+                            String(localized: "journey_level_2_exercise_3_instruction_1"),
+                            String(localized: "journey_level_2_exercise_3_instruction_2")
                         ],
                         instructionPromptTypes: [
                             .statement,
                             .question,
                             .statement
                         ],
-                        scienceNote: "Behavioral change interrupts avoidance and restores control.",
+                        scienceNote: String(localized: "journey_level_2_exercise_3_science"),
                         reportValue: .include,
                         imageNames: []
                     )
@@ -180,77 +180,77 @@ class CalmJourneyDataStore: ObservableObject {
             // LEVEL 3 — Thought Awareness (Premium)
             CalmLevel(
                 id: 3,
-                title: "Thought Awareness",
-                summary: "Learn to observe and reframe anxious thoughts.",
+                title: String(localized: "journey_level_3_title"),
+                summary: String(localized: "journey_level_3_summary"),
                 free: false,
                 exercises: [
                     CalmExercise(
                         id: 1,
                         type: .education,
-                        title: "Why Thoughts Matter",
+                        title: String(localized: "journey_level_3_exercise_1_title"),
                         instructions: [
-                            "Our thoughts influence how we feel and act.",
-                            "When anxious, we often believe our thoughts are facts.",
-                            "Learning to question them can reduce anxiety."
+                            String(localized: "journey_level_3_exercise_1_instruction_0"),
+                            String(localized: "journey_level_3_exercise_1_instruction_1"),
+                            String(localized: "journey_level_3_exercise_1_instruction_2")
                         ],
                         instructionPromptTypes: [
                             .statement,
                             .statement,
                             .statement
                         ],
-                        scienceNote: "Cognitive restructuring reduces emotional reactivity.",
+                        scienceNote: String(localized: "journey_level_3_exercise_1_science"),
                         reportValue: .exclude,
                         imageNames: ["thinking-bubble", "thinking-1", "question-hand"]
                     ),
                     CalmExercise(
                         id: 2,
                         type: .prompt,
-                        title: "Catch the Thought",
+                        title: String(localized: "journey_level_3_exercise_2_title"),
                         instructions: [
-                            "Write down one anxious thought you've had recently.",
-                            "Describe when it appeared and what you felt in your body."
+                            String(localized: "journey_level_3_exercise_2_instruction_0"),
+                            String(localized: "journey_level_3_exercise_2_instruction_1")
                         ],
                         instructionPromptTypes: [
                             .question,
                             .question
                         ],
-                        scienceNote: "Awareness is the first step toward change.",
+                        scienceNote: String(localized: "journey_level_3_exercise_2_science"),
                         reportValue: .include,
                         imageNames: []
                     ),
                     CalmExercise(
                         id: 3,
                         type: .prompt,
-                        title: "Check the Evidence",
+                        title: String(localized: "journey_level_3_exercise_3_title"),
                         instructions: [
-                            "Ask yourself: What evidence supports this thought?",
-                            "What evidence goes against it?",
-                            "Is there another possible explanation?"
+                            String(localized: "journey_level_3_exercise_3_instruction_0"),
+                            String(localized: "journey_level_3_exercise_3_instruction_1"),
+                            String(localized: "journey_level_3_exercise_3_instruction_2")
                         ],
                         instructionPromptTypes: [
                             .question,
                             .question,
                             .question
                         ],
-                        scienceNote: "CBT teaches balanced thinking to counter distorted beliefs.",
+                        scienceNote: String(localized: "journey_level_3_exercise_3_science"),
                         reportValue: .include,
                         imageNames: []
                     ),
                     CalmExercise(
                         id: 4,
                         type: .prompt,
-                        title: "Reframe the Thought",
+                        title: String(localized: "journey_level_3_exercise_4_title"),
                         instructions: [
-                            "Take your original thought and make it gentler.",
-                            "Example: 'I can't handle this' → 'This is hard, but I've managed before.'",
-                            "Notice how your body feels after reframing."
+                            String(localized: "journey_level_3_exercise_4_instruction_0"),
+                            String(localized: "journey_level_3_exercise_4_instruction_1"),
+                            String(localized: "journey_level_3_exercise_4_instruction_2")
                         ],
                         instructionPromptTypes: [
                             .question,
                             .statement,
                             .question
                         ],
-                        scienceNote: "Reframing reduces catastrophizing and promotes calm thinking.",
+                        scienceNote: String(localized: "journey_level_3_exercise_4_science"),
                         reportValue: .include,
                         imageNames: []
                     )
@@ -260,59 +260,59 @@ class CalmJourneyDataStore: ObservableObject {
             // LEVEL 4 — Build Calm Habits (Premium)
             CalmLevel(
                 id: 4,
-                title: "Build Calm Habits",
-                summary: "Create small routines that support mental balance.",
+                title: String(localized: "journey_level_4_title"),
+                summary: String(localized: "journey_level_4_summary"),
                 free: false,
                 exercises: [
                     CalmExercise(
                         id: 1,
                         type: .education,
-                        title: "Habits and Mood",
+                        title: String(localized: "journey_level_4_exercise_1_title"),
                         instructions: [
-                            "Regular routines reduce uncertainty.",
-                            "Even small activities like walking or journaling can improve mood.",
-                            "Structure supports emotional stability."
+                            String(localized: "journey_level_4_exercise_1_instruction_0"),
+                            String(localized: "journey_level_4_exercise_1_instruction_1"),
+                            String(localized: "journey_level_4_exercise_1_instruction_2")
                         ],
                         instructionPromptTypes: [
                             .statement,
                             .statement,
                             .statement
                         ],
-                        scienceNote: "Behavioral activation increases positive reinforcement and reduces anxiety.",
+                        scienceNote: String(localized: "journey_level_4_exercise_1_science"),
                         reportValue: .exclude,
                         imageNames: ["thinking-bulb", "walking-up", "hands-open-smile"]
                     ),
                     CalmExercise(
                         id: 2,
                         type: .prompt,
-                        title: "Identify Calm Habits",
+                        title: String(localized: "journey_level_4_exercise_2_title"),
                         instructions: [
-                            "What daily habit helps you feel calm?",
-                            "It could be a walk, music, journaling, or talking to a friend."
+                            String(localized: "journey_level_4_exercise_2_instruction_0"),
+                            String(localized: "journey_level_4_exercise_2_instruction_1")
                         ],
                         instructionPromptTypes: [
                             .question,
                             .statement
                         ],
-                        scienceNote: "Linking calm behaviors to routine strengthens emotional regulation.",
+                        scienceNote: String(localized: "journey_level_4_exercise_2_science"),
                         reportValue: .include,
                         imageNames: []
                     ),
                     CalmExercise(
                         id: 3,
                         type: .prompt,
-                        title: "Plan a Small Action",
+                        title: String(localized: "journey_level_4_exercise_3_title"),
                         instructions: [
-                            "Choose one small calm action for today.",
-                            "Set a specific time you'll do it.",
-                            "Later, reflect on how it felt."
+                            String(localized: "journey_level_4_exercise_3_instruction_0"),
+                            String(localized: "journey_level_4_exercise_3_instruction_1"),
+                            String(localized: "journey_level_4_exercise_3_instruction_2")
                         ],
                         instructionPromptTypes: [
                             .question,
                             .question,
                             .question
                         ],
-                        scienceNote: "Small achievable goals build momentum and confidence.",
+                        scienceNote: String(localized: "journey_level_4_exercise_3_science"),
                         reportValue: .include,
                         imageNames: []
                     )
@@ -322,75 +322,75 @@ class CalmJourneyDataStore: ObservableObject {
             // LEVEL 5 — Compassion & Maintenance (Premium)
             CalmLevel(
                 id: 5,
-                title: "Compassion & Maintenance",
-                summary: "Learn to be kind to yourself and maintain balance.",
+                title: String(localized: "journey_level_5_title"),
+                summary: String(localized: "journey_level_5_summary"),
                 free: false,
                 exercises: [
                     CalmExercise(
                         id: 1,
                         type: .education,
-                        title: "Why Self-Compassion Matters",
+                        title: String(localized: "journey_level_5_exercise_1_title"),
                         instructions: [
-                            "Anxiety often comes with self-criticism.",
-                            "Treating yourself with kindness reduces shame and fear.",
-                            "Self-compassion is strength, not weakness."
+                            String(localized: "journey_level_5_exercise_1_instruction_0"),
+                            String(localized: "journey_level_5_exercise_1_instruction_1"),
+                            String(localized: "journey_level_5_exercise_1_instruction_2")
                         ],
                         instructionPromptTypes: [
                             .statement,
                             .statement,
                             .statement
                         ],
-                        scienceNote: "Self-compassion improves resilience and emotion regulation.",
+                        scienceNote: String(localized: "journey_level_5_exercise_1_science"),
                         reportValue: .exclude,
                         imageNames: ["inside-box-sad", "hands-open-smile", "shadow-angel"]
                     ),
                     CalmExercise(
                         id: 2,
                         type: .prompt,
-                        title: "Self-Compassion Check",
+                        title: String(localized: "journey_level_5_exercise_2_title"),
                         instructions: [
-                            "Think of a moment you felt anxious or embarrassed.",
-                            "What did you tell yourself?",
-                            "What would you say to a close friend in the same situation?"
+                            String(localized: "journey_level_5_exercise_2_instruction_0"),
+                            String(localized: "journey_level_5_exercise_2_instruction_1"),
+                            String(localized: "journey_level_5_exercise_2_instruction_2")
                         ],
                         instructionPromptTypes: [
                             .question,
                             .question,
                             .question
                         ],
-                        scienceNote: "Reframing self-talk promotes emotional healing.",
+                        scienceNote: String(localized: "journey_level_5_exercise_2_science"),
                         reportValue: .include,
                         imageNames: []
                     ),
                     CalmExercise(
                         id: 3,
                         type: .prompt,
-                        title: "Values Reflection",
+                        title: String(localized: "journey_level_5_exercise_3_title"),
                         instructions: [
-                            "What truly matters to you that anxiety sometimes gets in the way of?",
-                            "What small step can you take toward it anyway?"
+                            String(localized: "journey_level_5_exercise_3_instruction_0"),
+                            String(localized: "journey_level_5_exercise_3_instruction_1")
                         ],
                         instructionPromptTypes: [
                             .question,
                             .question
                         ],
-                        scienceNote: "Acting on values builds long-term emotional balance.",
+                        scienceNote: String(localized: "journey_level_5_exercise_3_science"),
                         reportValue: .include,
                         imageNames: []
                     ),
                     CalmExercise(
                         id: 4,
                         type: .prompt,
-                        title: "Calm Reminder Note",
+                        title: String(localized: "journey_level_5_exercise_4_title"),
                         instructions: [
-                            "Write a message to your future self for hard moments.",
-                            "Example: 'Breathe. You've handled harder days before.'"
+                            String(localized: "journey_level_5_exercise_4_instruction_0"),
+                            String(localized: "journey_level_5_exercise_4_instruction_1")
                         ],
                         instructionPromptTypes: [
                             .question,
                             .statement
                         ],
-                        scienceNote: "Personal affirmations reinforce emotional safety.",
+                        scienceNote: String(localized: "journey_level_5_exercise_4_science"),
                         reportValue: .include,
                         imageNames: []
                     )
@@ -400,62 +400,62 @@ class CalmJourneyDataStore: ObservableObject {
             // LEVEL 6 — Facing Fears Gently (Premium)
             CalmLevel(
                 id: 6,
-                title: "Facing Fears Gently",
-                summary: "Build courage through small, safe steps toward feared situations.",
+                title: String(localized: "journey_level_6_title"),
+                summary: String(localized: "journey_level_6_summary"),
                 free: false,
                 exercises: [
                     CalmExercise(
                         id: 6,
                         type: .education,
-                        title: "Understanding Fear",
+                        title: String(localized: "journey_level_6_exercise_6_title"),
                         instructions: [
-                            "Fear is your body's alarm system, designed to keep you safe.",
-                            "When the alarm goes off too often, it can limit your life.",
-                            "Facing fear gently teaches your brain that safety can exist even in discomfort."
+                            String(localized: "journey_level_6_exercise_6_instruction_0"),
+                            String(localized: "journey_level_6_exercise_6_instruction_1"),
+                            String(localized: "journey_level_6_exercise_6_instruction_2")
                         ],
                         instructionPromptTypes: [.statement, .statement, .statement],
-                        scienceNote: "Gradual exposure reduces avoidance and rewires fear pathways.",
+                        scienceNote: String(localized: "journey_level_6_exercise_6_science"),
                         reportValue: .exclude,
                         imageNames: ["afraid", "inside-box-sad", "shadow-hero"]
                     ),
                     CalmExercise(
                         id: 7,
                         type: .prompt,
-                        title: "Your Fear Ladder",
+                        title: String(localized: "journey_level_6_exercise_7_title"),
                         instructions: [
-                            "List three things that make you anxious: one mild, one moderate, one strong.",
-                            "Choose one small fear to face safely this week.",
-                            "Imagine how it might feel afterward."
+                            String(localized: "journey_level_6_exercise_7_instruction_0"),
+                            String(localized: "journey_level_6_exercise_7_instruction_1"),
+                            String(localized: "journey_level_6_exercise_7_instruction_2")
                         ],
                         instructionPromptTypes: [.question, .question, .question],
-                        scienceNote: "Breaking fears into small steps increases confidence and control.",
+                        scienceNote: String(localized: "journey_level_6_exercise_7_science"),
                         reportValue: .include,
                         imageNames: []
                     ),
                     CalmExercise(
                         id: 8,
                         type: .prompt,
-                        title: "Reflect on Courage",
+                        title: String(localized: "journey_level_6_exercise_8_title"),
                         instructions: [
-                            "Recall a time you faced something scary and it went better than expected.",
-                            "What helped you stay grounded in that moment?"
+                            String(localized: "journey_level_6_exercise_8_instruction_0"),
+                            String(localized: "journey_level_6_exercise_8_instruction_1")
                         ],
                         instructionPromptTypes: [.question, .question],
-                        scienceNote: "Remembering success reinforces self-efficacy and calm.",
+                        scienceNote: String(localized: "journey_level_6_exercise_8_science"),
                         reportValue: .include,
                         imageNames: []
                     ),
                     CalmExercise(
                         id: 9,
                         type: .breathing,
-                        title: "Calm Before Action",
+                        title: String(localized: "journey_level_6_exercise_9_title"),
                         instructions: [
-                            "Before approaching a fear, pause and breathe slowly for 10 seconds.",
-                            "Inhale gently through the nose, exhale through the mouth.",
-                            "Remind yourself: 'I can do this step calmly.'"
+                            String(localized: "journey_level_6_exercise_9_instruction_0"),
+                            String(localized: "journey_level_6_exercise_9_instruction_1"),
+                            String(localized: "journey_level_6_exercise_9_instruction_2")
                         ],
                         instructionPromptTypes: [.action, .action, .statement],
-                        scienceNote: "Pre-exposure breathing reduces physiological arousal.",
+                        scienceNote: String(localized: "journey_level_6_exercise_9_science"),
                         reportValue: .exclude,
                         imageNames: []
                     )
@@ -465,50 +465,50 @@ class CalmJourneyDataStore: ObservableObject {
             // LEVEL 7 — Mindful Presence (Premium)
             CalmLevel(
                 id: 7,
-                title: "Mindful Presence",
-                summary: "Learn to stay grounded in the present moment.",
+                title: String(localized: "journey_level_7_title"),
+                summary: String(localized: "journey_level_7_summary"),
                 free: false,
                 exercises: [
                     CalmExercise(
                         id: 10,
                         type: .education,
-                        title: "What Is Mindfulness?",
+                        title: String(localized: "journey_level_7_exercise_10_title"),
                         instructions: [
-                            "Mindfulness means paying attention to now, without judging it.",
-                            "It helps you notice thoughts and sensations rather than reacting to them.",
-                            "Calm often arises when awareness replaces resistance."
+                            String(localized: "journey_level_7_exercise_10_instruction_0"),
+                            String(localized: "journey_level_7_exercise_10_instruction_1"),
+                            String(localized: "journey_level_7_exercise_10_instruction_2")
                         ],
                         instructionPromptTypes: [.statement, .statement, .statement],
-                        scienceNote: "Mindfulness reduces rumination and increases emotional regulation.",
+                        scienceNote: String(localized: "journey_level_7_exercise_10_science"),
                         reportValue: .exclude,
                         imageNames: ["meditate-1", "thinking-1", "hands-open-smile"]
                     ),
                     CalmExercise(
                         id: 11,
                         type: .breathing,
-                        title: "Five-Minute Presence",
+                        title: String(localized: "journey_level_7_exercise_11_title"),
                         instructions: [
-                            "Set a timer for five minutes.",
-                            "Focus on your breath as it moves in and out.",
-                            "When your mind wanders, gently bring it back to the breath.",
-                            "Notice sensations, sounds, and the space around you."
+                            String(localized: "journey_level_7_exercise_11_instruction_0"),
+                            String(localized: "journey_level_7_exercise_11_instruction_1"),
+                            String(localized: "journey_level_7_exercise_11_instruction_2"),
+                            String(localized: "journey_level_7_exercise_11_instruction_3")
                         ],
                         instructionPromptTypes: [.action, .action, .action, .statement],
-                        scienceNote: "Brief mindfulness practice activates the parasympathetic system.",
+                        scienceNote: String(localized: "journey_level_7_exercise_11_science"),
                         reportValue: .exclude,
                         imageNames: []
                     ),
                     CalmExercise(
                         id: 12,
                         type: .prompt,
-                        title: "Observe Without Fixing",
+                        title: String(localized: "journey_level_7_exercise_12_title"),
                         instructions: [
-                            "Recall a recent difficult emotion.",
-                            "Write what it felt like in your body without labeling it good or bad.",
-                            "What happened when you simply observed it?"
+                            String(localized: "journey_level_7_exercise_12_instruction_0"),
+                            String(localized: "journey_level_7_exercise_12_instruction_1"),
+                            String(localized: "journey_level_7_exercise_12_instruction_2")
                         ],
                         instructionPromptTypes: [.question, .question, .question],
-                        scienceNote: "Non-judgmental observation decreases emotional reactivity.",
+                        scienceNote: String(localized: "journey_level_7_exercise_12_science"),
                         reportValue: .include,
                         imageNames: []
                     )
@@ -518,49 +518,49 @@ class CalmJourneyDataStore: ObservableObject {
             // LEVEL 8 — Emotional Balance (Premium)
             CalmLevel(
                 id: 8,
-                title: "Emotional Balance",
-                summary: "Understand and regulate emotions with compassion.",
+                title: String(localized: "journey_level_8_title"),
+                summary: String(localized: "journey_level_8_summary"),
                 free: false,
                 exercises: [
                     CalmExercise(
                         id: 13,
                         type: .education,
-                        title: "Riding Emotional Waves",
+                        title: String(localized: "journey_level_8_exercise_13_title"),
                         instructions: [
-                            "Emotions rise and fall like waves.",
-                            "Trying to block them often makes them stronger.",
-                            "Riding the wave means allowing the feeling until it naturally fades."
+                            String(localized: "journey_level_8_exercise_13_instruction_0"),
+                            String(localized: "journey_level_8_exercise_13_instruction_1"),
+                            String(localized: "journey_level_8_exercise_13_instruction_2")
                         ],
                         instructionPromptTypes: [.statement, .statement, .statement],
-                        scienceNote: "Emotion regulation involves acceptance rather than suppression.",
+                        scienceNote: String(localized: "journey_level_8_exercise_13_science"),
                         reportValue: .exclude,
                         imageNames: ["thinking-bubble", "kung-fu", "meditate-1"]
                     ),
                     CalmExercise(
                         id: 14,
                         type: .prompt,
-                        title: "Name the Feeling",
+                        title: String(localized: "journey_level_8_exercise_14_title"),
                         instructions: [
-                            "Think of something that upset you recently.",
-                            "Label the main emotion as precisely as you can.",
-                            "Where do you feel it in your body?"
+                            String(localized: "journey_level_8_exercise_14_instruction_0"),
+                            String(localized: "journey_level_8_exercise_14_instruction_1"),
+                            String(localized: "journey_level_8_exercise_14_instruction_2")
                         ],
                         instructionPromptTypes: [.question, .question, .question],
-                        scienceNote: "Labeling emotions activates prefrontal control and reduces intensity.",
+                        scienceNote: String(localized: "journey_level_8_exercise_14_science"),
                         reportValue: .include,
                         imageNames: []
                     ),
                     CalmExercise(
                         id: 15,
                         type: .prompt,
-                        title: "Pause Practice",
+                        title: String(localized: "journey_level_8_exercise_15_title"),
                         instructions: [
-                            "When a strong emotion appears, take one slow breath.",
-                            "Ask: 'What do I need right now — to act or to rest?'",
-                            "Write a short reflection afterward."
+                            String(localized: "journey_level_8_exercise_15_instruction_0"),
+                            String(localized: "journey_level_8_exercise_15_instruction_1"),
+                            String(localized: "journey_level_8_exercise_15_instruction_2")
                         ],
                         instructionPromptTypes: [.action, .question, .question],
-                        scienceNote: "The pause between emotion and reaction builds emotional mastery.",
+                        scienceNote: String(localized: "journey_level_8_exercise_15_science"),
                         reportValue: .include,
                         imageNames: []
                     )
@@ -570,48 +570,48 @@ class CalmJourneyDataStore: ObservableObject {
             // LEVEL 9 — Connection & Support (Premium)
             CalmLevel(
                 id: 9,
-                title: "Connection & Support",
-                summary: "Strengthen bonds and find safety in connection.",
+                title: String(localized: "journey_level_9_title"),
+                summary: String(localized: "journey_level_9_summary"),
                 free: false,
                 exercises: [
                     CalmExercise(
                         id: 16,
                         type: .education,
-                        title: "Why Connection Calms",
+                        title: String(localized: "journey_level_9_exercise_16_title"),
                         instructions: [
-                            "Humans regulate emotions through relationships.",
-                            "Sharing stress with someone safe can lower your cortisol levels.",
-                            "Connection turns isolation into safety."
+                            String(localized: "journey_level_9_exercise_16_instruction_0"),
+                            String(localized: "journey_level_9_exercise_16_instruction_1"),
+                            String(localized: "journey_level_9_exercise_16_instruction_2")
                         ],
                         instructionPromptTypes: [.statement, .statement, .statement],
-                        scienceNote: "Co-regulation is a proven buffer against anxiety.",
+                        scienceNote: String(localized: "journey_level_9_exercise_16_science"),
                         reportValue: .exclude,
                         imageNames: ["brain-handshake", "hands-open-smile", "shadow-angel"]
                     ),
                     CalmExercise(
                         id: 17,
                         type: .prompt,
-                        title: "Safe People Map",
+                        title: String(localized: "journey_level_9_exercise_17_title"),
                         instructions: [
-                            "List three people who make you feel calm or supported.",
-                            "What qualities make them feel safe to you?"
+                            String(localized: "journey_level_9_exercise_17_instruction_0"),
+                            String(localized: "journey_level_9_exercise_17_instruction_1")
                         ],
                         instructionPromptTypes: [.question, .question],
-                        scienceNote: "Identifying supportive figures increases perceived safety.",
+                        scienceNote: String(localized: "journey_level_9_exercise_17_science"),
                         reportValue: .include,
                         imageNames: []
                     ),
                     CalmExercise(
                         id: 18,
                         type: .prompt,
-                        title: "Reach Out",
+                        title: String(localized: "journey_level_9_exercise_18_title"),
                         instructions: [
-                            "Think of someone you haven't spoken to in a while but trust.",
-                            "Send a short message or plan a brief chat.",
-                            "Afterward, reflect on how it felt to connect."
+                            String(localized: "journey_level_9_exercise_18_instruction_0"),
+                            String(localized: "journey_level_9_exercise_18_instruction_1"),
+                            String(localized: "journey_level_9_exercise_18_instruction_2")
                         ],
                         instructionPromptTypes: [.question, .action, .question],
-                        scienceNote: "Positive social contact boosts oxytocin and reduces anxiety.",
+                        scienceNote: String(localized: "journey_level_9_exercise_18_science"),
                         reportValue: .include,
                         imageNames: []
                     )
@@ -621,61 +621,61 @@ class CalmJourneyDataStore: ObservableObject {
             // LEVEL 10 — Growth & Purpose (Premium)
             CalmLevel(
                 id: 10,
-                title: "Growth & Purpose",
-                summary: "Integrate calm into daily life and long-term meaning.",
+                title: String(localized: "journey_level_10_title"),
+                summary: String(localized: "journey_level_10_summary"),
                 free: false,
                 exercises: [
                     CalmExercise(
                         id: 19,
                         type: .education,
-                        title: "Your Calm Journey",
+                        title: String(localized: "journey_level_10_exercise_19_title"),
                         instructions: [
-                            "Every calm skill you've learned is part of a larger growth story.",
-                            "Progress is not perfection — it's presence, patience, and practice.",
-                            "Let's look at what this growth means to you."
+                            String(localized: "journey_level_10_exercise_19_instruction_0"),
+                            String(localized: "journey_level_10_exercise_19_instruction_1"),
+                            String(localized: "journey_level_10_exercise_19_instruction_2")
                         ],
                         instructionPromptTypes: [.statement, .statement, .statement],
-                        scienceNote: "Reflecting on progress consolidates learning and motivation.",
+                        scienceNote: String(localized: "journey_level_10_exercise_19_science"),
                         reportValue: .exclude,
                         imageNames: ["walking-up", "hands-open-smile", "thinking-bulb"]
                     ),
                     CalmExercise(
                         id: 20,
                         type: .prompt,
-                        title: "Letter to Future You",
+                        title: String(localized: "journey_level_10_exercise_20_title"),
                         instructions: [
-                            "Write a short message to your future self for when anxiety returns.",
-                            "Include words of encouragement and a reminder of your strengths."
+                            String(localized: "journey_level_10_exercise_20_instruction_0"),
+                            String(localized: "journey_level_10_exercise_20_instruction_1")
                         ],
                         instructionPromptTypes: [.question, .statement],
-                        scienceNote: "Self-directed compassion strengthens resilience over time.",
+                        scienceNote: String(localized: "journey_level_10_exercise_20_science"),
                         reportValue: .include,
                         imageNames: []
                     ),
                     CalmExercise(
                         id: 21,
                         type: .prompt,
-                        title: "Purpose Compass",
+                        title: String(localized: "journey_level_10_exercise_21_title"),
                         instructions: [
-                            "What matters most to you beyond anxiety?",
-                            "What small daily action aligns with that value?",
-                            "How could you make calm part of your purpose?"
+                            String(localized: "journey_level_10_exercise_21_instruction_0"),
+                            String(localized: "journey_level_10_exercise_21_instruction_1"),
+                            String(localized: "journey_level_10_exercise_21_instruction_2")
                         ],
                         instructionPromptTypes: [.question, .question, .question],
-                        scienceNote: "Values-based living supports long-term emotional stability.",
+                        scienceNote: String(localized: "journey_level_10_exercise_21_science"),
                         reportValue: .include,
                         imageNames: []
                     ),
                     CalmExercise(
                         id: 22,
                         type: .prompt,
-                        title: "Gratitude Grounding",
+                        title: String(localized: "journey_level_10_exercise_22_title"),
                         instructions: [
-                            "List three things you're grateful for today.",
-                            "Notice how your body feels when focusing on gratitude."
+                            String(localized: "journey_level_10_exercise_22_instruction_0"),
+                            String(localized: "journey_level_10_exercise_22_instruction_1")
                         ],
                         instructionPromptTypes: [.question, .question],
-                        scienceNote: "Gratitude practices increase positive affect and reduce anxiety symptoms.",
+                        scienceNote: String(localized: "journey_level_10_exercise_22_science"),
                         reportValue: .include,
                         imageNames: []
                     )

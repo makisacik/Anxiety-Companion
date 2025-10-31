@@ -33,17 +33,17 @@ struct PaywallView: View {
 
                     // Title
                     VStack(spacing: 8) {
-                        Text("Unlimited Access")
+                        Text(String(localized: "paywall_unlimited"))
                             .font(.system(.largeTitle, design: .serif))
                             .fontWeight(.bold)
                             .foregroundColor(.themeText)
                         
                         // Benefits list (app content)
                         VStack(alignment: .leading, spacing: 14) {
-                            benefitRow(icon: "wind", text: "Guided breathing and relaxation")
-                            benefitRow(icon: "pencil.line", text: "Daily reflections and mood tracking")
-                            benefitRow(icon: "location", text: "Personalized insights and reminders")
-                            benefitRow(icon: "fork.knife", text: "Tips for calm habits and routines")
+                            benefitRow(icon: "wind", text: String(localized: "paywall_benefit_breathing"))
+                            benefitRow(icon: "pencil.line", text: String(localized: "paywall_benefit_tracking"))
+                            benefitRow(icon: "location", text: String(localized: "paywall_benefit_insights"))
+                            benefitRow(icon: "fork.knife", text: String(localized: "paywall_benefit_habits"))
                         }
                         .padding(.top, 6)
                     }
@@ -52,21 +52,21 @@ struct PaywallView: View {
                     // Plans section
                     VStack(spacing: 12) {
                         planRow(
-                            title: "Yearly Plan",
-                            subtitle: "$39.99 per year",
-                            leadingStrikethrough: "$415.48",
-                            badge: "SAVE 90%",
+                            title: String(localized: "paywall_plan_yearly_title"),
+                            subtitle: String(localized: "paywall_plan_yearly_price"),
+                            leadingStrikethrough: String(localized: "paywall_plan_yearly_original"),
+                            badge: String(localized: "paywall_plan_yearly_save"),
                             isSelected: selectedPlan == .yearly,
                             trailing: nil
                         ) { selectedPlan = .yearly }
 
                         planRow(
-                            title: "3-Day Trial",
-                            subtitle: "then $7.99 per week",
+                            title: String(localized: "paywall_plan_trial_title"),
+                            subtitle: String(localized: "paywall_plan_trial_price"),
                             leadingStrikethrough: nil,
                             badge: nil,
                             isSelected: selectedPlan == .weeklyTrial,
-                            trailing: Text("FREE")
+                            trailing: Text(String(localized: "paywall_free"))
                                 .font(.system(.headline, design: .rounded))
                                 .fontWeight(.bold)
                                 .foregroundColor(.themeText)
@@ -76,7 +76,7 @@ struct PaywallView: View {
 
                     // Toggle
                     HStack {
-                        Text("Free Trial Enabled")
+                        Text(String(localized: "paywall_trial_enabled"))
                             .font(.system(.body, design: .rounded))
                             .foregroundColor(.themeText)
                         Spacer()
@@ -102,7 +102,7 @@ struct PaywallView: View {
                         dismiss()
                     }) {
                         HStack(spacing: 8) {
-                            Text("Try for Free")
+                            Text(String(localized: "paywall_try_free"))
                                 .font(.system(.headline, design: .rounded))
                                 .fontWeight(.semibold)
                                 .foregroundColor(.themeBackgroundPure)
@@ -147,7 +147,7 @@ struct PaywallView: View {
 
                     // Footer
                     HStack(spacing: 20) {
-                        Button("Restore") { HapticFeedback.light() }
+                        Button(String(localized: "action_restore")) { HapticFeedback.light() }
                             .font(.system(.footnote, design: .rounded))
                             .foregroundColor(.themeText.opacity(0.7))
                     }

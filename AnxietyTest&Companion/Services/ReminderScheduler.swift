@@ -205,11 +205,11 @@ final class ReminderScheduler {
         let content = UNMutableNotificationContent()
         switch category {
         case .reflection:
-            content.title = "A gentle pause ✨"
-            content.body = "If it feels okay, write a few honest lines about today. No pressure."
+            content.title = String(localized: "notification_reflection_title")
+            content.body = String(localized: "notification_reflection_body")
         case .weeklyTest:
-            content.title = "Weekly check-in 📊"
-            content.body = "When you’re ready, take a moment to see how this week felt. One step at a time."
+            content.title = String(localized: "notification_weekly_test_title")
+            content.body = String(localized: "notification_weekly_test_body")
         }
         content.sound = .default
 
@@ -251,8 +251,8 @@ final class ReminderScheduler {
         
         // Create notification content
         let content = UNMutableNotificationContent()
-        content.title = "Time for your calm check-in 🌤️"
-        content.body = "Take a moment to reflect on how you've been feeling lately."
+        content.title = String(localized: "notification_checkin_title")
+        content.body = String(localized: "notification_checkin_body")
         content.sound = .default
         
         // Create trigger (repeating)

@@ -23,13 +23,13 @@ struct NotificationPermissionView: View {
             // Popup card (slightly lower)
             VStack(spacing: 20) {
                 VStack(spacing: 16) {
-                    Text("🌿 Stay mindful of your calm.")
+                        Text(String(localized: "onboarding_notification_title"))
                         .font(.system(.title3, design: .serif))
                         .fontWeight(.bold)
                         .multilineTextAlignment(.center)
                         .foregroundColor(.themeText)
 
-                    Text("Would you like gentle reminders to check in on how you're feeling?")
+                        Text(String(localized: "onboarding_notification_description"))
                         .font(.system(.body, design: .rounded))
                         .foregroundColor(.themeText.opacity(0.8))
                         .multilineTextAlignment(.center)
@@ -42,7 +42,7 @@ struct NotificationPermissionView: View {
                             HapticFeedback.success()
                             handlePermissionRequest()
                         }) {
-                            Text("Yes, remind me 🌤️")
+                                Text(String(localized: "onboarding_notification_allow_button"))
                                 .font(.system(.body, design: .rounded))
                                 .fontWeight(.medium)
                                 .foregroundColor(.themeText)
@@ -60,7 +60,7 @@ struct NotificationPermissionView: View {
                             HapticFeedback.soft()
                             dismissPopup()
                         }) {
-                            Text("Not now")
+                                Text(String(localized: "onboarding_notification_skip_button"))
                                 .font(.system(.body, design: .rounded))
                                 .fontWeight(.medium)
                                 .foregroundColor(.themeText.opacity(0.8))

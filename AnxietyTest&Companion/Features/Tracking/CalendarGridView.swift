@@ -21,7 +21,7 @@ struct CalendarGridView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
-                Text("Your Check-ins")
+                Text(String(localized: "tracking_checkins_title"))
                     .font(.system(.headline, design: .serif))
                     .fontWeight(.semibold)
                     .foregroundColor(.themeText)
@@ -54,7 +54,15 @@ struct CalendarGridView: View {
             // Calendar Grid
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 8) {
                 // Day headers
-                ForEach(Array(["S", "M", "T", "W", "T", "F", "S"].enumerated()), id: \.offset) { index, day in
+                ForEach(Array([
+                    String(localized: "calendar_day_sun"),
+                    String(localized: "calendar_day_mon"),
+                    String(localized: "calendar_day_tue"),
+                    String(localized: "calendar_day_wed"),
+                    String(localized: "calendar_day_thu"),
+                    String(localized: "calendar_day_fri"),
+                    String(localized: "calendar_day_sat")
+                ].enumerated()), id: \.offset) { index, day in
                     Text(day)
                         .font(.system(.caption, design: .rounded))
                         .fontWeight(.medium)
@@ -85,7 +93,7 @@ struct CalendarGridView: View {
                     Circle()
                         .fill(Color.themeText.opacity(0.3))
                         .frame(width: 8, height: 8)
-                    Text("Calm")
+                    Text(String(localized: "tracking_calm"))
                         .font(.system(.caption2, design: .rounded))
                         .foregroundColor(.themeText.opacity(0.7))
                 }
@@ -94,7 +102,7 @@ struct CalendarGridView: View {
                     Circle()
                         .fill(Color.themeText)
                         .frame(width: 8, height: 8)
-                    Text("Moderate")
+                    Text(String(localized: "tracking_moderate"))
                         .font(.system(.caption2, design: .rounded))
                         .foregroundColor(.themeText.opacity(0.7))
                 }
@@ -103,7 +111,7 @@ struct CalendarGridView: View {
                     Circle()
                         .fill(Color.themeCompanionOutline)
                         .frame(width: 8, height: 8)
-                    Text("High")
+                    Text(String(localized: "tracking_high"))
                         .font(.system(.caption2, design: .rounded))
                         .foregroundColor(.themeText.opacity(0.7))
                 }
@@ -278,7 +286,7 @@ struct DayDetailView: View {
 
                     if let gad7Entry = gad7Entry {
                         VStack(spacing: 12) {
-                            Text("GAD-7 Score")
+                            Text(String(localized: "tracking_gad7_score"))
                                 .font(.system(.headline, design: .rounded))
                                 .foregroundColor(.themeText)
 
@@ -300,7 +308,7 @@ struct DayDetailView: View {
 
                     if let moodEntry = moodEntry {
                         VStack(spacing: 12) {
-                            Text("Mood")
+                            Text(String(localized: "tracking_mood"))
                                 .font(.system(.headline, design: .rounded))
                                 .foregroundColor(.themeText)
 
@@ -315,7 +323,7 @@ struct DayDetailView: View {
                     }
 
                     if gad7Entry == nil && moodEntry == nil {
-                        Text("No data for this day")
+                        Text(String(localized: "tracking_no_data_for_day"))
                             .font(.system(.body, design: .rounded))
                             .foregroundColor(.themeText.opacity(0.6))
                     }
@@ -327,7 +335,7 @@ struct DayDetailView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Done") {
+                    Button(String(localized: "action_done")) {
                         dismiss()
                     }
                     .foregroundColor(.themeText)
@@ -338,10 +346,10 @@ struct DayDetailView: View {
     
     private func getScoreCategory(_ score: Int) -> String {
         switch score {
-        case 0...4: return "Minimal Anxiety"
-        case 5...9: return "Mild Anxiety"
-        case 10...14: return "Moderate Anxiety"
-        default: return "Severe Anxiety"
+        case 0...4: return String(localized: "tracking_anxiety_minimal")
+        case 5...9: return String(localized: "tracking_anxiety_mild")
+        case 10...14: return String(localized: "tracking_anxiety_moderate")
+        default: return String(localized: "tracking_anxiety_severe")
         }
     }
     

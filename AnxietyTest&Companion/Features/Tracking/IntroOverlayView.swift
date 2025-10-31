@@ -19,20 +19,20 @@ struct IntroOverlayView: View {
                 }
             
             VStack(spacing: 24) {
-                Text("Welcome to your Progress Page 🌿")
+                Text(String(localized: "tracking_intro_title"))
                     .font(.system(.title2, design: .serif))
                     .fontWeight(.semibold)
                     .foregroundColor(.themeText)
                     .multilineTextAlignment(.center)
                 
-                Text("Here you'll see how your check-ins and moods change over time. It's not about being perfect — it's about understanding yourself better.")
+                Text(String(localized: "tracking_intro_message"))
                     .font(.system(.body, design: .rounded))
                     .foregroundColor(.themeText.opacity(0.8))
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 8)
                 
                 Button(action: dismissOverlay) {
-                    Text("Got it")
+                    Text(String(localized: "tracking_intro_got_it"))
                         .font(.system(.body, design: .rounded))
                         .fontWeight(.medium)
                         .foregroundColor(.themeText)

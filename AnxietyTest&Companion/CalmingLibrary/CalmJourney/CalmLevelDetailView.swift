@@ -81,7 +81,7 @@ struct CalmLevelDetailView: View {
                     
                     Spacer()
                     
-                    Text("Level \(level.id)")
+                    Text(String.localizedStringWithFormat(String(localized: "journey_level"), level.id))
                         .font(.system(.headline, design: .rounded))
                         .foregroundColor(.themeText.opacity(0.7))
                 }
@@ -130,7 +130,7 @@ struct CalmLevelDetailView: View {
                     HStack {
                         Image(systemName: allExercisesCompleted ? "checkmark.circle.fill" : "play.fill")
                             .font(.system(size: 18, weight: .semibold))
-                        Text(allExercisesCompleted ? "Level Complete!" : currentExerciseIndex == 0 ? "Start Level" : "Continue")
+                        Text(allExercisesCompleted ? String(localized: "level_detail_complete") : currentExerciseIndex == 0 ? String(localized: "level_detail_start") : String(localized: "level_detail_continue"))
                             .font(.system(.body, design: .rounded))
                             .fontWeight(.semibold)
                     }
@@ -152,13 +152,13 @@ struct CalmLevelDetailView: View {
     private var progressSection: some View {
         VStack(spacing: 12) {
             HStack {
-                Text("Progress")
+                Text(String(localized: "level_detail_progress"))
                     .font(.system(.headline, design: .rounded))
                     .foregroundColor(.themeText)
                 
                 Spacer()
                 
-                Text("\(completedExercises.count)/\(level.exercises.count)")
+                Text(String.localizedStringWithFormat(String(localized: "session_step"), completedExercises.count, level.exercises.count))
                     .font(.system(.headline, design: .rounded))
                     .foregroundColor(.themeText.opacity(0.7))
             }
@@ -180,12 +180,12 @@ struct CalmLevelDetailView: View {
                     .font(.system(size: 80))
                     .foregroundColor(.themeText)
                 
-                Text("Level Complete! 🎉")
+                Text(String(localized: "level_detail_complete"))
                     .font(.system(.largeTitle, design: .serif))
                     .fontWeight(.bold)
                     .foregroundColor(.themeText)
                 
-                Text("You've completed all exercises in \(level.title)")
+                Text(String.localizedStringWithFormat(String(localized: "level_detail_completed_exercises"), level.title))
                     .font(.system(.body, design: .rounded))
                     .foregroundColor(.themeText.opacity(0.8))
                     .multilineTextAlignment(.center)
@@ -202,7 +202,7 @@ struct CalmLevelDetailView: View {
                     HStack {
                         Image(systemName: "house.fill")
                             .font(.system(size: 18, weight: .semibold))
-                        Text("Back to Journey")
+                        Text(String(localized: "completion_back_to_journey"))
                             .font(.system(.body, design: .rounded))
                             .fontWeight(.semibold)
                     }
@@ -227,7 +227,7 @@ struct CalmLevelDetailView: View {
                     HStack {
                         Image(systemName: "arrow.clockwise")
                             .font(.system(size: 18, weight: .semibold))
-                        Text("Repeat Level")
+                        Text(String(localized: "level_detail_repeat"))
                             .font(.system(.body, design: .rounded))
                             .fontWeight(.semibold)
                     }

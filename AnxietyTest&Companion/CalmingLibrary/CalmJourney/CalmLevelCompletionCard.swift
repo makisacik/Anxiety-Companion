@@ -47,7 +47,7 @@ struct CalmLevelCompletionCard: View {
 
             // Celebration content
             VStack(spacing: 24) {
-                Text("You've completed this calm step 🌿")
+                Text(String(localized: "completion_congrats"))
                     .font(.title2.bold())
                     .foregroundColor(.themeText)
                     .multilineTextAlignment(.center)
@@ -55,7 +55,7 @@ struct CalmLevelCompletionCard: View {
                 CompanionFaceView(expression: .happy)
                     .frame(width: 120, height: 120)
 
-                Text("Take a deep breath.\nYou're doing great.")
+                Text(String(localized: "completion_breath"))
                     .font(.body)
                     .foregroundColor(.themeText.opacity(0.8))
                     .multilineTextAlignment(.center)
@@ -73,7 +73,7 @@ struct CalmLevelCompletionCard: View {
                     HStack {
                         Image(systemName: "house.fill")
                             .font(.system(size: 18, weight: .semibold))
-                        Text("Back to Journey")
+                        Text(String(localized: "completion_back_to_journey"))
                             .font(.system(.body, design: .rounded))
                             .fontWeight(.semibold)
                     }
@@ -95,7 +95,7 @@ struct CalmLevelCompletionCard: View {
                     HStack {
                         Image(systemName: "arrow.clockwise")
                             .font(.system(size: 18, weight: .semibold))
-                        Text("Repeat Session")
+                        Text(String(localized: "completion_repeat_session"))
                             .font(.system(.body, design: .rounded))
                             .fontWeight(.semibold)
                     }

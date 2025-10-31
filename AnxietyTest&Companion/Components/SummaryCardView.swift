@@ -15,7 +15,7 @@ struct SummaryCardView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text("Your Recent Check-In")
+                Text(String(localized: "summary_recent_checkin"))
                     .font(.system(.title2, design: .serif))
                     .fontWeight(.semibold)
                     .foregroundColor(.themeText)
@@ -32,12 +32,13 @@ struct SummaryCardView: View {
             if let latestEntry = gad7Entries.first {
                 let daysAgo = Calendar.current.dateComponents([.day], from: latestEntry.date ?? Date(), to: Date()).day ?? 0
                 let category = getScoreCategory(Int(latestEntry.score))
+                let daysAgoText = daysAgo == 0 ? String(localized: "home_anxiety_last_test_today") : String.localizedStringWithFormat(String(localized: "home_anxiety_last_test_days_ago"), daysAgo)
                 
-                Text("Last test: \(daysAgo == 0 ? "Today" : "\(daysAgo) days ago") • Score: \(category) (\(latestEntry.score)/21)")
+                Text(String.localizedStringWithFormat(String(localized: "summary_last_test_format"), daysAgoText, category, Int(latestEntry.score)))
                     .font(.system(.caption, design: .rounded))
                     .foregroundColor(.themeText.opacity(0.7))
             } else {
-                Text("You haven't done a check-in yet.")
+                Text(String(localized: "summary_no_checkin"))
                     .font(.system(.caption, design: .rounded))
                     .foregroundColor(.themeText.opacity(0.7))
             }
@@ -65,10 +66,10 @@ struct SummaryCardView: View {
     
     private func getScoreCategory(_ score: Int) -> String {
         switch score {
-        case 0...4: return "Minimal"
-        case 5...9: return "Mild"
-        case 10...14: return "Moderate"
-        default: return "Severe"
+        case 0...4: return String(localized: "home_anxiety_score_minimal")
+        case 5...9: return String(localized: "home_anxiety_score_mild")
+        case 10...14: return String(localized: "home_anxiety_score_moderate")
+        default: return String(localized: "home_anxiety_score_severe")
         }
     }
 }

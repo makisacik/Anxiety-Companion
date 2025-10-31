@@ -21,7 +21,7 @@ struct ContentView: View {
             List {
                 ForEach(items) { item in
                     NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
+                        Text(String.localizedStringWithFormat(String(localized: "content_item_at"), itemFormatter.string(from: item.timestamp!)))
                     } label: {
                         Text(item.timestamp!, formatter: itemFormatter)
                     }
@@ -34,11 +34,11 @@ struct ContentView: View {
                 }
                 ToolbarItem {
                     Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                        Label(String(localized: "content_add_item"), systemImage: "plus")
                     }
                 }
             }
-            Text("Select an item")
+            Text(String(localized: "content_select_item"))
         }
     }
 
